@@ -9,7 +9,7 @@ The file follows two rules.
 - A guarantee is written down only after a test in this repository checks it. The test is named next to the guarantee as `file::function`, or as `file::Class::function` when it sits inside a test class. Every test file name is unique, and each section says which folder holds its tests.
 - Every reference carries its DOI, so that anyone can look it up. The references are collected once, at the end.
 
-Version: 0.2.0
+Version: 0.2.1
 
 ## How to read the sections
 

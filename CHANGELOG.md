@@ -4,6 +4,21 @@
 
 All notable changes to this project are recorded in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-11-02
+
+### Fixed
+
+- **rent-split.** SKILL.md called `spliddit` the default rule, but `rules.negative_rent` is required. It is now described as the recommended rule.
+- **bill-split and ride-split.** The descriptions said that a group order or a shared ride is checked so that nobody pays more than alone. The scripts compare with ordering or riding alone and name anyone who would pay more, and the descriptions now say so.
+- **Reproduce.** The command in the Reproduce section of every script repeats the options of the run (`--demo` or `--input -`, the output format, `--audit`, `--all-rules`, `--remove`, `--source` and `--lang`) and starts with `scripts/`.
+- **Output wording.** chore-split says "in the single week" when there is one week. ride-split writes "stretch by stretch (Shapley)" in lower case inside a sentence, and in Chinese it says when only one rider is left on a stretch.
+- **SKILL.md.** Each guarantee and limit is stated once, under Guarantees and limits. stuff-split names its rules by method, group-vote counts the seven rules of `--all-rules`, and a wrong section pointer in bill-split is fixed.
+- **THEORY.** The caption of the gift circle says why the English figure draws number 2, the notes on the references keep only why each work is cited, and the Chinese version translates the citation notes.
+
+### Changed
+
+- CI runs on Python 3.14 as well.
+
 ## [0.2.0] - 2026-11-02
 
 First public release. It ships eight skills as a Claude Code plugin named `fair-and-square`, and as plain skill folders for Codex and other tools.
@@ -21,4 +36,5 @@ First public release. It ships eight skills as a Claude Code plugin named `fair-
 - **All skills.** Python 3.9 or later and the standard library only. Text output in Chinese or English (`--lang`) as tables for the organizer, one private message per person, or a group-chat summary without private numbers, and `--json` for the full result. `--demo` and `--selftest` run on built-in data. `--input FILE --delete-input` reads the input from a file and deletes it. A shared core, `fsq_core.py`, holds exact money, rounding, the Shapley value, seeded orders and commitments.
 - **Documentation.** `docs/THEORY.md` states for each skill what is guaranteed, which tests check it, what is not guaranteed and where the method comes from.
 
+[0.2.1]: https://github.com/YYYJH1/fair-and-square-skills/releases/tag/v0.2.1
 [0.2.0]: https://github.com/YYYJH1/fair-and-square-skills/releases/tag/v0.2.0

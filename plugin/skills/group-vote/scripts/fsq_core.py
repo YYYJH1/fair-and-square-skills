@@ -57,7 +57,7 @@ from typing import (
     NoReturn,
 )
 
-CORE_VERSION = "0.2.0"
+CORE_VERSION = "0.2.1"
 
 EXIT_OK = 0
 EXIT_INPUT = 2  # invalid input; the message names the field

@@ -4,6 +4,21 @@
 
 本项目所有值得注意的改动都记录在这个文件里。格式遵循 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)。项目遵循 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)。
 
+## [0.2.1] - 2026-11-02
+
+### 修复
+
+- **rent-split。** SKILL.md 把 `spliddit` 叫作默认规则，但 `rules.negative_rent` 是必填的。现在把它写成推荐的规则。
+- **bill-split 和 ride-split。** 说明里写拼单和拼车会经过核对，保证没人比单独付得更多。脚本做的是和单点、单独乘车比较，并指出谁会付得更多，说明现在照实写。
+- **复算命令。** 每个脚本「复算命令」一节里的命令，现在带上本次运行的选项（`--demo` 或 `--input -`、输出格式、`--audit`、`--all-rules`、`--remove`、`--source` 和 `--lang`），并以 `scripts/` 开头。
+- **输出措辞。** chore-split 只有一周时写「the single week」。ride-split 在句中把「stretch by stretch (Shapley)」写成小写，一段路只剩一个人时，中文写「只有 1 人在车上」。
+- **SKILL.md。** 每条保证和限制只在「Guarantees and limits」里说一次。stuff-split 用方法名称呼三条规则，group-vote 写明 `--all-rules` 的七条规则，bill-split 里一处指错的章节已改正。
+- **THEORY。** 礼物圈的图注说明英文图为什么抽中第 2 号，参考文献的说明只保留各文献为何被引用，中文版把引用说明译成了中文。
+
+### 变更
+
+- CI 也在 Python 3.14 上运行。
+
 ## [0.2.0] - 2026-11-02
 
 第一个公开版本。它带有八个技能，以名为 `fair-and-square` 的 Claude Code 插件的形式发布，也以普通技能文件夹的形式提供给 Codex 和其他工具。
@@ -21,4 +36,5 @@
 - **所有技能。** Python 3.9 或更新版本，只用标准库。文字输出有中文或英文（`--lang`），形式是给组织者的表格、每人一条私信，或者不含私密数字的群聊汇总，`--json` 给出完整结果。`--demo` 和 `--selftest` 在内置数据上运行。`--input FILE --delete-input` 从文件读入输入，并把它删掉。共用核心 `fsq_core.py` 包含精确金额、取整、Shapley 值、带种子的顺序和承诺。
 - **文档。** `docs/THEORY_zh.md` 为每个技能写明：保证什么，哪些测试核对这些保证，不保证什么，方法出自哪里。
 
+[0.2.1]: https://github.com/YYYJH1/fair-and-square-skills/releases/tag/v0.2.1
 [0.2.0]: https://github.com/YYYJH1/fair-and-square-skills/releases/tag/v0.2.0

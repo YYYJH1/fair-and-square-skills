@@ -1,6 +1,6 @@
 [project]
 name = "fair-and-square-skills"
-version = "0.2.0"
+version = "0.2.1"
 description = "Agent skills for everyday fair division: rent, bills, rides, votes, chores, lotteries, belongings and gift exchanges, computed by tested scripts."
 readme = "README.md"
 license = "MIT"
