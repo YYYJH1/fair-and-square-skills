@@ -93,8 +93,8 @@ class TestTransfers:
     def test_greedy_uses_an_extra_transfer_in_11_3_percent_of_random_cases(self):
         """20000 random settlements of 4 to 8 people with balances in multiples of 10.
 
-        The stream of random.Random(3) gave the same 2252 cases on CPython 3.9, 3.10, 3.12 and
-        3.13 when this test was written. The assertion on the share is the one that matters.
+        The stream of random.Random(3) gives the same 2252 cases on every Python version that CI
+        runs. The assertion on the share is the one that matters.
         """
         rng = random.Random(3)
         total = more = 0

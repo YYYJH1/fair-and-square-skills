@@ -1,13 +1,13 @@
 ---
 name: bill-split
-description: Use whenever people need to split a shared bill (a meal where some people did not drink, a trip with several payers, a takeaway group order with delivery fees and full-reduction coupons) or ask who owes whom, even if nobody asks for an algorithm. Runs a bundled script that splits item by item, shares fees and discounts, rounds exactly to the cent and returns the fewest transfers, one private message per person and a group-chat summary. For group orders it shares a coupon by Shapley value and checks that nobody pays more than ordering alone. It can also audit a split the group already uses and show who overpays. Typical requests include split the bill, settle up, who owes whom, AA、分账、聚餐怎么分钱、旅行账单、谁该给谁转账、外卖拼单、凑满减. Not for taxi fares by drop-off order (use ride-split) or for rent and rooms (use rent-split).
+description: Use whenever people need to split a shared bill (a meal where some people did not drink, a trip with several payers, a takeaway group order with delivery fees and full-reduction coupons) or ask who owes whom, even if nobody asks for an algorithm. Runs a bundled script that splits item by item, shares fees and discounts, rounds exactly to the cent and returns the fewest transfers, one private message per person and a group-chat summary. For group orders it shares a coupon by Shapley value and checks whether anybody pays more than ordering alone. It can also audit a split the group already uses and show who overpays. Typical requests include split the bill, settle up, who owes whom, AA、分账、聚餐怎么分钱、旅行账单、谁该给谁转账、外卖拼单、凑满减. Not for taxi fares by drop-off order (use ride-split) or for rent and rooms (use rent-split).
 license: MIT
 allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/scripts/bill_split.py *)
 ---
 
 # bill-split
 
-Splitting a bill equally is easy and often unfair: the people who skipped the wine pay for it. This skill splits each item among the people who shared it, shares fees and discounts by a rule the group agreed on, and settles up with the fewest transfers. For takeaway group orders it also shares a coupon fairly and checks that joining the order does not cost anyone more than ordering alone.
+Splitting a bill equally is easy and often unfair: the people who skipped the wine pay for it. This skill splits each item among the people who shared it, shares fees and discounts by a rule the group agreed on, and settles up with the fewest transfers. For takeaway group orders it also shares a coupon fairly and checks whether joining the order costs anyone more than ordering alone.
 
 Quote every amount, name and count exactly as the script prints it. Do not compute, estimate, round or adjust any of them yourself.
 
@@ -99,7 +99,7 @@ Bills are public facts, so nobody needs to go first and nothing needs to be sent
 
 1. Fees and discounts: by what each person ordered (default), equally per person, or exact amounts.
 2. Leftover cents: largest remainder, and equal remainders rotate with the bill id, so no one gets the extra cent every time.
-3. Settling up: the fewest transfers (exact while at most 16 people have a balance, otherwise the greedy rule and the script says so).
+3. Settling up: the fewest transfers (the default) or the greedy rule.
 4. For a group order: the full-reduction coupon by Shapley value or in proportion to dish prices, delivery fee and red packet in proportion to dish prices, packaging with the dish. The coupon rule changes who pays what, so decide it before ordering. The group will not vote on the rule after seeing the result.
 
 If AskUserQuestion is available, confirm the choices with it: one sentence restating the situation, the recommended option first. Otherwise ask numbered questions, each with the recommended answer.
@@ -125,7 +125,7 @@ Done when the organizer has confirmed the input table.
 
 Done when the script has exited with code 0.
 
-Run it on the same input three times: `--format md` for the organizer's tables, `--format dm` for one message per person, `--format group` for the group-chat summary. Add `--audit` to compare with the split the group uses now (next section).
+Run it on the same input three times: `--format md` for the organizer's tables, `--format dm` for one message per person, `--format group` for the group-chat summary. Add `--audit` to compare with the split the group uses now (see "Checking an existing split").
 
 ## Step 4. Present
 
@@ -145,14 +145,13 @@ If the group already splits some way, run with `--audit`. In an `audit` block, `
 - A child eats half: `weights`. A guest who left early: leave them out of `among`.
 - Someone paid for others, or two people paid one bill: allowed. A note says so.
 - A free item with amount 0: allowed, with a note. A person literally named "all" is just a person.
-- More than 16 people with a balance: the script settles with the greedy rule and says it may not be the fewest.
 - Shapley can give a small order that lifts the group over a threshold a share larger than the order, so that person receives money. The script notes it. If the group dislikes this, choose `proportional` before ordering.
 - If someone can reach a coupon tier alone, grouping can waste it and the trap check fails. Say so plainly.
 
 ## Guarantees and limits
 
 - Amounts are exact fractions. The total is right to the cent, and every person's share of a bill is within one cent of the exact amount. Each part shown in a breakdown is a whole number of cents and the parts add up to the share.
-- With at most 16 people having a balance, the number of transfers is the fewest possible. The total money moved is not minimized.
+- With at most 16 people having a balance, the number of transfers is the fewest possible. With more, the script settles with the greedy rule and says it may not be the fewest. The total money moved is not minimized.
 - The coupon shares add up to the discount. Equal dishes get equal shares. In a group order the trap check is computed, never assumed.
 - Not strategy-proof. Dish prices and receipts are taken as facts, so a person could pad an order to cross a threshold.
 

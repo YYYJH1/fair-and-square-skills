@@ -1,6 +1,6 @@
 ---
 name: ride-split
-description: Use whenever people who shared a taxi, ride-hail or carpool need to split the fare by who rode how far, got off in which order or took a detour, or want to know whether an equal split of the fare is fair, even if nobody asks for an algorithm. Runs a bundled script (Shapley value, exact to the cent) that returns each rider's share with a line they can check, a group-chat summary, a check that no rider and no group pays more than riding alone, and an audit of a split already made. Works from meter readings, from each rider's app estimate for a solo ride, or from a distance matrix. Typical requests include carpool split, split a taxi fare, who pays what when people get off in turn, 拼车怎么分钱、打车 AA、顺路下车怎么算、先下车的人为什么该少付、自驾油费过路费按路程分. Not for meals, trips or other shared bills (use bill-split) or for rent (use rent-split).
+description: Use whenever people who shared a taxi, ride-hail or carpool need to split the fare by who rode how far, got off in which order or took a detour, or want to know whether an equal split of the fare is fair, even if nobody asks for an algorithm. Runs a bundled script (Shapley value, exact to the cent) that returns each rider's share with a line they can check, a group-chat summary, a check of whether any rider or group pays more than riding alone, and an audit of a split already made. Works from meter readings, from each rider's app estimate for a solo ride, or from a distance matrix. Typical requests include carpool split, split a taxi fare, who pays what when people get off in turn, 拼车怎么分钱、打车 AA、顺路下车怎么算、先下车的人为什么该少付、自驾油费过路费按路程分. Not for meals, trips or other shared bills (use bill-split) or for rent (use rent-split).
 license: MIT
 allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/scripts/ride_split.py *)
 ---
@@ -82,8 +82,6 @@ Ask for the riders in the order they get off, then pick the input mode:
 - `general`: the riders do not simply drop off in a line, for example one needs a detour. Give either the price of every group riding alone (`"subset_costs": {"小周": 15, "阿杰": 40, "小周+阿杰": 40, ...}`, one entry per non-empty group, practical only up to 4 riders, which is 15 prices), or a distance matrix and a tariff (`"distance_matrix": [[0, 2, 12, 11], ...]`, row 0 is the start and row i the stop of rider i, `"tariff": {"base": 10, "per_unit": 2.5}`). The script tries every route. A list of `{"riders": [...], "cost": ...}` objects also works for `subset_costs` and is the form for names that contain a plus sign. Optional `"actual_total"` scales all prices to what was really paid.
 
 Optional fields in every mode: `"paid_by": "老陈"` (the rider who paid the driver, so the messages say who sends what to whom), `"ride_id": "..."` (any text, for example the date and route, which only decides who gets a leftover cent when shares tie exactly).
-
-Size limits: `meter` and `estimates` take 2 to 12 riders, `general` takes 2 to 6.
 
 Build the JSON, show it back to the organizer as a table, and wait for confirmation before running.
 

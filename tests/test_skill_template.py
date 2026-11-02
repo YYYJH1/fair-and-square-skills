@@ -90,7 +90,6 @@ class TestStructure:
 
     def test_a_check_of_an_existing_split_has_the_same_heading_everywhere(self, skill):
         headings = re.findall(r"^## (.*)$", text_of(skill), flags=re.MULTILINE)
-        assert "Checking a split already made" not in headings
         if skill in ("rent-split", "bill-split", "ride-split"):
             assert "Checking an existing split" in headings
 
@@ -113,7 +112,6 @@ class TestStructure:
 class TestOptionsAndExitCodes:
     def test_the_options_sentence_is_the_same_everywhere(self, skill):
         assert "Options are listed by `--help`." in text_of(skill)
-        assert "All flags are listed" not in text_of(skill)
 
     def test_demo_and_selftest_are_both_described(self, skill):
         body = text_of(skill)

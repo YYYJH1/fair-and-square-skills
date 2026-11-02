@@ -106,7 +106,7 @@
     "房间数和人数不等，以及两人合住但不是情侣的情形（情侣先商量出一组联合报价，当作一个人）。",
     "有人最多只能付多少的预算上限。"
   ],
-  "reproduce": "python3 rent_split.py --input - --format md --audit   # same JSON on standard input",
+  "reproduce": "python3 scripts/rent_split.py --demo --json",
   "result": {
     "assignment": {
       "Coco": "北次卧",

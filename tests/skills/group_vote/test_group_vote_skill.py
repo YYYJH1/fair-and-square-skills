@@ -209,7 +209,9 @@ class TestBody:
             gv.solve(fc.parse_input(gv.DEMO_JSON), all_rules=True, remove=["剧本杀"])
         )["result"]["per_rule_winners"]
         assert set(removal.values()) == {"爬山"}
-        assert "removing 剧本杀 or 密室逃脱 makes all five rules pick 爬山" in body
+        assert (
+            "removing 剧本杀 or 密室逃脱 makes all seven rules of `--all-rules` pick 爬山" in body
+        )
 
 
 def documented_command() -> tuple[list[str], str]:
@@ -367,9 +369,14 @@ class TestTheorySection:
         assert len(doc.cited(content)) > 25, "the section should name the tests that check it"
         assert doc.missing_tests(content) == []
 
-    def test_the_references_say_which_dois_were_not_available(self):
+    def test_the_notes_say_what_the_references_of_the_section_are_cited_for(self):
         notes = doc.section("References").split("Notes on the references")[1]
-        assert "CrossRef" in notes and "Daedalus" in notes and "no DOI" in notes
+        for needed in (
+            "Young and Levenglick (1978) is cited for the rule",
+            "Doron and Kronick (1977) shows",
+            "Tideman (1987) defines independence of clones",
+        ):
+            assert needed in notes, needed
 
     def test_the_skill_cites_the_same_papers_it_relies_on(self):
         body = text()

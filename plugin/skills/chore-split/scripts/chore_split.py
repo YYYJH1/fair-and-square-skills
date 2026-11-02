@@ -138,6 +138,8 @@ TEXT = {
         "q_chores_n": "{n} 件家务",
         "q_weeks_1": "{n} 周",
         "q_weeks_n": "{n} 周",
+        "q_weeks_checked_1": "{n} 周",
+        "q_weeks_checked_n": "{n} 周",
         "cap_schedule": "每周排班",
         "hdr_schedule": ["周", "挑选顺序"],
         "nothing": "（没有分到）",
@@ -342,6 +344,8 @@ TEXT = {
         "q_chores_n": "{n} chores",
         "q_weeks_1": "{n} week",
         "q_weeks_n": "{n} weeks",
+        "q_weeks_checked_1": "the single week",
+        "q_weeks_checked_n": "all {n} weeks",
         "cap_schedule": "Weekly schedule",
         "hdr_schedule": ["Week", "Pick order"],
         "nothing": "(none)",
@@ -385,7 +389,7 @@ TEXT = {
         ),
         "n_ef1_ok": (
             "EF1 status (nobody envies anybody once one chore is set aside): holds. The script "
-            "checked every pair of people in all {weeks}. All {n} round-by-round comparisons "
+            "checked every pair of people in {weeks}. All {n} round-by-round comparisons "
             "hold."
         ),
         "n_ef1_bad": (
@@ -1326,7 +1330,7 @@ def summary_notes(plan: Plan, lang: str) -> list:
     if plan.ef1_holds:
         notes.append(
             text["n_ef1_ok"].format(
-                weeks=quantity(lang, "q_weeks", problem.weeks), n=plan.n_comparisons
+                weeks=quantity(lang, "q_weeks_checked", problem.weeks), n=plan.n_comparisons
             )
         )
     else:

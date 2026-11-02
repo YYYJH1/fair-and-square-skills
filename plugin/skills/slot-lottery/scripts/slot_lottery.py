@@ -50,6 +50,7 @@ import hashlib
 import itertools
 import math
 import re
+import shlex
 import sys
 from collections import Counter
 from collections.abc import Sequence
@@ -3182,6 +3183,8 @@ def reproduce_command(args: argparse.Namespace) -> str:
     parts += ["--demo"] if args.demo else ["--input", "-"]
     if args.verify:
         parts.append("--verify")
+        if args.source is not None:
+            parts += ["--source", shlex.quote(args.source)]
     parts += ["--json"] if args.json else ["--format", args.format]
     if args.lang != "zh":
         parts += ["--lang", args.lang]

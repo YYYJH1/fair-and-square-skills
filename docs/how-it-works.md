@@ -12,14 +12,14 @@ Each skill fixes the rule before anyone shares a number, so nobody can choose th
 
 ## Private input
 
-The numbers are private, so the input needs care too. A script reads it from standard input, which creates no input file, or from a file named by `--input`. An agent that can pipe the input in does so. Claude Code asks the user to approve any command whose heredoc holds braces and quotes, and every input of these skills does. There the skills write the input to a file in the session's scratchpad and run the script with `--delete-input`. The script deletes the file as soon as it has read it, also when it then rejects the input. This is an ordinary deletion and not a secure erase. The file exists until the script reads it, and it stays if the run stops before that.
+The numbers are private, so the input needs care too. A script reads it from standard input, which creates no input file, or from a file named by `--input`. An agent that can pipe the input in does so. Claude Code asks the user to approve any command whose heredoc holds braces and quotes, and every input of these skills does. There the skills write the input to a file in the session's scratchpad and run the script with `--delete-input`. The script deletes the file as soon as it has read it, also when it then rejects the input. The limits of this deletion are listed under [Limits that hold for every skill](THEORY.md#limits-that-hold-for-every-skill).
 
 ## Rules for every script
 
 Every script must follow these rules, which `tests/test_contract.py` checks:
 
 - Standard library only, Python 3.9 or later.
-- No network, no subprocesses, no `eval` or `exec`, no files written. The one change to the file system is the opt-in `--delete-input`, which deletes the `--input` file after it has been read. Only `core/fsq_core.py` does this, in one place.
+- No network, no subprocesses, no `eval`, `exec`, `compile` or `__import__`, no files written. The one change to the file system is the opt-in `--delete-input`, which deletes the `--input` file after it has been read. Only `core/fsq_core.py` does this, in one place.
 - `--help`, `--demo` and `--selftest` exit with status 0, and the demo prints the same bytes on every run.
 
 ## Run a script without an agent

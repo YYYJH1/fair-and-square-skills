@@ -156,7 +156,9 @@ TEXT = {
         "nm_route": "路线只考虑从起点依次到各人的下车点，不含绕路接人、折返和路况。",
         "nm_scale": "折算假设大家顺路；绕路时折算会把绕路成本按比例摊给所有人。",
         "part": "第 {index} 段 {cost} 元，{people} 人同坐",
+        "part_one": "第 {index} 段 {cost} 元，只有 1 人在车上",
         "part_est": "第 {index} 段 {cost}（{people} 人同坐）",
+        "part_est_one": "第 {index} 段 {cost}（只有 1 人在车上）",
         "dm_pay": "这次拼车你付 {share}。",
         "dm_null": "你下车时没有产生任何车费，所以不用付。",
         "dm_parts": "路程分成几段，每段车费由还在车上的人平摊：{parts}。",
@@ -195,6 +197,7 @@ TEXT = {
         "title_general": "Ride split: general mode",
         "title_audit": "Ride split audit: is the current split fair?",
         "m_shapley": "Stretch by stretch (Shapley)",
+        "m_shapley_inline": "stretch by stretch (Shapley)",
         "m_shapley_general": "Shapley value",
         "m_equal": "Equal split",
         "m_proportional": "Proportional to solo fare",
@@ -474,9 +477,16 @@ def counted(lang: str, key: str, count: int, **fields) -> str:
     return say(lang, key, count=count, **fields)
 
 
-def shapley_label(ride, lang: str) -> str:
-    """Name of the fair split: stretch by stretch in a line, the plain Shapley value otherwise."""
-    return TEXT[lang]["m_shapley_general" if ride.mode == "general" else "m_shapley"]
+def shapley_label(ride, lang: str, inline: bool = False) -> str:
+    """Name of the fair split: stretch by stretch in a line, the plain Shapley value otherwise.
+
+    inline asks for the form to use in the middle of a sentence. In English that form starts with
+    a small letter.
+    """
+    key = "m_shapley_general" if ride.mode == "general" else "m_shapley"
+    if inline and key + "_inline" in TEXT[lang]:
+        key += "_inline"
+    return TEXT[lang][key]
 
 
 def names(riders, members, lang: str) -> str:
@@ -1051,9 +1061,10 @@ def parts_for(ride: Ride, game: Game, rider: int, lang: str) -> str:
     for segment in game.segments:
         if rider in segment.sharers:
             pieces.append(
-                say(
+                counted(
                     lang,
                     key,
+                    len(segment.sharers),
                     index=segment.index,
                     cost=money(fc.to_cents(segment.cost)),
                     people=len(segment.sharers),
@@ -1306,7 +1317,7 @@ def core_notes(ride: Ride, out: Outcome, lang: str) -> list:
     if prop is None:
         notes.append(text["note_prop_undefined"])
     elif not prop.violations and prop.cents != out.shapley.cents:
-        notes.append(say(lang, "note_prop_in_core", method=method))
+        notes.append(say(lang, "note_prop_in_core", method=shapley_label(ride, lang, inline=True)))
     if ride.mode == "general":
         notes.append(text["note_general_limits"])
         if out.core_empty is True:
@@ -1526,7 +1537,12 @@ def audit_report(ride: Ride, out: Outcome, result: dict, lang: str):
     notes.append(text["note_audit"])
     person_lines = {name: audit_lines(ride, out, i, lang) for i, name in enumerate(ride.riders)}
     group_lines = [
-        say(lang, "g_audit_intro", total=money(ride.total), method=shapley_label(ride, lang))
+        say(
+            lang,
+            "g_audit_intro",
+            total=money(ride.total),
+            method=shapley_label(ride, lang, inline=True),
+        )
     ]
     for i, name in enumerate(ride.riders):
         group_lines.append(
@@ -1639,7 +1655,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=textwrap.fill(
             "Split a shared taxi or carpool fare fairly (Shapley value, exact to the cent) and "
-            "check that no rider or group pays more than riding alone.",
+            "check whether any rider or group pays more than riding alone.",
             width=78,
         ),
         epilog=(

@@ -103,7 +103,7 @@ class TestBody:
 
     def test_states_the_size_limits_and_the_core_caveat(self):
         body = text()
-        assert "2 to 12 riders" in body and "2 to 6" in body
+        assert "take 2 to 12" in body and "takes 2 to 6" in body
         assert "up to 4 riders" in body
         assert "can fall outside the core, and the core can be empty" in body
 

@@ -58,7 +58,7 @@
 ## 复算命令
 
 ```
-python3 rent_split.py --input - --format md --audit   # same JSON on standard input
+python3 scripts/rent_split.py --demo --format md
 ```
 
 # 储物间的例子：同一组报价，两种负房租规则

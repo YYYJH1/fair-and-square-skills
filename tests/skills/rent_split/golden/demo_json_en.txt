@@ -106,7 +106,7 @@
     "Different numbers of rooms and people, and two people who share a room without being a couple (a couple first agrees on one joint set of bids and counts as one person).",
     "A budget limit on the most a person can pay."
   ],
-  "reproduce": "python3 rent_split.py --input - --format md --audit --lang en   # same JSON on standard input",
+  "reproduce": "python3 scripts/rent_split.py --demo --json --lang en",
   "result": {
     "assignment": {
       "Coco": "北次卧",

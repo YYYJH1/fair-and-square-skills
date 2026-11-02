@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/YYYJH1/fair-and-square-skills/actions/workflows/ci.yml"><img src="https://github.com/YYYJH1/fair-and-square-skills/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="#install"><img src="https://img.shields.io/badge/python-3.9%20to%203.13-3776ab" alt="Python 3.9 to 3.13"></a>
+  <a href="#install"><img src="https://img.shields.io/badge/python-3.9%20to%203.14-3776ab" alt="Python 3.9 to 3.14"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-2ea44f" alt="License: MIT"></a>
   <a href="https://agentskills.io/specification"><img src="https://img.shields.io/badge/format-Agent%20Skills-0f766e" alt="Agent Skills format"></a>
 </p>
@@ -45,7 +45,7 @@ The agent picks `rent-split`, asks each person for private bids and runs the bun
 | `rent-split` | Who gets which room and what each person pays | "Split the rent in our flat." |
 | `bill-split` | Shared bills, trip expenses, group orders with coupons | "Split this dinner bill." |
 | `ride-split` | Carpool or taxi fares by drop-off order | "Split our taxi fare." |
-| `group-vote` | Choosing a place or an option by ranked votes | "Help us vote on where to go." |
+| `group-vote` | Choosing a place or an option by vote | "Help us vote on where to go." |
 | `chore-split` | Who does which chore | "Make a fair chore rota." |
 | `slot-lottery` | Limited slots, shifts or tickets | "Draw 3 tickets among 8 people." |
 | `gift-exchange` | Who gives a gift to whom | "Draw our Secret Santa." |

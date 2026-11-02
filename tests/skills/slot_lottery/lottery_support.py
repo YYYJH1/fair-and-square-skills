@@ -20,7 +20,7 @@ EXAMPLES = SKILL_DIR / "examples"
 GOLDEN_DIR = Path(__file__).resolve().parent / "golden"
 
 # The recorded example: eight people, three slots, one fictional published source. Seed prefix
-# 15b9c53a44270857eb442863 and the order below were first recorded on Python 3.10, 3.12 and 3.13.
+# 15b9c53a44270857eb442863 and the order below are checked on every Python version that CI runs.
 PEOPLE8 = ["阿明", "小红", "大刘", "Coco", "老王", "Yuki", "小周", "Mia"]
 SOURCE = "（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07"
 GOLDEN_SEED_PREFIX = "15b9c53a44270857eb442863"

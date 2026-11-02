@@ -237,6 +237,33 @@ class TestDemo:
         assert list(tmp_path.iterdir()) == []
 
 
+class TestReproduce:
+    def test_every_block_of_the_demo_prints_the_command_of_the_demo(self):
+        done = run_script("--demo", "--lang", "en")
+        assert (
+            done.stdout.count("\npython3 scripts/bill_split.py --demo --format md --lang en\n") == 3
+        )
+        demos = json.loads(run_script("--demo", "--json").stdout)
+        for demo in demos.values():
+            assert demo["reproduce"] == "python3 scripts/bill_split.py --demo --json"
+
+    @pytest.mark.parametrize(
+        ("args", "command"),
+        [
+            ([], "python3 scripts/bill_split.py --input - --format md"),
+            (["--audit"], "python3 scripts/bill_split.py --input - --format md --audit"),
+            (
+                ["--audit", "--lang", "en"],
+                "python3 scripts/bill_split.py --input - --format md --audit --lang en",
+            ),
+        ],
+    )
+    def test_a_run_on_a_file_names_its_options(self, args, command):
+        done = run_script("--input", str(EXAMPLES / "audit_aa.json"), *args)
+        assert done.returncode == 0, done.stderr
+        assert f"```\n{command}\n```" in done.stdout
+
+
 class TestSelfTest:
     def test_selftest_passes(self):
         done = run_script("--selftest")

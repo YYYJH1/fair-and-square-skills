@@ -1,6 +1,6 @@
 <p align="center"><b>English</b> · <a href="README_zh.md">简体中文</a></p>
 
-# README figures
+# Documentation figures
 
 The figures in `docs/assets/` show real output of the skill scripts. `build.py` runs the scripts for the numbers, writes one HTML page per figure, language and theme, and lets headless Chromium screenshot each page at twice the resolution.
 
@@ -46,7 +46,3 @@ The build exits with an error when one of these checks fails:
 | `style.css` | Colors as CSS variables, switched by `data-theme` (light, dark) on `<html>`, and the fonts. One primary color (teal), one accent (amber) and grays. |
 | `rent_card.en.json`, `rent_card.zh.json` | The fixed input of the result card: the same three private bids, with English or Chinese names and rooms. |
 | `ps_holiday_weeks.en.json`, `six_circle.en.json` | The examples of `slot-lottery` and `gift-exchange` with English names and slots, for the English figures. |
-
-## Inputs of the English figures
-
-The Chinese figures of `slot-lottery` and `gift-exchange` run the examples of those skills. The English figures run `ps_holiday_weeks.en.json` and `six_circle.en.json` in this folder, the same inputs with English names.

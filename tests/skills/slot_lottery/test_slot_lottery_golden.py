@@ -233,9 +233,9 @@ class TestStoredCopiesOfOtherExamples:
         )
 
 
-class TestTheDefaultMethodIsUnchanged:
-    """Naming the default method, rsd, in the rules changes nothing, and the new fields are
-    refused by the two old setups, so their inputs and outputs are the ones recorded above."""
+class TestTheDefaultMethod:
+    """Naming the default method, rsd, in the rules changes nothing, and the examples of lottery
+    and rsd carry no method."""
 
     @pytest.mark.parametrize(
         "flags", [[], ["--format", "dm"], ["--format", "group"], ["--json"], ["--lang", "en"]]
@@ -249,7 +249,7 @@ class TestTheDefaultMethodIsUnchanged:
         assert by_plain.returncode == by_name.returncode == 0, by_name.stderr
         assert by_plain.stdout == by_name.stdout != ""
 
-    def test_the_old_examples_have_no_method_and_print_no_method(self):
+    def test_the_examples_have_no_method_and_print_no_method(self):
         for name in ("tickets_8_for_3.json", "shifts_rsd.json", "commit_reveal.json"):
             data = load_example(name)
             assert "method" not in data.get("rules", {})

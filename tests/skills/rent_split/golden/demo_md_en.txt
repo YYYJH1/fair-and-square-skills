@@ -58,7 +58,7 @@ One line per person (send it to that person only, not to the group):
 ## Reproduce
 
 ```
-python3 rent_split.py --input - --format md --audit --lang en   # same JSON on standard input
+python3 scripts/rent_split.py --demo --format md --lang en
 ```
 
 # The storage room example: the same bids under two negative-rent rules

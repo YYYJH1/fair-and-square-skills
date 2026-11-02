@@ -10,8 +10,8 @@ The one exception to "no file system changes" is the shared core, which deletes 
 file after reading it when ``--delete-input`` is given. The scan allows exactly that: one
 ``.unlink()`` call, inside ``_delete_input_file``, in a file named ``fsq_core.py``.
 
-The static scan is a guard rail for the promises made in the README. It is not a sandbox, so a
-determined author can still get around it. Review stays necessary.
+The static scan is a guard rail for the rules in docs/how-it-works.md and CONTRIBUTING.md. It is
+not a sandbox, so a determined author can still get around it. Review stays necessary.
 """
 
 from __future__ import annotations

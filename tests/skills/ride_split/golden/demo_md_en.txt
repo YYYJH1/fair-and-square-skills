@@ -46,7 +46,7 @@ Core check: no rider, and no group of riders, should pay more than the same peop
 
 Stretch by stretch (Shapley): all 15 groups checked, none pays more than riding alone.
 
-The proportional split is in the core here too. How it differs from the Stretch by stretch (Shapley) split is a choice of rule and must be agreed in advance.
+The proportional split is in the core here too. How it differs from the stretch by stretch (Shapley) split is a choice of rule and must be agreed in advance.
 
 Rounding: leftover cents go to the largest remainders; exact ties are decided by the ride_id "ride-1".
 

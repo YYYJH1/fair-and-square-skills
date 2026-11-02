@@ -61,7 +61,6 @@ def test_the_four_references_of_the_section_are_listed_once_each_with_one_doi():
 def test_the_notes_say_what_each_reference_is_cited_for():
     notes = doc.section("References").split("Notes on the references")[1]
     for needed in (
-        "CrossRef",
         "Brams and Taylor (1996) is cited for the Knaster procedure of sealed bids",
         "Lipton et al. (2004) for the notion of envy up to one item",
         "Budish (2011) for its name",

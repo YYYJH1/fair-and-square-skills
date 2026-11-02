@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/YYYJH1/fair-and-square-skills/actions/workflows/ci.yml"><img src="https://github.com/YYYJH1/fair-and-square-skills/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="#安装"><img src="https://img.shields.io/badge/python-3.9%20to%203.13-3776ab" alt="Python 3.9 到 3.13"></a>
+  <a href="#安装"><img src="https://img.shields.io/badge/python-3.9%20to%203.14-3776ab" alt="Python 3.9 到 3.14"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-2ea44f" alt="许可证：MIT"></a>
   <a href="https://agentskills.io/specification"><img src="https://img.shields.io/badge/format-Agent%20Skills-0f766e" alt="Agent Skills 格式"></a>
 </p>
@@ -45,7 +45,7 @@ Agent 会选用 `rent-split`，向每个人私下收报价，再运行随包附�
 | `rent-split` | 谁住哪间房、各付多少 | 「帮我们分一下房租。」 |
 | `bill-split` | 聚餐、旅行账单，以及带优惠券的拼单 | 「这顿饭怎么分钱。」 |
 | `ride-split` | 按下车先后分拼车或打车费 | 「打车费怎么分。」 |
-| `group-vote` | 用排序投票选去处或选项 | 「团建投票选去哪。」 |
+| `group-vote` | 用投票选去处或选项 | 「团建投票选去哪。」 |
 | `chore-split` | 谁做哪件家务 | 「排一个公平的值日表。」 |
 | `slot-lottery` | 名额、班次、票数有限时怎么分 | 「8 个人抢 3 张票，公平抽签。」 |
 | `gift-exchange` | 交换礼物谁送给谁 | 「抽一下我们的交换礼物。」 |

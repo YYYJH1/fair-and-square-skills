@@ -237,9 +237,10 @@ def test_step_one_fixes_the_rules_in_a_chinese_message():
         "public random source",
         "no new vote on the rule",
         "分家当规则（先定再收，发出后不改）",
-        "A 无嫉妒加转账",
-        "B Knaster 暗标法",
-        "C 不转钱",
+        "envy_free（无嫉妒加转账",
+        "knaster（Knaster 暗标法",
+        "max_nash（不转钱",
+        "我们用 max_nash",
         "我先交",
         "不再换分法，也不重新分",
     ):
@@ -289,20 +290,13 @@ def test_the_rules_message_names_what_the_script_needs():
         assert needed in message, needed
 
 
-def test_the_three_rules_table_names_every_method_and_what_each_costs():
+def test_the_three_rules_table_names_every_method_and_says_what_it_does():
     table = TEXT.split("## The three rules")[1].split("## The script")[0]
     for method in ss.METHODS:
         assert f"`{method}`" in table
-    for needed in (
-        "What it promises",
-        "What it costs",
-        "Somebody can end up with less than under `knaster`",
-        "Somebody may envy somebody",
-        "2,000,000",
-        "EF1",
-        "Pareto efficient",
-    ):
-        assert needed in table, needed
+    assert "What it does" in table
+    for kept_below in ("promises", "costs", "2,000,000", "EF1"):
+        assert kept_below not in table, f"{kept_below!r} belongs under Guarantees and limits"
 
 
 def test_the_text_never_ranks_one_rule_above_another():
@@ -323,6 +317,7 @@ def test_the_guarantees_and_limits_say_what_is_and_is_not_promised():
         "`envy_free`: every item goes to a person who values it most",
         "the cash adds up to exactly zero",
         "No division with cash gives the poorest-off person more",
+        "somebody can end up with less than under `knaster`",
         "at most one cent",
         "`knaster`:",
         "never below the fair share",
@@ -330,6 +325,8 @@ def test_the_guarantees_and_limits_say_what_is_and_is_not_promised():
         "`max_nash`:",
         "2,000,000",
         "EF1 and Pareto efficient",
+        "EF1 means that nobody envies anybody once one item is set aside",
+        "the script takes turns in the priority order instead and says so",
         "It is not free of envy",
         "Not strategy-proof, under any of the three rules",
         "Ties never change what anybody ends with",

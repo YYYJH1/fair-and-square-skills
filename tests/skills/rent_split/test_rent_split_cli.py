@@ -297,6 +297,26 @@ def test_every_example_has_the_json_envelope(name):
     assert all(isinstance(text, str) for text in parsed["not_modeled"])
 
 
+@pytest.mark.parametrize(
+    ("args", "command"),
+    [
+        (["--demo"], "python3 scripts/rent_split.py --demo --json"),
+        (["--demo", "--lang", "en"], "python3 scripts/rent_split.py --demo --json --lang en"),
+        (["--input", "-"], "python3 scripts/rent_split.py --input - --json"),
+        (["--input", "-", "--audit"], "python3 scripts/rent_split.py --input - --json --audit"),
+    ],
+)
+def test_the_reproduce_command_names_the_options_of_the_run(args, command):
+    done = run_script(*args, "--json", stdin=example("audit_equal_split"))
+    assert done.returncode == 0, done.stderr
+    assert json.loads(done.stdout)["reproduce"] == command
+
+
+def test_the_reproduce_section_of_the_markdown_shows_the_command_of_the_run():
+    done = run_script("--demo")
+    assert "```\npython3 scripts/rent_split.py --demo --format md\n```" in done.stdout
+
+
 def test_the_stdin_form_and_the_file_form_print_the_same_bytes():
     path = EXAMPLES / "four_roommates.json"
     from_file = run_script("--input", str(path))

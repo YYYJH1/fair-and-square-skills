@@ -55,7 +55,7 @@ The input fields. Give exactly one of `ballots`, `approvals`, `approval_counts` 
 | `csv` | A questionnaire export pasted as text (see Step 2). |
 | `rules.method` | Required, no default: `plurality`, `runoff`, `irv`, `borda`, `condorcet`, `schulze`, `approval` or `kemeny` (at most 8 options). |
 | `rules.partial` | `reject` (default: every ballot ranks every option, except that plurality reads only the first name) or `tie_last` (options a ballot leaves out tie for last). |
-| `rules.tie_break.random_source` | The public text that fixes the tie-break order, copied exactly. `rules.random_source`, the spelling rent-split uses, is accepted too. Without it, a tie ends the run with exit code 3. |
+| `rules.tie_break.random_source` | The public text that fixes the tie-break order, copied exactly. `rules.random_source` is accepted as well. Without it, a tie ends the run with exit code 3. |
 
 Options are listed by `--help`. In short: `--format dm` writes one private message per named voter, `--format group` a summary for the group chat, `--json` the full result, `--lang en` switches the text to English, `--remove OPTION` counts again without that option, `--all-rules` explains a result after the fact, `--demo` runs the 27-ballot example and `--selftest` runs the built-in checks. Exit code 2 means invalid input and the message names the field. Exit code 3 means a tie that the agreed rules cannot break. Exit code 1 means a failed self-test. Python 3.9 or later, standard library only.
 
@@ -113,7 +113,7 @@ Done when the organizer has the tables, every named voter has their own message 
 
 ## When an option drops out
 
-If an option turns out to be unavailable, count again with `--remove`, once for each option, for example `--remove 火锅`. The ballots are counted again without that option, under the same rule and with the same tie-break order. The output says whether the winner changed. A new winner can appear: in the demo, removing 剧本杀 or 密室逃脱 makes all five rules pick 爬山. Report the script's statement as printed.
+If an option turns out to be unavailable, count again with `--remove`, once for each option, for example `--remove 火锅`. The ballots are counted again without that option, under the same rule and with the same tie-break order. The output says whether the winner changed. A new winner can appear: in the demo, removing 剧本杀 or 密室逃脱 makes all seven rules of `--all-rules` pick 爬山. Report the script's statement as printed.
 
 ## Explaining after the fact
 

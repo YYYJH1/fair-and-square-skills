@@ -49,6 +49,14 @@ def test_the_license_is_the_same_everywhere() -> None:
     assert (ROOT / "LICENSE").read_text(encoding="utf-8").startswith("MIT License")
 
 
+def ci_matrix() -> list[str]:
+    """The Python versions of the CI test matrix, lowest first."""
+    ci = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
+    matrix = re.search(r"python-version: \[(.*?)\]", ci)
+    assert matrix is not None
+    return sorted(re.findall(r'"(3\.\d+)"', matrix.group(1)), key=lambda v: int(v[2:]))
+
+
 def test_the_classifiers_name_the_python_versions_of_the_ci_matrix() -> None:
     classifiers = array("classifiers")
     versions = sorted(
@@ -56,11 +64,19 @@ def test_the_classifiers_name_the_python_versions_of_the_ci_matrix() -> None:
         for item in classifiers
         if re.fullmatch(r"Programming Language :: Python :: 3\.\d+", item)
     )
-    ci = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
-    matrix = re.search(r"python-version: \[(.*?)\]", ci)
-    assert matrix is not None
-    assert versions == sorted(re.findall(r'"(3\.\d+)"', matrix.group(1)))
+    assert versions == sorted(ci_matrix())
     assert 'requires-python = ">=3.9"' in PYPROJECT
+
+
+def test_the_readme_badges_name_the_first_and_the_last_python_version_of_the_ci_matrix() -> None:
+    versions = ci_matrix()
+    first, last = versions[0], versions[-1]
+    for name in ("README.md", "README_zh.md"):
+        text = (ROOT / name).read_text(encoding="utf-8")
+        badge = re.search(r'img\.shields\.io/badge/python-(\S+?)-[0-9a-f]{6}" alt="([^"]+)"', text)
+        assert badge is not None, f"{name} has no Python badge"
+        assert badge.group(1) == f"{first}%20to%20{last}", name
+        assert first in badge.group(2) and last in badge.group(2), name
 
 
 def test_the_changelog_has_a_section_for_the_current_version() -> None:

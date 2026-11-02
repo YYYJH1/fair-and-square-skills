@@ -1385,8 +1385,21 @@ def _group_lines(outcome: Outcome, lang: str = "zh") -> list[str]:
 
 
 def _reproduce(audit: bool, lang: str = "zh") -> str:
+    """The command of a run on standard input, for callers that give no command of their own."""
     flag = (" --audit" if audit else "") + (f" --lang {lang}" if lang != "zh" else "")
-    return f"python3 rent_split.py --input - --format md{flag}   # same JSON on standard input"
+    return f"python3 scripts/rent_split.py --input - --format md{flag}"
+
+
+def reproduce_command(args: argparse.Namespace) -> str:
+    """The command line of this run, with every option that changes the output."""
+    parts = ["python3", "scripts/rent_split.py"]
+    parts += ["--demo"] if args.demo else ["--input", "-"]
+    parts += ["--json"] if args.json else ["--format", args.format]
+    if args.audit:
+        parts.append("--audit")
+    if args.lang != "zh":
+        parts += ["--lang", args.lang]
+    return " ".join(parts)
 
 
 def _json_parts(
@@ -1454,6 +1467,7 @@ def build_result(
     report: AuditReport | None = None,
     ignored_audit: bool = False,
     lang: str = "zh",
+    reproduce: str | None = None,
 ) -> fc.Result:
     """Turn an Outcome (and an optional audit) into the Result the core writes out."""
     if lang not in TEXT:
@@ -1473,7 +1487,7 @@ def build_result(
         result=result,
         certificate=certificate,
         not_modeled=not_modeled(lang),
-        reproduce=_reproduce(view is not None, lang),
+        reproduce=reproduce if reproduce is not None else _reproduce(view is not None, lang),
     )
     out.tables = _bid_tables(outcome, lang)
     out.notes = _notes(outcome, lang)
@@ -1495,7 +1509,9 @@ def build_result(
     return out
 
 
-def analyse(data: Any, want_audit: bool = False, lang: str = "zh") -> fc.Result:
+def analyse(
+    data: Any, want_audit: bool = False, lang: str = "zh", reproduce: str | None = None
+) -> fc.Result:
     """Validate parsed input, solve it and build the Result (the whole pipeline)."""
     problem = read_problem(data)
     if want_audit and problem.audit is None:
@@ -1503,7 +1519,11 @@ def analyse(data: Any, want_audit: bool = False, lang: str = "zh") -> fc.Result:
     outcome = compute(problem)
     report = audit_split(outcome) if want_audit else None
     return build_result(
-        outcome, report, ignored_audit=problem.audit is not None and not want_audit, lang=lang
+        outcome,
+        report,
+        ignored_audit=problem.audit is not None and not want_audit,
+        lang=lang,
+        reproduce=reproduce,
     )
 
 
@@ -1627,7 +1647,12 @@ def storage_comparison(lang: str = "zh") -> fc.Result:
 
 def run_demo(args: argparse.Namespace) -> int:
     """--demo: the four-roommate example with an audit; md output adds the storage room."""
-    result = analyse(fc.read_object(args, DEMO_JSON), want_audit=True, lang=args.lang)
+    result = analyse(
+        fc.read_object(args, DEMO_JSON),
+        want_audit=True,
+        lang=args.lang,
+        reproduce=reproduce_command(args),
+    )
     if args.json or args.format != "md":
         fc.emit(result, args, lang=args.lang)
         return 0
@@ -1811,7 +1836,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.verify_commit is not None:
         return run_verify(args)
     fc.emit(
-        analyse(fc.read_object(args), want_audit=args.audit, lang=args.lang),
+        analyse(
+            fc.read_object(args),
+            want_audit=args.audit,
+            lang=args.lang,
+            reproduce=reproduce_command(args),
+        ),
         args,
         lang=args.lang,
     )

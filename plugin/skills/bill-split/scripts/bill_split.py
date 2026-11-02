@@ -10,7 +10,7 @@ fewest transfers that settle them.
 group_order is for one takeaway or online order shared by several people. It has the dishes of
 each person with a packaging fee per dish, shared fees such as delivery, tiered full-reduction
 coupons (shared by Shapley value or in proportion to dish prices) and flat coupons such as a red
-packet. The script also checks that nobody pays more than ordering alone.
+packet. The script also checks whether anybody pays more than ordering alone.
 
 Amounts are exact fractions, rounded once to whole cents with the largest-remainder rule. Ties
 rotate with the bill id, so the leftover cent does not always land on the same person. Options:
@@ -1699,12 +1699,25 @@ def _not_modeled(key: str, lang: str) -> list[str]:
 
 
 def _reproduce(audit: bool, lang: str) -> str:
-    command = "python3 bill_split.py --input input.json"
+    """The command of a run on standard input, for callers that give no command of their own."""
+    command = "python3 scripts/bill_split.py --input - --format md"
     if audit:
         command += " --audit"
     if lang != "zh":
         command += f" --lang {lang}"
     return command
+
+
+def reproduce_command(args: argparse.Namespace) -> str:
+    """The command line of this run, with every option that changes the output."""
+    parts = ["python3", "scripts/bill_split.py"]
+    parts += ["--demo"] if args.demo else ["--input", "-"]
+    parts += ["--json"] if args.json else ["--format", args.format]
+    if args.audit:
+        parts.append("--audit")
+    if args.lang != "zh":
+        parts += ["--lang", args.lang]
+    return " ".join(parts)
 
 
 # ---------------------------------------------------------------------------------------
@@ -1816,7 +1829,9 @@ def _ledger_rules_line(ledger: Ledger, lang: str) -> str:
     return say(lang, "rules_expenses", settle=settle_text)
 
 
-def build_ledger_result(calc: LedgerCalc, lang: str, audit: bool) -> fc.Result:
+def build_ledger_result(
+    calc: LedgerCalc, lang: str, audit: bool, reproduce: str | None = None
+) -> fc.Result:
     """Turn the numbers of an expenses input into a Result (md, dm, group and json)."""
     ledger = calc.ledger
     people = ledger.people
@@ -1825,7 +1840,7 @@ def build_ledger_result(calc: LedgerCalc, lang: str, audit: bool) -> fc.Result:
     result = fc.Result(
         title=say(lang, "title_expenses"),
         inputs_echo=_echo_ledger(ledger),
-        reproduce=_reproduce(audit, lang),
+        reproduce=reproduce if reproduce is not None else _reproduce(audit, lang),
         not_modeled=_not_modeled("not_modeled_expenses", lang),
     )
 
@@ -2045,7 +2060,9 @@ def _order_dm_parts(person: str, calc: OrderCalc, lang: str) -> str:
     return _list(parts, lang)
 
 
-def build_order_result(calc: OrderCalc, lang: str, audit: bool) -> fc.Result:
+def build_order_result(
+    calc: OrderCalc, lang: str, audit: bool, reproduce: str | None = None
+) -> fc.Result:
     """Turn the numbers of a group order into a Result (md, dm, group and json)."""
     spec = calc.spec
     people = calc.people
@@ -2054,7 +2071,7 @@ def build_order_result(calc: OrderCalc, lang: str, audit: bool) -> fc.Result:
     result = fc.Result(
         title=say(lang, "title_order"),
         inputs_echo=_echo_order(spec),
-        reproduce=_reproduce(audit, lang),
+        reproduce=reproduce if reproduce is not None else _reproduce(audit, lang),
         not_modeled=_not_modeled("not_modeled_order", lang),
     )
 
@@ -2203,15 +2220,21 @@ def build_order_result(calc: OrderCalc, lang: str, audit: bool) -> fc.Result:
 # ---------------------------------------------------------------------------------------
 
 
-def compute(data: Any, audit: bool = False, lang: str = "zh") -> fc.Result:
-    """Validate a parsed input and compute its Result (the function behind the command line)."""
+def compute(
+    data: Any, audit: bool = False, lang: str = "zh", reproduce: str | None = None
+) -> fc.Result:
+    """Validate a parsed input and compute its Result (the function behind the command line).
+
+    reproduce is the command line to print in the Reproduce section. Without it the section
+    shows the command that reads the same JSON from standard input.
+    """
     if lang not in fc.LANGS:
         raise ValueError(f"lang must be one of {', '.join(fc.LANGS)}")
     obj = fc.require_object(data, "input")
     mode = fc.require_choice(obj.get("mode", "expenses"), "mode", MODES)
     if mode == "expenses":
-        return build_ledger_result(compute_ledger(parse_ledger(obj), audit), lang, audit)
-    return build_order_result(compute_order(parse_order(obj), audit), lang, audit)
+        return build_ledger_result(compute_ledger(parse_ledger(obj), audit), lang, audit, reproduce)
+    return build_order_result(compute_order(parse_order(obj), audit), lang, audit, reproduce)
 
 
 # ---------------------------------------------------------------------------------------
@@ -2285,8 +2308,9 @@ DEMOS = (
 
 
 def run_demo(args: argparse.Namespace) -> int:
+    command = reproduce_command(args)
     results = [
-        (name, compute(fc.parse_input(text), audit=audit, lang=args.lang))
+        (name, compute(fc.parse_input(text), audit=audit, lang=args.lang, reproduce=command))
         for name, text, audit in DEMOS
     ]
     if args.json:
@@ -2456,7 +2480,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.demo:
         return run_demo(args)
     data = fc.read_object(args)
-    fc.emit(compute(data, audit=args.audit, lang=args.lang), args, lang=args.lang)
+    result = compute(data, audit=args.audit, lang=args.lang, reproduce=reproduce_command(args))
+    fc.emit(result, args, lang=args.lang)
     return 0
 
 

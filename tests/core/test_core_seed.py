@@ -16,7 +16,7 @@ PEOPLE8 = ["阿明", "小红", "大刘", "Coco", "老王", "Yuki", "小周", "Mi
 SOURCE = "（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07"
 PEOPLE6 = ["阿明", "小红", "大刘", "Coco", "老王", "Yuki"]
 
-# Recorded with Python 3.10.19, 3.12.14 and 3.13.17, which agree:
+# The recorded values, which CI checks on every Python version that it runs:
 #   seed 15b9c53a44270857eb442863…  order Yuki 小周 大刘 Coco 小红 阿明 Mia 老王
 RECORDED_SEED_PREFIX = "15b9c53a44270857eb442863"
 RECORDED_ORDER = ["Yuki", "小周", "大刘", "Coco", "小红", "阿明", "Mia", "老王"]

@@ -152,10 +152,17 @@ class TestReferences:
         for doi in doc.doi_list(self.REFERENCES):
             assert re.fullmatch(r"10\.\d{4,9}/[A-Za-z0-9._()/;:-]+", doi.replace(";", "")), doi
 
-    def test_the_notes_say_what_was_checked_and_what_has_no_doi(self):
+    def test_every_work_the_notes_name_is_in_the_list(self):
         notes = self.REFERENCES.split("Notes on the references")[1]
-        for needed in ("CrossRef", "Daedalus", "no DOI", "first page"):
-            assert needed in notes, needed
+        named = re.findall(
+            r"((?:von )?[A-Z][\w-]*)(?: and [A-Z][\w-]*| et al\.)? \(((?:19|20)\d{2})\)", notes
+        )
+        assert len(named) >= 12
+        for surname, year in named:
+            assert any(
+                entry.startswith(f"- {surname},") and year in entry.split("doi:")[0]
+                for entry in self.entries()
+            ), f"{surname} ({year}) is named in the notes and missing from the list"
 
 
 class TestStyle:

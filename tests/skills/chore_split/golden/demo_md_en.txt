@@ -39,7 +39,7 @@
 
 The number in brackets is the place of the chore in that person's own ranking (1 is the least disliked). <= means no worse than the other person's pick. A person who picks before the other is compared with the same round, a person who picks after the other with the next round, because the other has already taken a chore in the current one.
 
-EF1 status (nobody envies anybody once one chore is set aside): holds. The script checked every pair of people in all 1 week. All 9 round-by-round comparisons hold.
+EF1 status (nobody envies anybody once one chore is set aside): holds. The script checked every pair of people in the single week. All 9 round-by-round comparisons hold.
 
 Rotation: the pick order of week 1 comes from the source, then the start moves one place each week. After 3 weeks everybody has started once.
 

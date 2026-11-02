@@ -32,7 +32,7 @@ uv run pytest -q
 uv run python tools/validate_plugin.py
 ```
 
-CI runs the same four commands on Python 3.9 to 3.13. `uv run ruff format .` rewrites the files that the format check would reject. A separate job runs every skill script with `--help`, `--demo` and `--selftest`, and once more under `python -I`, on plain Python 3.9 with no packages installed.
+CI runs the same four commands on Python 3.9 to 3.14. `uv run ruff format .` rewrites the files that the format check would reject. A separate job runs every skill script with `--help`, `--demo` and `--selftest`, and then once more with `--demo` under `python -I`, on plain Python 3.9 with no packages installed.
 
 The files in `tests/skills/*/golden/` hold the exact text that the scripts print for the recorded examples. After a change of output that you intend, run `FSQ_UPDATE_GOLDEN=1 uv run pytest -q`, read the `git diff` of every file it rewrote, and commit those files together with the change.
 
@@ -58,8 +58,8 @@ A skill is a folder `plugin/skills/<name>/` with `SKILL.md`, `scripts/`, `exampl
 - `name` is lowercase letters, digits and single hyphens. It equals the folder name and contains neither `claude` nor `anthropic`.
 - `description` has at most 1024 characters and no angle brackets.
 - Every `scripts/`, `examples/` or `references/` path mentioned in SKILL.md exists.
-- Scripts are called as `python3 ${CLAUDE_SKILL_DIR}/scripts/<script>.py`, followed by a sentence saying that the script sits next to SKILL.md when the variable is not replaced. The same section gives two ways to pass the input. In Claude Code the agent writes the input to a file with the Write tool and runs the script with `--input FILE --delete-input`, because a heredoc whose body holds braces and quotes needs the user's approval there. For Codex and other tools the section keeps the heredoc on standard input.
-- Scripts use Python 3.9 or later and the standard library only. They never use the network, subprocesses, `eval`, `exec` or `compile`, and they never write a file. The one change they make to the file system is in the shared core: with `--delete-input`, `read_input` deletes the `--input` file after reading it. `tests/test_contract.py` allows that single `unlink` call, in `_delete_input_file` of `fsq_core.py`, and nothing else. Input arrives on standard input or in the `--input` file, and results go to standard output.
+- Scripts are called as `python3 ${CLAUDE_SKILL_DIR}/scripts/<script>.py`, followed by a sentence saying that, when the variable is not replaced, the script is in the `scripts/` folder next to SKILL.md. The same section gives two ways to pass the input. In Claude Code the agent writes the input to a file with the Write tool and runs the script with `--input FILE --delete-input`, because a heredoc whose body holds braces and quotes needs the user's approval there. For Codex and other tools the section keeps the heredoc on standard input.
+- Scripts use Python 3.9 or later and the standard library only. They never use the network, subprocesses, `eval`, `exec`, `compile` or `__import__`, and they never write a file. The one change they make to the file system is in the shared core: with `--delete-input`, `read_input` deletes the `--input` file after reading it. `tests/test_contract.py` allows that single `unlink` call, in `_delete_input_file` of `fsq_core.py`, and nothing else. Input arrives on standard input or in the `--input` file, and results go to standard output.
 - Every script exits 0 on `--help`, `--demo` and `--selftest`, and the demo prints the same bytes on every run. Every script also starts under `python -I`, which leaves its own folder off `sys.path`, so it imports `fsq_core.py` from the folder it sits in.
 - Every number in a reply comes from the script's output. Examples use invented names and amounts.
 - The skill has a section in `docs/THEORY.md` with the guarantees, what is not guaranteed and the method. A guarantee is written down only after a test checks it, and the test is named next to it as `file::function`.
@@ -79,9 +79,9 @@ Code that several skills need lives once in `core/`, and `core/MANIFEST.txt` lis
 ### Release checklist
 
 1. CI is green on the commit to release.
-2. Set the new version in `plugin/.claude-plugin/plugin.json`, in `pyproject.toml` (then run `uv lock`), as `CORE_VERSION` in `core/fsq_core.py` (then run `python3 tools/sync_core.py`) and on the `Version:` line of `docs/THEORY.md`. The validator fails when the four differ. The version must not appear in `.claude-plugin/marketplace.json`, which the validator rejects, because users receive an update only when the version in `plugin.json` changes.
+2. Set the new version in `plugin/.claude-plugin/plugin.json`, in `pyproject.toml` (then run `uv lock`), as `CORE_VERSION` in `core/fsq_core.py` (then run `python3 tools/sync_core.py`) and on the `Version:` line of `docs/THEORY.md`. The validator fails when the four differ. Do not add a version to `.claude-plugin/marketplace.json`: the validator rejects it.
 3. Add a section for the version to `CHANGELOG.md`.
 4. Run `claude plugin validate . --strict` and `claude plugin validate plugin --strict` locally and fix every warning. The CI runner has no Claude Code, so CI cannot run them for you.
 5. Run `python3 tools/validate_plugin.py`, `python3 tools/sync_core.py --check` and the tests once more.
 6. Search the tree for credentials and machine-specific absolute paths.
-7. Tag the version bump commit as `vX.Y.Z` and push the tag. Copy the section of `CHANGELOG.md` into the release notes.
+7. Tag the release commit as `vX.Y.Z` and push the tag. Copy the section of `CHANGELOG.md` into the release notes.

@@ -175,11 +175,12 @@ class TestRemovingAnOption:
         assert winners_of(result) == ALL_OPTIONS[gone]
 
     @pytest.mark.parametrize("gone", ["剧本杀", "密室逃脱"])
-    def test_removing_either_makes_all_five_rules_pick_爬山(self, gone):
+    def test_removing_either_makes_all_seven_rules_pick_爬山(self, gone):
         done = run_json(demo_input(), "--all-rules", "--remove", gone, "--json")
         assert done.returncode == 0, done.stderr
         result = json.loads(done.stdout)["result"]
-        assert set(winners_of(result).values()) == {"爬山"}
+        assert len(result["per_rule_winners"]) == 7
+        assert set(result["per_rule_winners"].values()) == {"爬山"}
         assert result["recount"]["original_winner"] == "爬山"
 
     def test_the_recount_says_when_the_winner_changes(self):

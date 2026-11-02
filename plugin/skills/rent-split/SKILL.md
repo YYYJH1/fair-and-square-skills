@@ -62,7 +62,7 @@ Options are listed by `--help`. `--lang en` writes the text output in English. E
 python3 ${CLAUDE_SKILL_DIR}/scripts/rent_split.py --demo
 ```
 
-The `examples/` folder holds three complete inputs: `examples/four_roommates.json`, `examples/storage_room.json` (a storage room that nobody wants, where the three rules differ) and `examples/audit_equal_split.json` (the four roommates paying equal shares).
+The `examples/` folder holds three complete inputs: `examples/four_roommates.json`, `examples/storage_room.json` (a storage room that nobody wants, where `allow` gives a different split from the other two rules) and `examples/audit_equal_split.json` (the four roommates paying equal shares).
 
 ## Step 1. Fix the rules before anyone gives numbers
 
@@ -71,7 +71,7 @@ Done when the organizer has posted one rules message and nobody objected.
 Draft the rules message for the organizer. It fixes in advance:
 
 1. How to bid. Each person privately prices every room so that their prices add up to the total rent. Ask it this way: "If you set the prices of the rooms yourself, adding up to exactly the total rent, how would you price them?"
-2. Negative rent. Choose `spliddit` (the default: first look for a split where nobody is paid to live in a room, and only if none exists allow it), `allow` (the person in the least wanted room may be paid to live there), or `forbid` (if no such split exists, everyone bids again). The group will not vote on the rule after seeing results.
+2. Negative rent. Choose `spliddit` (the recommended rule: first look for a split where nobody is paid to live in a room, and only if none exists allow it), `allow` (the person in the least wanted room may be paid to live there), or `forbid` (if no such split exists, everyone bids again). The group will not vote on the rule after seeing results.
 3. The organizer goes first. Before collecting, the organizer either hands their own bids to another roommate to hold, or posts a commitment code (see the next section) and reveals the bids after everyone else has submitted.
 4. Everyone submits privately and at the same time, by a deadline. Nobody needs to guess what others will bid.
 5. Optionally, a public random source, for example a lottery draw that will be published on a known date. It is used only if two room assignments are exactly equally good. Without one, ties go by name.

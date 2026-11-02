@@ -62,7 +62,7 @@ Version: 0.2.0
 
    测试：`test_core_seed.py::TestAgainstTheSpecification::test_seed_and_order_follow_the_spec`、`test_core_seed.py::TestAgainstTheSpecification::test_result_does_not_depend_on_listing_order`、`test_core_seed.py::TestMakeSeed::test_every_component_matters`、`test_core_seed.py::TestMakeSeed::test_no_two_inputs_share_a_preimage`、`test_core_seed.py::TestSeedPreimage::test_it_is_the_canonical_json_of_the_four_inputs`、`test_core_seed.py::TestSeededOrder::test_the_order_equals_draw_order_whatever_the_listing_order`。
 
-2. **记录的值。** 对 slot-lottery 一节里记录的示例中的八个人、三个名额和那段虚构的随机源原文，种子以 15b9c53a44270857eb442863 开头，顺序是 Yuki 小周 大刘 Coco 小红 阿明 Mia 老王。这些值是在 Python 3.10、3.12 和 3.13 上记录的，CI 在 Python 3.9 到 3.13 上核对它们。
+2. **记录的值。** 对 slot-lottery 一节里记录的示例中的八个人、三个名额和那段虚构的随机源原文，种子以 15b9c53a44270857eb442863 开头，顺序是 Yuki 小周 大刘 Coco 小红 阿明 Mia 老王。CI 在它运行的每个 Python 版本上核对这些值。
 
    测试：`test_core_seed.py::TestGoldenValues::test_seed_and_order_match_the_recorded_values`、`test_core_seed.py::TestGoldenValues::test_first_raw_draws`。
 
@@ -70,7 +70,7 @@ Version: 0.2.0
 
    测试：`test_core_seed.py::TestSeedStream::test_rejection_sampling_skips_the_biased_tail`、`test_core_seed.py::TestSeedStream::test_power_of_two_never_rejects`、`test_core_seed.py::TestShuffleAndSample::test_is_a_permutation_and_leaves_the_input_alone`。
 
-4. **随机源不可预测时，机会均等。** 如果随机源原文无法预测，并且 SHA-256 的表现像随机函数，那么每个顺序的概率都是 1/n!。从 n 个人里抽出 k 个获胜者时，每个人被抽中的概率都是 k/n。这依赖这两个假设。测试用固定的随机源原文和落在尾部远处的阈值，从统计上核对它的推论。
+4. **随机源不可预测时，机会均等。** 如果随机源原文无法预测，并且 SHA-256 的表现像随机函数，那么每个顺序的概率都是 1/n!。从 n 个人里抽出 k 个获胜者时，每个人被抽中的概率都是 k/n。测试用固定的随机源原文和落在尾部远处的阈值，从统计上核对它的推论。
 
    测试：`test_core_seed.py::TestSeedStream::test_values_are_uniform_enough`、`test_core_seed.py::TestSeedStream::test_shuffles_of_three_are_uniform_enough`、`test_core_seed.py::TestSeedStream::test_each_person_wins_about_k_over_n_of_the_time`。
 
@@ -185,7 +185,7 @@ rent-split 里组织者先报价的规则和 slot-lottery 里承诺与揭示的�
 1. **分配。** 房间分给人，使中选报价的总和尽可能大（匈牙利算法）。无嫉妒的分法只对这样的分配存在（Svensson 1983）。
 2. **房租。** 设 w(i, k) 为人 k 对 k 所住房间的报价减去人 i 对该房间的报价，设 d(i, k) 为以这些权重在完全图上算出的最短路距离（Floyd-Warshall）。效用向量无嫉妒，当且仅当对所有 i 和 k 都有 u_k - u_i <= d(i, k)。满足 u >= 0 的这类向量里最小的是 L_i = -min_k d(i, k)，而让最差的人尽量好的无嫉妒效用是 u_i = t + L_i，其中 t = (W - L 之和) / n，W 是中选报价的总和减去 R。人 i 分到的那间房的房租是 (自己的报价) - u_i。这就是 Gal、Mash、Procaccia 和 Zick（2017）的 maximin 规则，写成了闭式，而不是线性规划。因为使总报价最大的每一种分配，房租都相同，所以在这些分配之间的选择只决定谁住哪间。
 3. **没有负房租。** 房租不为负，当且仅当 u_i 至多等于人 i 自己的报价。落在这些上限以下的无嫉妒效用有一个最大元素 G_k = min_i (i 自己的报价 + d(i, k))，没有负房租的分法存在，当且仅当 G_k 之和至少为 W。在这样的分法里，脚本取 leximin 的那一种：把最低的效用尽量抬高，找出不能再抬高的人，把他们固定在那里，对其余的人重复这一过程。结果是唯一的。
-4. **规则。** `allow` 用第 2 步。`forbid` 用第 3 步，第 3 步无解时报告没有解。默认的 `spliddit` 以计算器命名（Goldman 和 Procaccia 2015），它遵循的目标是：在无嫉妒的分法中，让最小的好处尽可能大。它用第 3 步，第 3 步无解时退回第 2 步。大家在任何人报价之前，从这三条规则里选一条。
+4. **规则。** `allow` 用第 2 步。`forbid` 用第 3 步，第 3 步无解时报告没有解。推荐的 `spliddit` 以计算器命名（Goldman 和 Procaccia 2015），它遵循的目标是：在无嫉妒的分法中，让最小的好处尽可能大。它用第 3 步，第 3 步无解时退回第 2 步。大家在任何人报价之前，从这三条规则里选一条。
 
 ## bill-split
 
@@ -254,7 +254,7 @@ rent-split 里组织者先报价的规则和 slot-lottery 里承诺与揭示的�
 
 要求 g，先给人排一个顺序，数一数哪些前缀的差额之和为零。在所有顺序上，这样的前缀数的最大值就是 g，因为两个相邻的零前缀之间的块是和为零的组，而分成 g 组的划分给出一个有 g 个零前缀的顺序。可以用对子集的动态规划来算：best[S] 是 S 中所有 i 的 best[S 去掉 i] 的最大值，如果 S 里的差额之和为零，再加一。这需要 O(2^k k) 的时间。沿着表往回走，得到一个顺序。在零前缀处把它切开，得到各个组。每个组按上面的办法结清。平局按排序后的名字打破，所以同样的输入得到同样的转账。
 
-这个问题一般是 NP 难的。k - 2 笔转账是否够用，与差额里是否含有一个和为零的非空真子集，是同一个问题。给定正整数 a_1, ..., a_m 和目标 T，其中 0 < T < a 之和，取差额 a_1, ..., a_m，以及 -T 和 -(a 之和 - T)。一个和为零的真子集要么含有 -T 和若干加起来等于 T 的 a_i，要么含有 -(a 之和 - T) 和若干加起来等于 a 之和 - T 的 a_i，而此时剩下的 a_i 加起来等于 T。同时含有两个负差额的子集需要全部的 a_i，所以不是真子集。因此，和为零的真子集存在，当且仅当某些 a_i 加起来等于 T。子集和问题是 NP 完全的（在 Karp 1972 里以 KNAPSACK 的名字出现）。从这篇引用里取用的只有这一个事实。
+这个问题一般是 NP 难的。k - 2 笔转账是否够用，与差额里是否含有一个和为零的非空真子集，是同一个问题。给定正整数 a_1, ..., a_m 和目标 T，其中 0 < T < a 之和，取差额 a_1, ..., a_m，以及 -T 和 -(a 之和 - T)。一个和为零的真子集要么含有 -T 和若干加起来等于 T 的 a_i，要么含有 -(a 之和 - T) 和若干加起来等于 a 之和 - T 的 a_i，而此时剩下的 a_i 加起来等于 T。同时含有两个负差额的子集需要全部的 a_i，所以不是真子集。因此，和为零的真子集存在，当且仅当某些 a_i 加起来等于 T。子集和问题是 NP 完全的（在 Karp 1972 里以 KNAPSACK 的名字出现）。
 
 **按 Shapley 值分摊优惠券。** 局中人是点了餐的人。一组人 S 的价值 v(S) 是各档位对 S 的菜品合计给出的减额，也就是门槛被合计达到的那些档位里最大的减额，达不到任何门槛时为零。人 i 的 Shapley 值（Shapley 1953）是 v(S + i) - v(S) 在人们可能被凑到一起的所有顺序上的平均，其中 S 是排在 i 之前的人的集合。等价地，它是对所有不含 i 的组 S 求和，每项是 |S|! (n - |S| - 1)! / n! 乘以 (v(S + i) - v(S))。脚本枚举全部 2^n 个组，所以在至多 16 个人时是精确的，更多的人会被拒绝（`test_bill_split_properties.py::TestShapley::test_the_largest_group_is_exact_and_quick`、`test_bill_split_properties.py::TestShapley::test_more_than_16_people_are_refused`）。对于单个门槛，这就是 Shapley-Shubik 权力指数（Shapley 和 Shubik 1954）。分档的优惠券是若干门槛博弈的和，而这个值是线性的，所以它就是各权力指数按各档增量加权后的和。因为加入一个人时 v 从不减少，所以没有一份是负的。
 
@@ -379,7 +379,7 @@ rent-split 里组织者先报价的规则和 slot-lottery 里承诺与揭示的�
 
     测试：`test_group_vote_properties.py::TestRemovingAnOption::test_removing_a_non_winner_never_changes_the_condorcet_winner`、`test_group_vote_properties.py::TestRemovingAnOption::test_a_recount_equals_a_fresh_count_of_the_reduced_ballots`、`test_group_vote_golden.py::TestRemovingAnOption::test_the_tie_break_order_is_the_original_one_without_the_removed_option`。
 
-12. **算好的例子能够重现。** 演示里的 27 张选票在五条规则下给出五个不同的赢家，决选是 15 比 12，博达计分是 64 比 63。去掉剧本杀或者去掉密室逃脱，五条规则都会选出爬山。对由 `random.Random(5)` 生成的 20000 个四选项的随机选票组合，Schulze 在 2248 个里给出不止一个候选赢家。常被用来解释 Schulze 法的五个候选人、45 位投票人的例子，给出手算得出的两两比较票数，赢家是 E。
+12. **算好的例子能够重现。** 演示里的 27 张选票在五条规则（相对多数、决选、即时决选、博达计分和孔多塞）下给出五个不同的赢家，决选是 15 比 12，博达计分是 64 比 63。去掉剧本杀或者去掉密室逃脱，`--all-rules` 列出的七条规则都会选出爬山。对由 `random.Random(5)` 生成的 20000 个四选项的随机选票组合，Schulze 在 2248 个里给出不止一个候选赢家。常被用来解释 Schulze 法的五个候选人、45 位投票人的例子，给出手算得出的两两比较票数，赢家是 E。
 
     测试：`test_group_vote_golden.py::TestTwentySevenBallots::test_the_five_rules_name_five_different_winners`、`test_group_vote_golden.py::TestTwentySevenBallots::test_the_runoff_is_decided_15_to_12`、`test_group_vote_golden.py::TestTwentySevenBallots::test_borda_is_64_to_63`、`test_group_vote_golden.py::TestRemovingAnOption::test_every_rule_after_a_removal`、`test_group_vote_golden.py::TestSchulzeTies::test_the_random_statistic_reproduces`、`test_group_vote_golden.py::TestSchulzeLiteratureExample::test_the_pairwise_matrix_counted_by_hand`。
 
@@ -426,7 +426,7 @@ rent-split 里组织者先报价的规则和 slot-lottery 里承诺与揭示的�
 
 ## chore-split
 
-测试在 `tests/skills/chore_split/` 里。
+测试在 `tests/skills/chore_split/` 里，共用部分的测试例外，它们在 `tests/core/` 里。
 
 这个技能有两个方案，大家在任何人报数之前，在 `rules.plan` 里选定其中一个。方案 A，`round_robin`，是默认方案。它接收排序，让大家轮流挑，不转钱。保证 1 到 11 和“方法”的前半部分讲的是它。方案 B，`bundle_pay`，对每个人能做的每件家务接收一个代价，并接收家务件数的上限。它以总代价最小的方式分配家务，并在人与人之间转钱。保证 12 到 23、“不保证”里以方案 B 开头的各条，以及“方法”里以方案 B 开头的各部分讲的是它。没有指明方案的输入就是方案 A，并按方案 A 作答。
 
@@ -537,7 +537,7 @@ rent-split 里组织者先报价的规则和 slot-lottery 里承诺与揭示的�
 - **有人喜欢的任务。** 证明的情形 2 用到了没有一件家务的代价为负。有人喜欢的任务出现时，这个论证就不成立。要同时处理家务和有人喜欢的任务，需要另一种方法，例如 Aziz 等人（2019，2022）研究的、针对混合物品的、基于轮流挑选的算法。本脚本没有实现它们。
 - **有人做不了的家务。** 能做的家务已经挑完的人会被跳过，这样一来，其他人拿到的家务可以比这个人多得多。设有两个人 A 和 B，顺序是 A、B，有三件家务 x、y、z，B 只能做 x。A 把 x 排在第一位。A 拿走 x，B 没有可挑的了，于是 A 拿走 y 和 z。A 有三件家务，B 一件也没有。如果每件家务对 A 都有代价，那么放下一件家务之后，A 手里的仍然比 B 多，所以 EF1 不成立。B 不会羡慕 A，因为 A 手里有 B 做不了的家务。脚本会报告这一对人，并且不做修补。测试：`test_chore_split_inputs.py::TestCannot::test_a_person_left_with_nothing_they_can_do_makes_ef1_fail`。
 - **付钱请人接下一件家务，或者分摊保洁的费用。** 方案 A 不转钱。方案 B 在室友之间转钱，保证见上文。请外面的保洁员要花多少钱，两个方案都不计算。
-- **随机源原文事先已定、无法预测。** 脚本看不出这一点，这正是“公开随机性”的假设。在方案 A 里，随机源只决定第 1 周谁先挑。在方案 B 里，它只用来在总代价相同的分法之间打破平局。
+- **随机源原文起作用的地方。** 在方案 A 里，随机源只决定第 1 周谁先挑。在方案 B 里，它只用来在总代价相同的分法之间打破平局。
 - **输入的排序就是大家的本意。** 每个人在自己的私信里核对自己的排序。方案 B 的代价和上限也是如此。
 - **方案 B：对最差的人最好的分法。** 在总代价最小的分法里，最差的人已经尽量好，但在所有分法里不一定。取阿明、小红和大刘，六件家务按这个顺序是洗碗、倒垃圾、拖地、刷厕所、做饭和擦窗，每人两件，每周的代价按这个家务顺序依次是：阿明 28、29、5、20、9、18，小红 13、9、4、3、26、2，大刘 2、26、24、27、1、13。总代价最小的分法是 38。它把拖地和擦窗给阿明，把倒垃圾和刷厕所给小红，把洗碗和做饭给大刘。补偿让阿明和大刘恰好每周 -55/3，精确到分是 -18.33，小红是 -4/3。补偿取整到分之后，这两个人是 -18.33 和 -18.34，因为各个分加起来仍然必须为零。另一种分法的总代价是 41，让每个人恰好是 -41/3，即 -13.67。它的补偿也加起来为零，并且不让任何人羡慕。它把拖地和做饭给阿明，把倒垃圾和刷厕所给小红，把洗碗和擦窗给大刘。把六件家务中的两件给每个人，共有 90 种分法，其中 15 种允许有让没有人羡慕的补偿，这一种是其中最好的。脚本不去找它。测试：`test_chore_split_bundle_money.py::TestADearerSplitCanBeBetterForTheWorstOff::test_the_cheapest_split_costs_38_and_leaves_the_worst_off_at_minus_55_over_3`、`test_chore_split_bundle_money.py::TestADearerSplitCanBeBetterForTheWorstOff::test_after_rounding_the_cents_of_the_two_worst_off_are_18_33_and_18_34`、`test_chore_split_bundle_money.py::TestADearerSplitCanBeBetterForTheWorstOff::test_another_split_with_total_cost_41_leaves_everybody_at_minus_41_over_3`、`test_chore_split_bundle_money.py::TestADearerSplitCanBeBetterForTheWorstOff::test_it_is_the_best_of_all_90_splits_into_pairs_that_have_envy_free_payments`、`test_chore_split_bundle_money.py::TestADearerSplitCanBeBetterForTheWorstOff::test_in_a_seeded_sweep_a_better_split_exists_in_some_cases_and_never_in_others`。
 - **方案 B：防策略。** 知道别人代价的人，有时可以靠填上不是自己真实的代价而获益。取两个人，上限各为 1，有两件家务。阿明做哪件家务都没有代价，所以他的真实代价是洗碗 0、倒垃圾 0。小红的代价是洗碗 0、倒垃圾 5。按真实代价，阿明做倒垃圾，小红做洗碗，不转钱。如果阿明填洗碗 1、倒垃圾 5，分法不变，而小红付给阿明 2.50。按阿明的真实代价，他获益 2.50。测试：`test_chore_split_bundle_money.py::TestNotStrategyProof::test_telling_the_truth_gives_nothing_and_exaggerating_gives_2_50`。
@@ -590,7 +590,7 @@ N 个人争夺有限的名额。在 `lottery` 模式下有 n 个相同的名额�
 
    测试：`test_slot_lottery_properties.py::test_the_script_agrees_with_the_independent_reference`、`test_slot_lottery_properties.py::test_rsd_script_order_equals_the_independent_reference`、`test_slot_lottery_properties.py::test_the_result_does_not_depend_on_the_order_people_are_listed`、`test_slot_lottery_properties.py::test_rsd_does_not_depend_on_how_people_prefs_and_slots_are_listed`、`test_slot_lottery_golden.py::TestRecordedLottery::test_the_printed_preimage_hashes_to_the_seed`、`test_slot_lottery_properties.py::test_the_printed_preimage_hashes_to_the_seed`、`test_slot_lottery_properties.py::test_a_different_source_text_gives_a_different_seed`、`test_slot_lottery_golden.py::TestRecordedLottery::test_changing_the_slot_count_changes_the_seed`。记录的示例由 `test_slot_lottery_golden.py::TestRecordedLottery::test_seed_order_winners_and_waiting_list_match_the_recorded_values` 和 `test_slot_lottery_golden.py::TestRecordedLottery::test_the_command_line_prints_the_same_values` 核对，轮流挑的示例由 `test_slot_lottery_golden.py::TestRecordedSerialDictatorship::test_queue_seed_and_allocation` 和 `test_slot_lottery_golden.py::TestRecordedSerialDictatorship::test_each_pick_is_explained_by_the_slots_taken_before` 核对。
 
-2. **均匀性。** 如果随机源原文无法预测，并且 SHA-256 的表现像随机函数，那么每个顺序的概率都是 1/n!，如“公开随机性”所述。于是每个人被抽中的概率都是 n_slots/N，候补名单上的每个位置也同样可能。这依赖这两个假设。测试用固定的随机源原文和落在尾部远处的阈值，从统计上核对它的推论。测试还核对拒绝采样的每个余数是否同样可能，以及洗牌是否恰好一次地达到每一个排列。
+2. **均匀性。** 如果随机源原文无法预测，并且 SHA-256 的表现像随机函数，那么每个顺序的概率都是 1/n!，如“公开随机性”所述。于是每个人被抽中的概率都是 n_slots/N，候补名单上的每个位置也同样可能。测试用固定的随机源原文和落在尾部远处的阈值，从统计上核对它的推论。测试还核对拒绝采样的每个余数是否同样可能，以及洗牌是否恰好一次地达到每一个排列。
 
    从一个均匀随机的顺序里去掉一个人，其余的人仍然构成一个均匀随机的顺序，所以候补名单上顺位前移，使留下的每个人都得到在剩余的人当中重新抽一次的概率。名额不少于人数时，每个人都中签。这个顺序是这些人的一个排列。
 
@@ -641,7 +641,7 @@ N 个人争夺有限的名额。在 `lottery` 模式下有 n 个相同的名额�
 
     测试：`test_slot_lottery_ps.py::test_the_terms_are_fixed_assignments_that_add_up_to_the_chances`、`test_slot_lottery_ps.py::test_the_terms_come_by_falling_weight_and_no_assignment_comes_twice`、`test_slot_lottery_ps.py::test_the_completion_table_is_square_and_doubly_stochastic_and_holds_the_chances`、`test_slot_lottery_ps.py::test_the_number_of_pieces_is_at_most_the_positive_cells_minus_the_side_plus_one`、`test_slot_lottery_ps.py::test_a_table_with_known_pieces_is_taken_apart_exactly`、`test_slot_lottery_ps.py::test_the_identity_table_has_one_piece`、`test_slot_lottery_ps.py::test_a_table_that_is_not_doubly_stochastic_is_refused_not_looped_on`、`test_slot_lottery_ps.py::TestClassicExample::test_two_fixed_assignments_of_one_half_each`。
 
-13. **抽签给每个人每个时段的概率，就是表里的概率。** 从种子的计数器流里取一个小于 D 的随机数，D 是各权重的最小公分母。种子遵循“公开随机性”，输入是规则名 `ps_bvn_v1`、交了志愿的人、作为名额数的名额总数，以及随机源原文。D 不超过 2^64 时，这个数就是“公开随机性”的拒绝采样所得的那个数。D 更大时，一次取 k 次取数，其中 k 是使 D 至多为 2^(64k) 的最小整数。把它们按大端读成一个小于 2^(64k) 的整数，并用同样的办法处理这个整数。一项占有的连续数的个数等于它的权重乘以 D，按列表的顺序排列，所以当这个数是均匀的时，它恰好以它的权重被抽中。在第 2 条的两个假设下，每个人因此以表里的概率得到每个时段。另一个手工计算给出同样的种子和同样的数。对经典例子和记录的示例里那段虚构的随机源原文，种子以 dd99a64e48d58a49 开头，取到的数是 0，D 为 2。
+13. **抽签给每个人每个时段的概率，就是表里的概率。** 从种子的计数器流里取一个小于 D 的随机数，D 是各权重的最小公分母。种子遵循“公开随机性”，输入是规则名 `ps_bvn_v1`、交了志愿的人、作为名额数的名额总数，以及随机源原文。D 不超过 2^64 时，这个数就是“公开随机性”的拒绝采样所得的那个数。D 更大时，一次取 k 次取数，其中 k 是使 D 至多为 2^(64k) 的最小整数。把它们按大端读成一个小于 2^(64k) 的整数，并用同样的办法处理这个整数。一项占有的连续数的个数等于它的权重乘以 D，按列表的顺序排列，所以当这个数是均匀的时，它恰好以它的权重被抽中。在第 2 条的两个假设下，每个人因此以表里的概率得到每个时段。测试里另有一次按这段描述写成、与脚本不共用任何代码的计算，给出同样的种子和同样的数。对经典例子和记录的示例里那段虚构的随机源原文，种子以 dd99a64e48d58a49 开头，取到的数是 0，D 为 2。
 
     测试：`test_slot_lottery_ps.py::test_the_random_number_is_the_one_computed_by_hand`、`test_slot_lottery_ps.py::test_a_random_number_below_any_modulus_follows_the_documented_rule`、`test_slot_lottery_ps.py::test_a_modulus_above_2_to_the_64_takes_two_draws_and_a_rejected_pair_takes_two_more`、`test_slot_lottery_ps.py::test_the_term_drawn_holds_the_number_and_is_the_assignment_given`、`test_slot_lottery_ps.py::test_every_term_owns_exactly_weight_times_modulus_numbers`、`test_slot_lottery_ps.py::test_a_different_source_gives_another_seed_and_the_same_table`、`test_slot_lottery_ps.py::test_the_script_draws_each_person_a_slot_with_the_chance_of_the_table`、`test_slot_lottery_ps.py::TestClassicExample::test_the_recorded_seed_number_and_term`、`test_slot_lottery_ps.py::TestSeatsAndNoSlot::test_the_assignment_drawn_respects_seats_and_lists`。
 
@@ -673,13 +673,13 @@ N 个人争夺有限的名额。在 `lottery` 模式下有 n 个相同的名额�
 
     测试：`test_slot_lottery_ps.py::TestNoRanking::test_forfeit_removes_them_before_the_draw`、`test_slot_lottery_ps.py::TestNoRanking::test_assigned_gives_them_what_is_left_in_the_order_of_slot_names_after_the_draw`、`test_slot_lottery_ps.py::TestNoRanking::test_the_people_who_take_what_is_left_get_a_message_of_their_own`、`test_slot_lottery_ps.py::TestNoRanking::test_a_person_who_is_out_gets_a_message_that_says_so`、`test_slot_lottery_da.py::TestNoRanking::test_forfeit_removes_them_before_the_draw`、`test_slot_lottery_da.py::TestNoRanking::test_assigned_gives_them_what_is_left_in_slot_order_after_the_deferred_acceptance`、`test_slot_lottery_da.py::TestNoRanking::test_messages_of_the_two_groups`、`test_slot_lottery_da.py::test_the_result_does_not_depend_on_how_people_prefs_and_slots_are_listed`、`test_slot_lottery_ps.py::TestLimits::test_more_people_than_the_limit_are_refused_naming_the_people`、`test_slot_lottery_ps.py::TestLimits::test_a_table_that_is_too_large_is_refused_naming_the_method`、`test_slot_lottery_ps.py::TestLimits::test_the_largest_allowed_instance_runs_and_its_terms_add_up`、`test_slot_lottery_da.py::TestLimits::test_more_people_than_the_limit_are_refused_naming_the_people`、`test_slot_lottery_da.py::TestLimits::test_the_largest_allowed_instance_runs_and_has_no_blocking_pair`、`test_slot_lottery_inputs.py::test_bad_ps_and_da_input_is_refused_with_the_field_named`、`test_slot_lottery_inputs.py::test_command_line_exits_with_code_2_for_bad_ps_and_da_input_and_names_the_field`。
 
-21. **消息和卡片里显示什么，以及核对卡片。** 私信里只有结果、概率或原因，以及收信人自己的志愿。群卡片里有结果、随机源和种子，没有任何志愿。对 `ps`，卡片里既没有概率表也没有分解，因为它们带有志愿的信息。对 `da`，卡片里有档次和抽签顺序，它们是公开的规则。`--verify` 根据输入重新算出整个结果，并把它与 `claimed.allocation`、种子比较，对 `da` 还与抽签顺序比较。`lottery` 和 `rsd` 的输入，只要没有 `rules.method`，打印的字节就与加入这些方法之前相同，演示以及班次示例和承诺与揭示示例的存档副本就说明了这一点。在规则里写出默认方法 `rsd`，不改变任何结果。
+21. **消息和卡片里显示什么，以及核对卡片。** 私信里只有结果、概率或原因，以及收信人自己的志愿。群卡片里有结果、随机源和种子，没有任何志愿。对 `ps`，卡片里既没有概率表也没有分解，因为它们带有志愿的信息。对 `da`，卡片里有档次和抽签顺序，它们是公开的规则。`--verify` 根据输入重新算出整个结果，并把它与 `claimed.allocation`、种子比较，对 `da` 还与抽签顺序比较。没有 `rules.method` 的 `lottery` 或 `rsd` 输入，其 JSON 回显里没有 method，演示以及班次示例和承诺与揭示示例的存档副本显示了它打印的内容。在规则里写出默认方法 `rsd`，打印的字节相同。
 
-    测试：`test_slot_lottery_ps.py::TestOutput::test_a_private_message_holds_only_the_receivers_chances_and_ranking`、`test_slot_lottery_ps.py::TestOutput::test_the_group_card_has_the_result_and_the_draw_and_neither_chances_nor_rankings`、`test_slot_lottery_da.py::TestOutput::test_a_private_message_names_nobody_else_and_holds_only_the_own_ranking`、`test_slot_lottery_da.py::TestOutput::test_the_group_card_has_the_priorities_the_order_and_the_result_but_no_ranking`、`test_slot_lottery_output.py::TestVerify::test_a_ps_or_da_round_trip_matches_and_a_changed_allocation_does_not`、`test_slot_lottery_output.py::TestVerify::test_a_da_card_with_another_lottery_order_does_not_verify`、`test_slot_lottery_output.py::TestVerify::test_a_ps_card_is_checked_against_the_source_typed_in_again`、`test_slot_lottery_output.py::TestVerify::test_the_json_form_of_a_ps_check_has_the_recomputed_allocation`、`test_slot_lottery_golden.py::TestDemoIsByteStable::test_output_matches_the_stored_copy`、`test_slot_lottery_golden.py::TestStoredCopiesOfOtherExamples::test_output_matches_the_stored_copy`、`test_slot_lottery_golden.py::TestTheDefaultMethodIsUnchanged::test_naming_rsd_in_the_rules_prints_the_same_bytes_as_leaving_it_out`、`test_slot_lottery_golden.py::TestTheDefaultMethodIsUnchanged::test_the_old_examples_have_no_method_and_print_no_method`。
+    测试：`test_slot_lottery_ps.py::TestOutput::test_a_private_message_holds_only_the_receivers_chances_and_ranking`、`test_slot_lottery_ps.py::TestOutput::test_the_group_card_has_the_result_and_the_draw_and_neither_chances_nor_rankings`、`test_slot_lottery_da.py::TestOutput::test_a_private_message_names_nobody_else_and_holds_only_the_own_ranking`、`test_slot_lottery_da.py::TestOutput::test_the_group_card_has_the_priorities_the_order_and_the_result_but_no_ranking`、`test_slot_lottery_output.py::TestVerify::test_a_ps_or_da_round_trip_matches_and_a_changed_allocation_does_not`、`test_slot_lottery_output.py::TestVerify::test_a_da_card_with_another_lottery_order_does_not_verify`、`test_slot_lottery_output.py::TestVerify::test_a_ps_card_is_checked_against_the_source_typed_in_again`、`test_slot_lottery_output.py::TestVerify::test_the_json_form_of_a_ps_check_has_the_recomputed_allocation`、`test_slot_lottery_golden.py::TestDemoIsByteStable::test_output_matches_the_stored_copy`、`test_slot_lottery_golden.py::TestStoredCopiesOfOtherExamples::test_output_matches_the_stored_copy`、`test_slot_lottery_golden.py::TestTheDefaultMethod::test_naming_rsd_in_the_rules_prints_the_same_bytes_as_leaving_it_out`、`test_slot_lottery_golden.py::TestTheDefaultMethod::test_the_examples_have_no_method_and_print_no_method`。
 
 ### 不保证
 
-- **概率取决于随机源原文。** 保证 2、13 和 18 里关于概率的陈述，假定定下规则时随机源原文无法被预测或影响，如“公开随机性”所述。
+- **随机源原文起作用的地方。** 保证 2、13 和 18 里关于概率的陈述依赖它。
 - **承诺与揭示让不揭示的人可以影响其他人。** 最后一个揭示的人先看到所有其他人的揭示，可以比较有他的揭示和没有他的揭示时的抽签结果。设 8 个人里抽 3 张票，不揭示就意味着退出（`forfeit`）。最后揭示者的一个朋友，在第一次抽签里以 3/8 = 0.375 的概率中签。在第二次抽签（在其余 7 个人里抽）里，他以 3/7 的概率中签。如果最后揭示者在这两者里挑好的那个，朋友中签的概率是 1 - (5/8)(4/7) = 9/14，即 0.643。对于一件家务（`assigned`），不揭示使最后揭示者承担 3 件家务中的一件，其余 2 件在另外 7 个人里抽。愿意承担一件家务的最后揭示者，只要两次抽签中有一次把朋友抽在外面，就能让朋友保持自由。所以只有两次抽签都抽中朋友，朋友才被派到。概率是 (3/8)(2/7) = 3/28，即 0.107，而不是 0.375。脚本在每个承诺与揭示的结果里都会打印这条警告。脚本看不到承诺和揭示是按什么顺序贴出来的。如果有人看了某个揭示之后才贴出承诺，他就可以挑选对自己有利的码，所以群聊里必须能看出每一个承诺都在先。声明的规则只是让不揭示的人付出代价。在揭示截止之后才公布的公开随机源，如果与揭示一起使用，就会消除这种优势，因为做决定的人那时还不知道结果。脚本没有把这两者结合起来。测试：`test_slot_lottery_commit_reveal.py::TestTheWarning::test_the_numbers_in_the_warning_are_exact_values` 计算这些值，`test_slot_lottery_commit_reveal.py::TestTheWarning::test_a_simulation_with_the_real_draw_gives_the_same_numbers` 用脚本的抽签重现它们，`test_slot_lottery_commit_reveal.py::TestTheWarning::test_withholding_in_the_pipeline_is_the_draw_among_the_others` 表明流程里的不揭示是通过在其余的人里抽签来实现的，`test_slot_lottery_commit_reveal.py::TestTheWarning::test_every_commit_reveal_output_carries_the_warning` 核对这条警告。
 - **序列独裁在抽签之后不是无嫉妒的。** 挑得早的人拿走别人想要的。它在抽签之前也不是序数有效的。在保证 3 的经典例子里，A 和 B 拿到自己最想要的时段的概率各是 5/12。Bogomolnaia 和 Moulin（2001）的概率序列规则给他们 1/2。在它的吃法里，A 和 B 吃 a，同时 C 和 D 吃 b，速度都一样。过了一半的时间，a 和 b 都吃完了。然后 A 和 B 吃 c，C 和 D 吃 d，所以 A 和 B 最后各得到一半的 a 和一半的 c。方法 `ps` 实现的就是这条规则。
 - **脚本按输入的原样接受志愿。** 它看不出组织者有没有把某个志愿输对。
@@ -698,7 +698,7 @@ N 个人争夺有限的名额。在 `lottery` 模式下有 n 个相同的名额�
 
 **序列独裁的帕累托有效性。** 假设另一个分配使没有人更差、有人更好，设 i 是顺序里第一个结果不同的人。i 之前的人在两个分配里拿着相同的时段，所以 i 在另一个分配里得到的无论是什么，在轮到 i 时都是空闲的。人 i 拿走的是自己可接受的最好的空闲时段，没有时则什么也没拿。所以另一个结果对 i 不可能更好，而既然不同，就是严格更差。这与假设矛盾。
 
-**随机初始禀赋的核心。** 随机序列独裁与随机初始禀赋的核心等价，这是 Abdulkadiroğlu 和 Sönmez（1998）的定理。这里没有核对它，上文也没有任何内容依赖它。
+**随机初始禀赋的核心。** 随机序列独裁与随机初始禀赋的核心等价，这是 Abdulkadiroğlu 和 Sönmez（1998）的定理。
 
 **`ps` 的吃法。** 时间从 0 走到 1。每个时刻，每个人都以速度 1，从自己清单上第一个仍有余量的时段吃起，而一个时段的余量以吃它的人的速度减少。日程只在某个时段被吃完时改变，每个时段至多发生一次，所以吃的过程比时段数至多多一段，所有时间点都是分数。在某一段里，一个人吃某个时段吃了时间 t，他得到这个时段的概率就增加 t。清单上什么也不剩的人，到时间 1 之前不吃任何时段。打印出来的日程列出每一段，其中谁吃什么，以及在这一段结束时哪些时段被吃完。
 
@@ -746,7 +746,7 @@ N 个人争夺有限的名额。在 `lottery` 模式下有 n 个相同的名额�
 
    测试：`test_gift_exchange_properties.py::test_the_listing_method_agrees_with_the_independent_reference`、`test_gift_exchange_properties.py::test_the_proposal_method_agrees_with_the_independent_reference`、`test_gift_exchange_properties.py::test_the_printed_preimage_hashes_to_the_seed_and_holds_the_four_inputs`、`test_gift_exchange_properties.py::test_the_rule_name_follows_the_way_of_giving_and_the_method`、`test_gift_exchange_properties.py::test_the_four_rule_names_are_different`、`test_gift_exchange_properties.py::test_a_different_source_text_gives_a_different_seed`、`test_gift_exchange_golden.py::TestRecordedExample::test_seed_plan_number_and_plan_match_the_recorded_values`、`test_gift_exchange_golden.py::TestRecordedExample::test_the_independent_reference_agrees`、`test_gift_exchange_golden.py::TestRecordedExample::test_the_printed_preimage_hashes_to_the_seed`、`test_gift_exchange_golden.py::TestRecordedExample::test_the_shared_core_makes_the_same_seed`、`test_gift_exchange_golden.py::TestRecordedCircle::test_seed_number_and_circle_match_the_recorded_values`、`test_gift_exchange_golden.py::TestRecordedCircle::test_the_independent_reference_agrees`、`test_gift_exchange_golden.py::TestRecordedCircle::test_the_way_of_giving_changes_the_seed`、`test_gift_exchange_golden.py::TestTwelvePeopleAreDrawnByProposals::test_seed_attempt_and_plan_match_the_recorded_values`、`test_gift_exchange_golden.py::TestTwelvePeopleAreDrawnByProposals::test_the_independent_reference_agrees`。
 
-6. **随机源不可预测时，机会均等。** 如果随机源原文无法预测，并且 SHA-256 的表现像随机函数，那么列出方案时，每个合法方案的概率都是 1/N。原因是第 k+1 号方案由一个小于 N 的均匀整数 k 选出。采用试排时，每一次试排都是一个均匀的排列。在 `any` 方式下，洗牌的 n! 种选择序列中，恰好有一个到达每个合法方案。在 `ring` 方式下，每个合法的圈恰好被其中 n 个到达，因为一个圈可以从它的 n 个人中的任何一个开始写。所以第一个合法的试排，等可能地是任何一个合法方案。如果搜索在试排达到上限后停止，它找到的那个方案，仍然等可能地是任何一个合法方案。这些陈述依赖那两个假设。测试用固定的随机源原文和两侧都落在尾部远处的阈值，从统计上核对推论，并对精确的论证做精确的核对。
+6. **随机源不可预测时，机会均等。** 如果随机源原文无法预测，并且 SHA-256 的表现像随机函数，那么列出方案时，每个合法方案的概率都是 1/N。原因是第 k+1 号方案由一个小于 N 的均匀整数 k 选出。采用试排时，每一次试排都是一个均匀的排列。在 `any` 方式下，洗牌的 n! 种选择序列中，恰好有一个到达每个合法方案。在 `ring` 方式下，每个合法的圈恰好被其中 n 个到达，因为一个圈可以从它的 n 个人中的任何一个开始写。所以第一个合法的试排，等可能地是任何一个合法方案。如果搜索在试排达到上限后停止，它找到的那个方案，仍然等可能地是任何一个合法方案。测试用固定的随机源原文和两侧都落在尾部远处的阈值，从统计上核对推论，并对精确的论证做精确的核对。
 
    测试：`test_gift_exchange_uniformity.py::test_the_96_plans_of_the_recorded_example_are_equally_likely`、`test_gift_exchange_uniformity.py::test_the_40_circles_of_the_recorded_example_are_equally_likely`、`test_gift_exchange_uniformity.py::test_proposals_give_each_of_the_96_plans_the_same_chance`、`test_gift_exchange_uniformity.py::test_proposals_give_each_of_the_40_circles_the_same_chance`、`test_gift_exchange_uniformity.py::test_the_shuffle_reaches_every_permutation_by_exactly_one_choice_sequence`、`test_gift_exchange_uniformity.py::test_in_the_way_any_every_legal_plan_is_one_proposal_in_twenty_four`、`test_gift_exchange_uniformity.py::test_in_the_way_ring_every_legal_circle_is_n_proposals_in_twenty_four`、`test_gift_exchange_uniformity.py::test_the_listing_method_draws_a_number_below_the_count_and_nothing_else`。
 
@@ -781,7 +781,7 @@ N 个人争夺有限的名额。在 `lottery` 模式下有 n 个相同的名额�
 ### 不保证
 
 - **配对对所有人都保持隐藏。** 抽法是公开的，所以任何有名字、排除和随机源原文的人，都可以重新抽一遍，读出整张表。运行脚本的人会看到整张表，包括组织者自己的那一条。群卡片把这些材料留到交换结束之后再给，这只是防止它被无意中发出去。测试：`test_gift_exchange_output.py::test_the_not_modeled_list_says_who_sees_the_table_and_what_cannot_be_checked`、`test_gift_exchange_output.py::test_the_md_output_holds_the_whole_table_and_everything_for_recomputing`。
-- **机会均等。** 它依赖随机源原文不可预测、并且事先已定，如“公开随机性”所述。名字和排除必须在随机源已知之前冻结，因为加上一个名字或去掉一条排除，也是试变体的一种办法。排除不是种子的一部分，所以同样的名字和随机源原文，对两组不同的排除给出同一条流。
+- **随机源已知之后的名字和排除。** 名字和排除必须在随机源已知之前冻结，因为加上一个名字或去掉一条排除，也是试变体的一种办法。排除不是种子的一部分，所以同样的名字和随机源原文，对两组不同的排除给出同一条流。
 - **`any` 方式下没有互送。** 两个人可以互相送礼。在演示的记录示例里，大刘和阿明就是这样。`ring` 方式在三个及以上的人时避免了这种情况，把这两个人列为一对也能避免。测试：`test_gift_exchange_output.py::test_the_md_output_warns_that_two_people_may_give_to_each_other_in_the_way_any`。
 - **对每个不存在的圈都给出解释。** 经过所有人的圈就是哈密顿回路，判定它是否存在是 NP 完全的（Karp 1972）。脚本指出一组走不出去的人，并且在至多九个人时列出每一个圈。超过九个人时，它只能说随机搜索在上限之内没有找到，这不是证明。测试：`test_gift_exchange_inputs.py::test_a_search_that_finds_nothing_in_the_limit_exits_with_the_limit_message`。
 - **最小的解释。** 为 `any` 方式指出的那一组，不能再去掉任何成员，但输入里别处可能还有更小的违反条件的组。测试：`test_gift_exchange_properties.py::test_the_reported_group_is_a_real_violator_and_cannot_be_cut_down`。
@@ -896,7 +896,7 @@ N 个人争夺有限的名额。在 `lottery` 模式下有 n 个相同的名额�
 - **有人什么也拿不到时的尺度。** 第 11 条需要一个每个人都有所得的结果。两个人争一件东西时，乘积就是拿到它的那个人的估值，所以数更大的人获胜，把其中一个数乘一下就可能让东西换人。测试：`test_stuff_split_max_nash.py::test_when_not_everybody_can_get_something_the_scale_of_a_person_can_matter`。
 - **平局时机会均等。** 平局规则是固定的、可复现的，并列的分配不必同样可能。没有随机源时，它们偏向排序靠前的名字。测试：`test_stuff_split_envy_free.py::test_the_name_order_or_the_source_settles_a_tie_that_the_counts_leave_open`。
 - **模型以外的一切。** 估值在一份东西的各件东西上相加，所以合在一起比分开更值钱的两件东西，必须当作一件来输入。一个人的钱对每个人都值同样多，脚本不看预算，东西也从不被拆开、卖掉或丢掉。没有人估值的东西仍然会给某个人，备注里会这样说明。测试：`test_stuff_split_max_nash.py::test_an_item_nobody_wants_is_given_out_and_the_notes_say_so`。
-- **随机源事先已定、无法预测。** 脚本看不出这一点，这正是“公开随机性”的假设。随机源只用来打破平局。
+- **随机源原文起作用的地方。** 随机源只用来打破平局。
 - **规模限制。** 最多 12 个人和 60 件东西。超过 2,000,000 种分配时，`max_nash` 改为轮流挑。测试：`test_stuff_split_inputs.py::test_invalid_input_exits_2_and_names_the_field`、`test_stuff_split_inputs.py::test_the_largest_sizes_are_accepted`。
 
 ### 方法
@@ -933,46 +933,43 @@ N 个人争夺有限的名额。在 `lottery` 模式下有 n 个相同的名额�
 
 参考文献只列出一次，按字母顺序排列。每一条都注明引用它的各节。
 
-- Abdulkadiroğlu, A., Sönmez, T. Random Serial Dictatorship and the Core from Random Endowments in House Allocation Problems. Econometrica 66(3):689, 1998. doi:10.2307/2998580 (cited in slot-lottery)
-- Aziz, H., Caragiannis, I., Igarashi, A., Walsh, T. Fair Allocation of Indivisible Goods and Chores. Proceedings of the Twenty-Eighth International Joint Conference on Artificial Intelligence (IJCAI 2019), pp. 53-59. doi:10.24963/ijcai.2019/8 (cited in chore-split)
-- Aziz, H., Caragiannis, I., Igarashi, A., Walsh, T. Fair Allocation of Indivisible Goods and Chores. Autonomous Agents and Multi-Agent Systems 36(1):article 3, 2022. doi:10.1007/s10458-021-09532-8 (cited in chore-split)
-- Berge, C. Two Theorems in Graph Theory. Proceedings of the National Academy of Sciences 43(9):842-844, 1957. doi:10.1073/pnas.43.9.842 (cited in gift-exchange)
-- Blum, M. Coin Flipping by Telephone: A Protocol for Solving Impossible Problems. ACM SIGACT News 15(1):23-27, 1983. doi:10.1145/1008908.1008911 (cited in slot-lottery)
-- Bogomolnaia, A., Moulin, H. A New Solution to the Random Assignment Problem. Journal of Economic Theory 100(2):295-328, 2001. doi:10.1006/jeth.2000.2710 (cited in slot-lottery)
-- Brams, S. J., Taylor, A. D. Fair Division. Cambridge University Press, 1996. doi:10.1017/cbo9780511598975 (cited in stuff-split)
-- Budish, E. The Combinatorial Assignment Problem: Approximate Competitive Equilibrium from Equal Incomes. Journal of Political Economy 119(6):1061-1103, 2011. doi:10.1086/664613 (cited in stuff-split)
-- Caragiannis, I., Kurokawa, D., Moulin, H., Procaccia, A. D., Shah, N., Wang, J. The Unreasonable Fairness of Maximum Nash Welfare. ACM Transactions on Economics and Computation 7(3):1-32, 2019. doi:10.1145/3355902 (cited in stuff-split)
-- Doron, G., Kronick, R. Single Transferrable Vote: An Example of a Perverse Social Choice Function. American Journal of Political Science 21(2):303, 1977. doi:10.2307/2110496 (cited in group-vote)
-- Dubins, L. E., Freedman, D. A. Machiavelli and the Gale-Shapley Algorithm. The American Mathematical Monthly 88(7):485-494, 1981. doi:10.1080/00029890.1981.11995301 (cited in slot-lottery)
-- Durstenfeld, R. Algorithm 235: Random Permutation. Communications of the ACM 7(7):420, 1964. doi:10.1145/364520.364540 (cited in Public randomness and gift-exchange)
-- Gal, Y., Mash, M., Procaccia, A. D., Zick, Y. Which Is the Fairest (Rent Division) of Them All? Journal of the ACM 64(6), 2017. doi:10.1145/3131361 (cited in rent-split, chore-split and stuff-split)
-- Gale, D., Shapley, L. S. College Admissions and the Stability of Marriage. The American Mathematical Monthly 69(1):9-15, 1962. doi:10.1080/00029890.1962.11989827 (cited in slot-lottery)
-- Gibbard, A. Manipulation of Voting Schemes: A General Result. Econometrica 41(4):587, 1973. doi:10.2307/1914083 (cited in group-vote)
-- Goldman, J., Procaccia, A. D. Spliddit: Unleashing Fair Division Algorithms. ACM SIGecom Exchanges 13(2):41-46, 2015. doi:10.1145/2728732.2728738 (cited in rent-split and ride-split)
-- Hall, P. On Representatives of Subsets. Journal of the London Mathematical Society s1-10(1):26-30, 1935. doi:10.1112/jlms/s1-10.37.26 (cited in gift-exchange)
-- Karp, R. M. Reducibility among Combinatorial Problems. In Complexity of Computer Computations, Springer, 1972, pp. 85-103. doi:10.1007/978-1-4684-2001-2_9 (cited in bill-split and gift-exchange)
-- Lipton, R. J., Markakis, E., Mossel, E., Saberi, A. On Approximately Fair Allocations of Indivisible Goods. Proceedings of the 5th ACM Conference on Electronic Commerce (EC 2004), pp. 125-131. doi:10.1145/988772.988792 (cited in stuff-split)
-- Littlechild, S. C., Owen, G. A Simple Expression for the Shapley Value in a Special Case. Management Science 20(3):370-372, 1973. doi:10.1287/mnsc.20.3.370 (cited in ride-split)
-- Roth, A. E. The Economics of Matching: Stability and Incentives. Mathematics of Operations Research 7(4):617-628, 1982. doi:10.1287/moor.7.4.617 (cited in slot-lottery)
-- Satterthwaite, M. A. Strategy-proofness and Arrow's Conditions: Existence and Correspondence Theorems for Voting Procedures and Social Welfare Functions. Journal of Economic Theory 10(2):187-217, 1975. doi:10.1016/0022-0531(75)90050-2 (cited in group-vote)
-- Schulze, M. A New Monotonic, Clone-Independent, Reversal Symmetric, and Condorcet-Consistent Single-Winner Election Method. Social Choice and Welfare 36(2):267-303, 2011. doi:10.1007/s00355-010-0475-4 (cited in group-vote)
-- Shapley, L. S. A Value for n-Person Games. In Contributions to the Theory of Games, Volume II, Princeton University Press, 1953, pp. 307-318. doi:10.1515/9781400881970-018 (cited in bill-split)
-- Shapley, L. S. On Balanced Sets and Cores. Naval Research Logistics Quarterly 14(4):453-460, 1967. doi:10.1002/nav.3800140404 (cited in ride-split)
-- Shapley, L. S. Cores of Convex Games. International Journal of Game Theory 1(1):11-26, 1971. doi:10.1007/bf01753431 (cited in ride-split)
-- Shapley, L. S., Shubik, M. A Method for Evaluating the Distribution of Power in a Committee System. American Political Science Review 48(3):787-792, 1954. doi:10.2307/1951053 (cited in bill-split)
-- Svensson, L.-G. Large Indivisibles: An Analysis with Respect to Price Equilibrium and Fairness. Econometrica 51(4):939, 1983. doi:10.2307/1912044 (cited in rent-split and chore-split)
-- Tideman, T. N. Independence of Clones as a Criterion for Voting Rules. Social Choice and Welfare 4(3):185-206, 1987. doi:10.1007/bf00433944 (cited in group-vote)
-- von Neumann, J. A Certain Zero-sum Two-person Game Equivalent to the Optimal Assignment Problem. In Contributions to the Theory of Games, Volume II, Princeton University Press, 1953, pp. 5-12. doi:10.1515/9781400881970-002 (cited in slot-lottery)
-- Young, H. P., Levenglick, A. A Consistent Extension of Condorcet's Election Principle. SIAM Journal on Applied Mathematics 35(2):285-300, 1978. doi:10.1137/0135023 (cited in group-vote)
+- Abdulkadiroğlu, A., Sönmez, T. Random Serial Dictatorship and the Core from Random Endowments in House Allocation Problems. Econometrica 66(3):689, 1998. doi:10.2307/2998580 （引用于 slot-lottery）
+- Aziz, H., Caragiannis, I., Igarashi, A., Walsh, T. Fair Allocation of Indivisible Goods and Chores. Proceedings of the Twenty-Eighth International Joint Conference on Artificial Intelligence (IJCAI 2019), pp. 53-59. doi:10.24963/ijcai.2019/8 （引用于 chore-split）
+- Aziz, H., Caragiannis, I., Igarashi, A., Walsh, T. Fair Allocation of Indivisible Goods and Chores. Autonomous Agents and Multi-Agent Systems 36(1):article 3, 2022. doi:10.1007/s10458-021-09532-8 （引用于 chore-split）
+- Berge, C. Two Theorems in Graph Theory. Proceedings of the National Academy of Sciences 43(9):842-844, 1957. doi:10.1073/pnas.43.9.842 （引用于 gift-exchange）
+- Blum, M. Coin Flipping by Telephone: A Protocol for Solving Impossible Problems. ACM SIGACT News 15(1):23-27, 1983. doi:10.1145/1008908.1008911 （引用于“承诺”和 slot-lottery）
+- Bogomolnaia, A., Moulin, H. A New Solution to the Random Assignment Problem. Journal of Economic Theory 100(2):295-328, 2001. doi:10.1006/jeth.2000.2710 （引用于 slot-lottery）
+- Brams, S. J., Taylor, A. D. Fair Division. Cambridge University Press, 1996. doi:10.1017/cbo9780511598975 （引用于 stuff-split）
+- Budish, E. The Combinatorial Assignment Problem: Approximate Competitive Equilibrium from Equal Incomes. Journal of Political Economy 119(6):1061-1103, 2011. doi:10.1086/664613 （引用于 stuff-split）
+- Caragiannis, I., Kurokawa, D., Moulin, H., Procaccia, A. D., Shah, N., Wang, J. The Unreasonable Fairness of Maximum Nash Welfare. ACM Transactions on Economics and Computation 7(3):1-32, 2019. doi:10.1145/3355902 （引用于 stuff-split）
+- Doron, G., Kronick, R. Single Transferrable Vote: An Example of a Perverse Social Choice Function. American Journal of Political Science 21(2):303, 1977. doi:10.2307/2110496 （引用于 group-vote）
+- Dubins, L. E., Freedman, D. A. Machiavelli and the Gale-Shapley Algorithm. The American Mathematical Monthly 88(7):485-494, 1981. doi:10.1080/00029890.1981.11995301 （引用于 slot-lottery）
+- Durstenfeld, R. Algorithm 235: Random Permutation. Communications of the ACM 7(7):420, 1964. doi:10.1145/364520.364540 （引用于“公开随机性”和 gift-exchange）
+- Gal, Y., Mash, M., Procaccia, A. D., Zick, Y. Which Is the Fairest (Rent Division) of Them All? Journal of the ACM 64(6), 2017. doi:10.1145/3131361 （引用于 rent-split、chore-split 和 stuff-split）
+- Gale, D., Shapley, L. S. College Admissions and the Stability of Marriage. The American Mathematical Monthly 69(1):9-15, 1962. doi:10.1080/00029890.1962.11989827 （引用于 slot-lottery）
+- Gibbard, A. Manipulation of Voting Schemes: A General Result. Econometrica 41(4):587, 1973. doi:10.2307/1914083 （引用于 group-vote）
+- Goldman, J., Procaccia, A. D. Spliddit: Unleashing Fair Division Algorithms. ACM SIGecom Exchanges 13(2):41-46, 2015. doi:10.1145/2728732.2728738 （引用于 rent-split 和 ride-split）
+- Hall, P. On Representatives of Subsets. Journal of the London Mathematical Society s1-10(1):26-30, 1935. doi:10.1112/jlms/s1-10.37.26 （引用于 gift-exchange）
+- Karp, R. M. Reducibility among Combinatorial Problems. In Complexity of Computer Computations, Springer, 1972, pp. 85-103. doi:10.1007/978-1-4684-2001-2_9 （引用于 bill-split 和 gift-exchange）
+- Lipton, R. J., Markakis, E., Mossel, E., Saberi, A. On Approximately Fair Allocations of Indivisible Goods. Proceedings of the 5th ACM Conference on Electronic Commerce (EC 2004), pp. 125-131. doi:10.1145/988772.988792 （引用于 stuff-split）
+- Littlechild, S. C., Owen, G. A Simple Expression for the Shapley Value in a Special Case. Management Science 20(3):370-372, 1973. doi:10.1287/mnsc.20.3.370 （引用于 ride-split）
+- Roth, A. E. The Economics of Matching: Stability and Incentives. Mathematics of Operations Research 7(4):617-628, 1982. doi:10.1287/moor.7.4.617 （引用于 slot-lottery）
+- Satterthwaite, M. A. Strategy-proofness and Arrow's Conditions: Existence and Correspondence Theorems for Voting Procedures and Social Welfare Functions. Journal of Economic Theory 10(2):187-217, 1975. doi:10.1016/0022-0531(75)90050-2 （引用于 group-vote）
+- Schulze, M. A New Monotonic, Clone-Independent, Reversal Symmetric, and Condorcet-Consistent Single-Winner Election Method. Social Choice and Welfare 36(2):267-303, 2011. doi:10.1007/s00355-010-0475-4 （引用于 group-vote）
+- Shapley, L. S. A Value for n-Person Games. In Contributions to the Theory of Games, Volume II, Princeton University Press, 1953, pp. 307-318. doi:10.1515/9781400881970-018 （引用于 bill-split）
+- Shapley, L. S. On Balanced Sets and Cores. Naval Research Logistics Quarterly 14(4):453-460, 1967. doi:10.1002/nav.3800140404 （引用于 ride-split）
+- Shapley, L. S. Cores of Convex Games. International Journal of Game Theory 1(1):11-26, 1971. doi:10.1007/bf01753431 （引用于 ride-split）
+- Shapley, L. S., Shubik, M. A Method for Evaluating the Distribution of Power in a Committee System. American Political Science Review 48(3):787-792, 1954. doi:10.2307/1951053 （引用于 bill-split）
+- Svensson, L.-G. Large Indivisibles: An Analysis with Respect to Price Equilibrium and Fairness. Econometrica 51(4):939, 1983. doi:10.2307/1912044 （引用于 rent-split 和 chore-split）
+- Tideman, T. N. Independence of Clones as a Criterion for Voting Rules. Social Choice and Welfare 4(3):185-206, 1987. doi:10.1007/bf00433944 （引用于 group-vote）
+- von Neumann, J. A Certain Zero-sum Two-person Game Equivalent to the Optimal Assignment Problem. In Contributions to the Theory of Games, Volume II, Princeton University Press, 1953, pp. 5-12. doi:10.1515/9781400881970-002 （引用于 slot-lottery）
+- Young, H. P., Levenglick, A. A Consistent Extension of Condorcet's Election Principle. SIAM Journal on Applied Mathematics 35(2):285-300, 1978. doi:10.1137/0135023 （引用于 group-vote）
 
 关于参考文献的说明：
 
-- Abdulkadiroğlu 和 Sönmez（1998）、Gibbard（1973）、Doron 和 Kronick（1977）以及 Svensson（1983）只给出首页。CrossRef 对 Gibbard 以及对 Doron 和 Kronick 只列出首页。Gal 等人（2017）没有给出页码范围或文章编号。
-- Kemeny 规则以 J. G. Kemeny 命名。原始文章（Daedalus，1959）在 CrossRef 里没有 DOI，这里没有引用。引用 Young 和 Levenglick（1978）是为了这条规则及其与孔多塞原则的关系。
+- Kemeny 规则以 J. G. Kemeny 命名。引用 Young 和 Levenglick（1978）是为了这条规则及其与孔多塞原则的关系。
 - Doron 和 Kronick（1977）表明，单一可转移投票，即只选一个席位时的即时决选，可能不满足单调性。Tideman（1987）定义了克隆独立性。
 - 引用 Durstenfeld（1964）是为了洗牌的原地形式。引用 Blum（1983）是为了先承诺后揭示的想法。引用 Bogomolnaia 和 Moulin（2001）是为了 slot-lottery 的方法 `ps` 所实现的概率序列规则。
 - 引用 Karp（1972）是为了子集和问题是 NP 完全的这一事实（bill-split），以及哈密顿回路问题是 NP 完全的这一事实（gift-exchange）。
-- 引用 Gale 和 Shapley（1962）是为了延迟接受算法，以及它给每个申请人的最好结果。引用 Dubins 和 Freedman（1981）以及 Roth（1982）是为了申请人不能靠假志愿获益这一事实。引用 von Neumann（1953）是为了 Birkhoff-von Neumann 定理。Birkhoff（1946）没有 DOI，正文里只通过这条定理提到它。
-- CrossRef 把 Hall（1935）的期号记为 1，在该刊自己的编号里是第 37 期，DOI 也表明了这一点。
-- CrossRef 把 Brams 和 Taylor（1996）这本书列在 Fair Division 这个标题下，并把它的 DOI 写成小写。
+- 引用 Gale 和 Shapley（1962）是为了延迟接受算法，以及它给每个申请人的最好结果。引用 Dubins 和 Freedman（1981）以及 Roth（1982）是为了申请人不能靠假志愿获益这一事实。引用 von Neumann（1953）是为了 Birkhoff-von Neumann 定理。
 - 引用 Brams 和 Taylor（1996）是为了 Knaster 的暗标程序。引用 Lipton 等人（2004）是为了去掉一件东西后的羡慕这一概念。引用 Budish（2011）是为了它的名称。引用 Caragiannis 等人（2019）是为了最大纳什福利规则。

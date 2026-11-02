@@ -2183,7 +2183,7 @@ def reproduce_command(args: argparse.Namespace) -> str:
     parts = ["python3", "scripts/group_vote.py"]
     parts += ["--demo"] if args.demo else ["--input", "-"]
     parts += ["--json"] if args.json else ["--format", args.format]
-    if args.all_rules and not args.demo:
+    if args.all_rules:
         parts.append("--all-rules")
     for name in args.remove:
         parts += ["--remove", shlex.quote(name)]

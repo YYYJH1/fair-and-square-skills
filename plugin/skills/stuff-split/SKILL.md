@@ -1,6 +1,6 @@
 ---
 name: stuff-split
-description: Use whenever a group needs to divide shared belongings or asks who gets the fridge, even if nobody asks for an algorithm. Runs a bundled script that takes each person's private money value for every item and applies one rule that the group picks first. Rule 1 gives every item to whoever values it most and settles with cash so that nobody envies anybody. Rule 2 is Knaster's sealed bids, with a fair share for everybody and unequal shares allowed. Rule 3 moves no money and is envy-free up to one item and Pareto efficient. Returns one checkable line per person, private messages and a group summary. Typical requests include divide our stuff fairly, split an inheritance, who gets the sofa, roommates moving out, 毕业分家当、搬家分东西、合租散伙东西怎么分、遗产怎么分. Not for rent or bills (use rent-split or bill-split), chores (chore-split) or drawing lots (slot-lottery).
+description: Use whenever a group needs to divide shared belongings or asks who gets the fridge, even if nobody asks for an algorithm. Runs a bundled script that takes each person's private money value for every item and applies one of three rules that the group picks first, namely envy_free (every item to whoever values it most, then cash so that nobody envies anybody), knaster (Knaster's sealed bids, a fair share for everybody, unequal shares allowed) or max_nash (no money moves, envy-free up to one item, Pareto efficient). Returns one checkable line per person, private messages and a group summary. Typical requests include divide our stuff fairly, split an inheritance, who gets the sofa, roommates moving out, 毕业分家当、搬家分东西、合租散伙东西怎么分、遗产怎么分. Not for rent or bills (use rent-split or bill-split), chores (chore-split) or drawing lots (slot-lottery).
 license: MIT
 allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/scripts/stuff_split.py *)
 ---
@@ -15,11 +15,11 @@ Quote every name, item, amount and count exactly as the script prints it. Do not
 
 The group picks one before anybody gives a number, and does not change it after the result.
 
-| `rules.method` | What it promises | What it costs |
-|---|---|---|
-| `envy_free` | Every item goes to a person who values it most. Cash then makes everybody's final worth (the value of their items plus their cash) the same, so nobody prefers another person's package plus that person's cash to their own. This is also the largest smallest final worth that any division with cash can give. | The surplus is not necessarily shared equally. Somebody can end up with less than under `knaster`. People have to pay cash. |
-| `knaster` | Every item goes to a person who values it most. Everybody is first owed a fair share (1/n of their own total value, or a share by agreed weights) and the surplus is shared in proportion to the shares. | Somebody may envy somebody. People have to pay cash. |
-| `max_nash` | No money moves. Of all the ways to give out the items, the script takes the one that gives something to the most people and then has the largest product of the values people receive. Nobody envies anybody once one item is set aside (EF1), and no other way is at least as good for everybody and better for somebody (Pareto efficient). | Somebody may envy somebody, by up to the value of one item. When there are more than 2,000,000 ways to try, the script takes turns instead and says so. Turns only promise EF1. |
+| `rules.method` | What it does |
+|---|---|
+| `envy_free` | Every item goes to a person who values it most. Cash then makes everybody's final worth (the value of their items plus their cash) the same. |
+| `knaster` | Every item goes to a person who values it most. Everybody is first owed a fair share (1/n of their own total value, or a share by agreed weights) and the surplus is shared in proportion to the shares. |
+| `max_nash` | No money moves. Of all the ways to give out the items, the script takes the one that gives something to the most people and then has the largest product of the values people receive. |
 
 ## The script
 
@@ -73,7 +73,7 @@ Options are listed by `--help`. `--lang en` writes the text output in English. E
 python3 ${CLAUDE_SKILL_DIR}/scripts/stuff_split.py --demo
 ```
 
-The `examples/` folder holds five complete inputs: `examples/three_roommates.json` (the demo, rule 3), `examples/piano_knaster.json` and `examples/piano_envy_free.json` (one piano and three heirs under the two rules with cash, which give different answers), `examples/weighted_knaster.json` (unequal shares and a tie settled by a public random source) and `examples/moving_out_14_items.json` (too many items to try every way, so the script takes turns and says so).
+The `examples/` folder holds five complete inputs: `examples/three_roommates.json` (the demo, `max_nash`), `examples/piano_knaster.json` and `examples/piano_envy_free.json` (one piano and three heirs under the two rules with cash, which give different answers), `examples/weighted_knaster.json` (unequal shares and a tie settled by a public random source) and `examples/moving_out_14_items.json` (too many items to try every way, so the script takes turns and says so).
 
 ## Step 1. Fix the rules before anyone gives numbers
 
@@ -81,7 +81,7 @@ Done when the organizer has posted one rules message and nobody objected.
 
 Draft the rules message for the organizer. It fixes in advance:
 
-1. The rule. Ask first whether money can change hands. If not, only `max_nash` applies. If it can, the group chooses among the three, using the table above. Say plainly what each costs. Nobody should be told that one rule is simply better.
+1. The rule. Ask first whether money can change hands. If not, only `max_nash` applies. If it can, the group chooses among the three, using the table above and the guarantees and limits below. Say plainly what each costs. Nobody should be told that one rule is simply better.
 2. What is in the split. A thing that one person keeps in any case, or that will be thrown away, stays out. Two things that are worth more together than apart, such as a TV and its stand, are entered as one item.
 3. How to value. Each person gives every item a value in money, privately: what it is worth to you, or the most you would pay for it if you had to buy it from the others. The values do not need to add up to anything. With `max_nash` no money moves, so the numbers are only points for comparing one person's items with each other, and everybody may use their own scale.
 4. Shares, for `knaster` only. They are equal unless the group agrees on weights now, for example because one person paid more of the cost.
@@ -94,7 +94,7 @@ If AskUserQuestion is available, confirm the rule choice with it: one sentence r
 Example (Chinese):
 
 > 分家当规则（先定再收，发出后不改）：
-> 1. 分法三选一：A 无嫉妒加转账（每件东西给最看重它的人，再用现金往来把每个人最后得到的调成一样多，没人羡慕别人那一份）。B Knaster 暗标法（每人先拿到自己估值的 1/3，剩下的盈余平分，可能有人羡慕）。C 不转钱（选出去掉一件东西后没人羡慕的分法）。我们用 C。
+> 1. 分法三选一：envy_free（无嫉妒加转账：每件东西给最看重它的人，再用现金往来把每个人最后得到的调成一样多，没人羡慕别人那一份）。knaster（Knaster 暗标法：每人先拿到自己估值的 1/3，剩下的盈余平分，可能有人羡慕）。max_nash（不转钱：选出去掉一件东西后没人羡慕的分法）。我们用 max_nash。
 > 2. 请给每件东西一个数：如果要你自己出钱买下它，你最多愿意出多少？选 C 的话不转钱，这个数只是你自己的打分，用什么分制都行。合在一起更值钱的东西（比如电视和电视柜）算一件。
 > 3. 周五晚 8 点前私聊发我，大家同时交，不必猜别人怎么报。我先交：我的数已经交给小红保管，收齐后公开。
 > 4. 如果有两个人并列需要排先后，用 11 月 8 日公开的开奖号码来定。
@@ -123,14 +123,14 @@ Done when the organizer has the tables, every person has their own message and t
 2. Give each person their own block from `--format dm`, privately. It holds their items, their cash if any, one line of proof against their own values, and a check table with a row for each person. For example, under `max_nash`: "按你的估值，阿明那份值 45.00，比你的 40.00 多 5.00。去掉那份里你最看重的冰箱（值 25.00）后只剩 20.00，不比你的多，所以去掉一件后你不羡慕阿明；其余的人那一份都不比你的多。" Setting aside one item is exactly what the guarantee allows.
 3. Post the `--format group` summary. It contains nobody's private values.
 4. The cash column is each person's net amount, and the amounts add up to zero. The script does not say who hands money to whom. The group arranges that among themselves.
-5. If the output says that `max_nash` took turns because there were too many ways to try, say so as printed. Only EF1 is promised then, and the picking order is part of the result.
+5. If the output says that `max_nash` took turns because there were too many ways to try, say so as printed.
 6. If the output says that people envy somebody under `knaster` or `max_nash`, report it as printed.
 
 ## Guarantees and limits
 
-- `envy_free`: every item goes to a person who values it most, the cash adds up to exactly zero, and every person ends with the same worth (the highest values added up, divided by the number of people). Nobody prefers another person's package plus cash to their own, and nobody ends below 1/n of their own total value (rounded down to the cent). No division with cash gives the poorest-off person more. After rounding to whole cents, worths differ by at most one cent and the largest envy is at most one cent, and the output says so when it happens.
+- `envy_free`: every item goes to a person who values it most, the cash adds up to exactly zero, and every person ends with the same worth (the highest values added up, divided by the number of people). Nobody prefers another person's package plus cash to their own, and nobody ends below 1/n of their own total value (rounded down to the cent). No division with cash gives the poorest-off person more. The surplus is not necessarily shared equally, and somebody can end up with less than under `knaster`. After rounding to whole cents, worths differ by at most one cent and the largest envy is at most one cent, and the output says so when it happens.
 - `knaster`: every item goes to a person who values it most, and everybody ends with their fair share plus their part of the surplus, never below the fair share (up to one cent of rounding). Somebody may envy somebody, and the output says who and by how much. In the piano example one heir envies another.
-- `max_nash`: the script tries every way to give out the items when there are at most 2,000,000 of them, and takes the one with the most people better off than nothing and then the largest product. The result is EF1 and Pareto efficient. It is not free of envy: in the roommate example two people envy the one who got the fridge, and one item set aside removes that. When the result gives everybody something, multiplying all of one person's numbers by a positive number changes nothing.
+- `max_nash`: the script tries every way to give out the items when there are at most 2,000,000 of them, and takes the one with the most people better off than nothing and then the largest product. The result is EF1 and Pareto efficient. EF1 means that nobody envies anybody once one item is set aside, and Pareto efficient means that no other way is at least as good for everybody and better for somebody. It is not free of envy: in the roommate example two people envy the one who got the fridge, and one item set aside removes that. When the result gives everybody something, multiplying all of one person's numbers by a positive number changes nothing. With more ways to try, the script takes turns in the priority order instead and says so, and only EF1 is promised.
 - Not strategy-proof, under any of the three rules. A person who shades their values can sometimes gain.
 - Ties never change what anybody ends with under `envy_free` and `knaster`: only who holds the item and who pays or receives the matching cash.
 - Values are added up over the items of a package. Two items that belong together are entered as one. The script does not look at budgets or ownership, and the items are never split.

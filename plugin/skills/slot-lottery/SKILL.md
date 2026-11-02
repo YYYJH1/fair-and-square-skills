@@ -47,7 +47,7 @@ The input fields:
 | Field | Meaning |
 |---|---|
 | `mode` | `lottery` for identical slots, `rsd` for different slots that people rank. The method for `rsd` is chosen in `rules.method`. |
-| `people` | Distinct names, at least two. The order of listing does not change the result. |
+| `people` | Distinct names, at least two (at most 40 with a ranking under `ps`, at most 200 under `da`). The order of listing does not change the result. |
 | `n_slots` | `lottery` only: the number of identical slots. |
 | `slot_names` | `rsd` only: one name per slot, one seat each unless `capacities` says more. |
 | `capacities` | `ps` and `da` only: slot to its number of seats, 1 for a slot that is not listed. |
@@ -67,13 +67,13 @@ The `examples/` folder holds five complete inputs: `examples/tickets_8_for_3.jso
 
 ## Choosing the method
 
-Identical slots (`lottery`) need no choice. For different slots that people rank (`rsd` mode), the group picks one of three methods in `rules.method` before any ranking is collected, and the rules message of Step 1 says which.
+Identical slots (`lottery`) need no choice. For different slots that people rank (`rsd` mode), the group picks one of three methods in `rules.method` before any ranking is collected, and the rules message of Step 1 says which. What each method guarantees and what it costs is listed under "Guarantees and limits".
 
-| Method | Use it when | What it guarantees | What it costs |
-|---|---|---|---|
-| `rsd` (the default) | the group wants the simplest story: draw an order, then everybody picks in turn | nobody gains by ranking dishonestly, and after the draw no other assignment makes somebody better off without making somebody else worse off | people with the same ranking have equal chances, but the chances can be worse than possible: if two people rank a, b, c, d and two others rank b, a, d, c, each of the first two gets slot a with chance 5/12 where `ps` gives 1/2 |
-| `ps` (probabilistic serial) | the group cares about the chances each person has before the draw | before the draw nobody would prefer the chances of somebody else to their own, and no other table of chances is at least as good for everybody and better for somebody | not strategy-proof, so a person who knows the other rankings can sometimes gain by reporting another ranking. No waiting list. At most 40 people |
-| `da` (deferred acceptance) | slots have priorities (seniority, need, who is eligible) or several seats | no person and slot would rather be together than with what they have, unless the slot is full of people it ranks higher, and an honest ranking is the best an applicant can report | not Pareto efficient, the tiers are taken as given, no waiting list. At most 200 people |
+| Method | Use it when |
+|---|---|
+| `rsd` (the default) | the group wants the simplest story: draw an order, then everybody picks in turn |
+| `ps` (probabilistic serial) | the group cares about the chances each person has before the draw |
+| `da` (deferred acceptance) | slots have priorities (seniority, need, who is eligible) or several seats |
 
 `ps` and `da` take the seats of each slot in `capacities`. `da` takes the priority tiers of each slot in `priorities`, and ties inside a tier are broken by one lottery for all slots, drawn from the public source. The two fields look like this:
 
@@ -240,7 +240,7 @@ Commit-reveal does not remove every way to influence the result. The person who 
 - Equal chances. If nobody could predict or influence the source text when the rules were fixed, and SHA-256 behaves like a random function, every order of the people is equally likely. Each person then has the same chance of being drawn, `n_slots` out of the number of people, and the same chance of every place on the waiting list. This is checked statistically and, for the shuffle, exactly.
 - Reproducible. The same input gives the same output on every machine and Python version. The script never calls the `random` module.
 - The organizer cannot choose the outcome once the source is fixed in advance and the list, the slot count and the rules are frozen. They can still mistype a ranking, and they can still try to add or drop a name.
-- `rsd` is strategy-proof for the order that was drawn: nobody gains by ranking dishonestly. After the draw, no other assignment makes somebody better off without making somebody else worse off (ex post Pareto efficiency, Abdulkadiroğlu and Sönmez 1998). It is not envy-free, because whoever picks early takes what the others wanted.
+- `rsd` is strategy-proof for the order that was drawn: nobody gains by ranking dishonestly. After the draw, no other assignment makes somebody better off without making somebody else worse off (ex post Pareto efficiency, Abdulkadiroğlu and Sönmez 1998). It is not envy-free, because whoever picks early takes what the others wanted. People with the same ranking have equal chances, but the chances can be worse than possible: if two people rank a, b, c, d and two others rank b, a, d, c, each of the first two gets slot a with chance 5/12 where `ps` gives 1/2.
 - `ps` gives every person chances that no other person's chances beat by their own ranking, and its table of chances is ordinally efficient (no other table is at least as good for everybody and better for somebody). The table is split into fixed assignments with a probability each, and one is drawn from the public source, so each person gets each slot with the chance in the table. `ps` is not strategy-proof, and the one assignment that is drawn can still leave somebody envious.
 - `da` leaves no blocking pair, gives every applicant the best slot that any stable assignment gives them, and an honest ranking is the best an applicant can report. It is not Pareto efficient: another assignment may suit several people better, at the price of ignoring a priority. The tiers are taken as given.
 - A predictable source, or one chosen after the rules, breaks all of this. Whoever can guess or choose the text can try variants (another day's numbers, one more name, one slot more or fewer) until the order suits them.

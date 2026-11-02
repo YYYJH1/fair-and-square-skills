@@ -237,13 +237,13 @@ class TestEnglishOutput:
             assert en["certificate"][key] == zh["certificate"][key]
         assert en["certificate"]["one_liner"] != zh["certificate"]["one_liner"]
         assert len(en["not_modeled"]) == len(zh["not_modeled"]) == 3
-        assert en["reproduce"] == zh["reproduce"].replace("   #", " --lang en   #")
+        assert en["reproduce"] == zh["reproduce"] + " --lang en"
 
     def test_the_reproduce_line_names_the_language_only_when_it_is_not_chinese(self):
         zh = rs.analyse(four_roommates()).reproduce
         en = rs.analyse(four_roommates(), lang="en").reproduce
         assert "--lang" not in zh
-        assert en.startswith("python3 rent_split.py --input - --format md --lang en")
+        assert en.startswith("python3 scripts/rent_split.py --input - --format md --lang en")
 
 
 # --------------------------------------------------------------------------------------

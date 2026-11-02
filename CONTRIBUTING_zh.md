@@ -32,7 +32,7 @@ uv run pytest -q
 uv run python tools/validate_plugin.py
 ```
 
-CI 在 Python 3.9 到 3.13 上运行同样的四条命令。`uv run ruff format .` 会重写格式检查会拒绝的那些文件。另有一个任务，在没有安装任何包的纯 Python 3.9 上，用 `--help`、`--demo` 和 `--selftest` 运行每个技能脚本，再在 `python -I` 下运行一次。
+CI 在 Python 3.9 到 3.14 上运行同样的四条命令。`uv run ruff format .` 会重写格式检查会拒绝的那些文件。另有一个任务，在没有安装任何包的纯 Python 3.9 上，用 `--help`、`--demo` 和 `--selftest` 运行每个技能脚本，再在 `python -I` 下用 `--demo` 运行一次。
 
 `tests/skills/*/golden/` 里的文件保存脚本对记录示例所打印的原文。有意改动输出之后，运行 `FSQ_UPDATE_GOLDEN=1 uv run pytest -q`，读一遍它重写的每个文件的 `git diff`，并把这些文件与改动一起提交。
 
@@ -58,8 +58,8 @@ CI 在 Python 3.9 到 3.13 上运行同样的四条命令。`uv run ruff format 
 - `name` 由小写字母、数字和单个连字符组成。它等于文件夹名，并且既不含 `claude` 也不含 `anthropic`。
 - `description` 至多 1024 个字符，不含尖括号。
 - SKILL.md 里提到的每一个 `scripts/`、`examples/` 或 `references/` 路径都存在。
-- 脚本以 `python3 ${CLAUDE_SKILL_DIR}/scripts/<script>.py` 的形式调用，后面跟一句话，说明在这个变量没有被替换时，脚本就在 SKILL.md 的旁边。同一节给出传入输入的两种办法。在 Claude Code 里，Agent 用 Write 工具把输入写进一个文件，再用 `--input FILE --delete-input` 运行脚本，因为正文里有花括号和引号的 heredoc 在那里需要用户批准。对 Codex 和其他工具，这一节保留标准输入上的 heredoc。
-- 脚本使用 Python 3.9 或更新版本，只用标准库。它们从不使用网络、子进程、`eval`、`exec` 或 `compile`，也从不写文件。它们对文件系统做的唯一改动在共用核心里：带 `--delete-input` 时，`read_input` 在读完 `--input` 文件之后把它删掉。`tests/test_contract.py` 只允许 `fsq_core.py` 的 `_delete_input_file` 里的这一次 `unlink` 调用，别的都不允许。输入来自标准输入或 `--input` 文件，结果写到标准输出。
+- 脚本以 `python3 ${CLAUDE_SKILL_DIR}/scripts/<script>.py` 的形式调用，后面跟一句话，说明在这个变量没有被替换时，脚本在 SKILL.md 旁边的 `scripts/` 文件夹里。同一节给出传入输入的两种办法。在 Claude Code 里，Agent 用 Write 工具把输入写进一个文件，再用 `--input FILE --delete-input` 运行脚本，因为正文里有花括号和引号的 heredoc 在那里需要用户批准。对 Codex 和其他工具，这一节保留标准输入上的 heredoc。
+- 脚本使用 Python 3.9 或更新版本，只用标准库。它们从不使用网络、子进程、`eval`、`exec`、`compile` 或 `__import__`，也从不写文件。它们对文件系统做的唯一改动在共用核心里：带 `--delete-input` 时，`read_input` 在读完 `--input` 文件之后把它删掉。`tests/test_contract.py` 只允许 `fsq_core.py` 的 `_delete_input_file` 里的这一次 `unlink` 调用，别的都不允许。输入来自标准输入或 `--input` 文件，结果写到标准输出。
 - 每个脚本在 `--help`、`--demo` 和 `--selftest` 下都以 0 退出，并且演示每次运行打印的字节都相同。每个脚本在 `python -I` 下也能启动，这个模式不把脚本自己的文件夹放进 `sys.path`，所以脚本从它所在的文件夹导入 `fsq_core.py`。
 - 回复里的每一个数字都来自脚本的输出。示例使用虚构的名字和金额。
 - 这个技能在 `docs/THEORY.md` 里有一节，写出保证、不保证的内容和方法。一条保证只有在测试核对过之后才会写下来，测试以 `file::function` 的形式写在它旁边。
@@ -79,9 +79,9 @@ CI 在 Python 3.9 到 3.13 上运行同样的四条命令。`uv run ruff format 
 ### 发布清单
 
 1. 要发布的那个提交上，CI 是绿的。
-2. 在 `plugin/.claude-plugin/plugin.json`、`pyproject.toml`（然后运行 `uv lock`）、`core/fsq_core.py` 里的 `CORE_VERSION`（然后运行 `python3 tools/sync_core.py`）和 `docs/THEORY.md` 的 `Version:` 行里设置新的版本号。四处不一致时，验证器会失败。版本号不得出现在 `.claude-plugin/marketplace.json` 里，验证器会拒绝这样的文件，因为只有 `plugin.json` 里的版本号改变时，用户才会收到更新。
+2. 在 `plugin/.claude-plugin/plugin.json`、`pyproject.toml`（然后运行 `uv lock`）、`core/fsq_core.py` 里的 `CORE_VERSION`（然后运行 `python3 tools/sync_core.py`）和 `docs/THEORY.md` 的 `Version:` 行里设置新的版本号。四处不一致时，验证器会失败。不要在 `.claude-plugin/marketplace.json` 里写版本号，验证器会拒绝这样的文件。
 3. 在 `CHANGELOG.md` 里为这个版本加一节。
 4. 在本地运行 `claude plugin validate . --strict` 和 `claude plugin validate plugin --strict`，并修掉每一条警告。CI 的运行环境里没有 Claude Code，所以 CI 不能替你运行它们。
 5. 再运行一遍 `python3 tools/validate_plugin.py`、`python3 tools/sync_core.py --check` 和测试。
 6. 在目录树里搜索凭据和与机器相关的绝对路径。
-7. 把升级版本号的那个提交打上 `vX.Y.Z` 的标签并推送标签。把 `CHANGELOG.md` 里对应的一节复制进发布说明。
+7. 把要发布的那个提交打上 `vX.Y.Z` 的标签并推送标签。把 `CHANGELOG.md` 里对应的一节复制进发布说明。

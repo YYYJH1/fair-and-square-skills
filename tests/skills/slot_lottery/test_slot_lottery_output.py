@@ -323,6 +323,15 @@ class TestVerify:
         assert done.returncode == 0, done.stdout + done.stderr
         assert "复算核对：一致" in done.stdout and "可以复现" in done.stdout
 
+    def test_the_reproduce_command_repeats_the_source_given_with_the_check(self):
+        data = dict(lottery_data(PEOPLE8, 3), claimed={"order": GOLDEN_ORDER})
+        done = run_json(data, "--verify", "--source", SOURCE, "--json")
+        assert done.returncode == 0, done.stdout + done.stderr
+        command = json.loads(done.stdout)["reproduce"]
+        assert command == (
+            f"python3 scripts/slot_lottery.py --input - --verify --source '{SOURCE}' --json"
+        )
+
     def test_the_recorded_order_matches(self):
         data = dict(lottery_data(PEOPLE8, 3), claimed={"order": GOLDEN_ORDER, "seed": GOLDEN_SEED})
         assert run_json(data, "--verify").returncode == 0

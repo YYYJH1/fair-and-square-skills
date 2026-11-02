@@ -191,6 +191,10 @@ class TestJsonEnvelope:
         assert json.loads(done.stdout)["reproduce"] == (
             "python3 scripts/group_vote.py --demo --json --remove KTV --lang en"
         )
+        done = run_script("--demo", "--json", "--all-rules")
+        assert json.loads(done.stdout)["reproduce"] == (
+            "python3 scripts/group_vote.py --demo --json --all-rules"
+        )
         done = run_json(demo_input(), "--format", "group", "--all-rules")
         assert done.returncode == 0
 
