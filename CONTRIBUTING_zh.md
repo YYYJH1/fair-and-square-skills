@@ -83,5 +83,5 @@ CI 在 Python 3.9 到 3.13 上运行同样的四条命令。`uv run ruff format 
 3. 在 `CHANGELOG.md` 里为这个版本加一节。
 4. 在本地运行 `claude plugin validate . --strict` 和 `claude plugin validate plugin --strict`，并修掉每一条警告。CI 的运行环境里没有 Claude Code，所以 CI 不能替你运行它们。
 5. 再运行一遍 `python3 tools/validate_plugin.py`、`python3 tools/sync_core.py --check` 和测试。
-6. 在目录树和历史里搜索凭据和与机器相关的绝对路径。运行 `git log --format='%an <%ae> | %cn <%ce>' | sort -u`，确认没有个人邮箱地址出现。
+6. 在目录树里搜索凭据和与机器相关的绝对路径。
 7. 把升级版本号的那个提交打上 `vX.Y.Z` 的标签并推送标签。把 `CHANGELOG.md` 里对应的一节复制进发布说明。

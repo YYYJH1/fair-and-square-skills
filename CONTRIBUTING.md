@@ -83,5 +83,5 @@ Code that several skills need lives once in `core/`, and `core/MANIFEST.txt` lis
 3. Add a section for the version to `CHANGELOG.md`.
 4. Run `claude plugin validate . --strict` and `claude plugin validate plugin --strict` locally and fix every warning. The CI runner has no Claude Code, so CI cannot run them for you.
 5. Run `python3 tools/validate_plugin.py`, `python3 tools/sync_core.py --check` and the tests once more.
-6. Search the tree and the history for credentials and machine-specific absolute paths. Run `git log --format='%an <%ae> | %cn <%ce>' | sort -u` and confirm that no personal email address appears.
+6. Search the tree for credentials and machine-specific absolute paths.
 7. Tag the version bump commit as `vX.Y.Z` and push the tag. Copy the section of `CHANGELOG.md` into the release notes.
