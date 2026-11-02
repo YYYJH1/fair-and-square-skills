@@ -1,0 +1,35 @@
+Chore split: 4 people, 10 chores, taking turns, 2 weeks
+Rules (fixed in advance, not changed after the result): every week we take turns. Whoever is up takes the remaining chore they mind least, until none is left. The pick order of week 1 comes from the public random source, then the start moves one place each week.
+Where the source comes from: 虚构示例：2026 年 11 月 22 日某公开开奖，按官网显示的格式原样抄写
+Source text: （虚构示例）2026-11-22 某公开开奖号码 07 14 21 28 33 + 04 10
+Seed preimage (the SHA-256 of this text is the seed): {"n_slots":10,"participants":["Coco","大刘","小红","阿明"],"rule":"chore_pick_order_v1","source":"（虚构示例）2026-11-22 某公开开奖号码 07 14 21 28 33 + 04 10"}
+Seed (SHA-256): 941d7c36f8446647d1c98f1d17bececca5468aa56f768d4631c1a4095efae4c9
+Pick order of week 1: 大刘, Coco, 阿明, 小红.
+Week 1 (pick order: 大刘, Coco, 阿明, 小红)
+Round 1: 大刘 拖地, Coco 擦窗, 阿明 倒垃圾, 小红 洗碗
+Round 2: 大刘 洗碗, Coco 做饭, 阿明 做饭
+Round 3: 大刘 做饭, Coco 做饭, 阿明 做饭
+Who gets what:
+大刘: 拖地, 洗碗, 做饭
+Coco: 擦窗, 做饭 x2
+阿明: 倒垃圾, 做饭 x2
+小红: 洗碗
+Week 2 (pick order: Coco, 阿明, 小红, 大刘)
+Round 1: Coco 擦窗, 阿明 倒垃圾, 小红 洗碗, 大刘 拖地
+Round 2: Coco 洗碗, 阿明 做饭, 大刘 做饭
+Round 3: Coco 做饭, 阿明 做饭, 大刘 做饭
+Who gets what:
+大刘: 拖地, 做饭 x2
+Coco: 擦窗, 洗碗, 做饭
+阿明: 倒垃圾, 做饭 x2
+小红: 洗碗
+Guarantee (EF1): it holds except for the pairs listed below. Check it with your own ranking. In every round the chore you picked is no worse than the one each other person picked right after you, with at most one chore as an exception: set it aside and you do not envy those people. Everybody gets a private message with their own ranking so they can check.
+Where EF1 fails (the script does not change the split):
+Week 1, 大刘 against 小红: 大刘 holds 3 chores, 小红 holds 1 chore (小红 had no chore left that they can do from round 2 on)
+Week 1, Coco against 小红: Coco holds 3 chores, 小红 holds 1 chore (小红 had no chore left that they can do from round 2 on)
+Week 1, 阿明 against 小红: 阿明 holds 3 chores, 小红 holds 1 chore (小红 had no chore left that they can do from round 2 on)
+Week 2, Coco against 小红: Coco holds 3 chores, 小红 holds 1 chore (小红 had no chore left that they can do from round 2 on)
+Week 2, 阿明 against 小红: 阿明 holds 3 chores, 小红 holds 1 chore (小红 had no chore left that they can do from round 2 on)
+Week 2, 大刘 against 小红: 大刘 holds 3 chores, 小红 holds 1 chore (小红 had no chore left that they can do from round 2 on)
+Not guaranteed: round-robin picking is not strategy-proof and rankings do not show how much a chore is disliked, so only EF1 is promised, not equal total burden. Each week is guaranteed on its own, not the weeks added together.
+Recompute: the source text, the names, the chore units per week and the rule name are above. Take the SHA-256 of the seed preimage and shuffle with the counter to get the order of week 1. Later weeks follow from the rotation rule. The shuffle is specified under Public randomness in docs/THEORY.md of github.com/YYYJH1/fair-and-square-skills.

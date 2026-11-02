@@ -1,0 +1,66 @@
+# Chore split: 3 people, 6 chores, taking turns, 1 week
+
+## Weekly schedule
+
+| Week | Pick order | 阿明 | 小红 | 大刘 |
+| --- | --- | --- | --- | --- |
+| 1 | 阿明, 小红, 大刘 | 倒垃圾, 做饭 | 洗碗, 擦窗 | 拖地, 刷厕所 |
+
+## Who picked what
+
+| Week | Round | Picks (in pick order) |
+| --- | --- | --- |
+| 1 | 1 | 阿明 倒垃圾 -> 小红 洗碗 -> 大刘 拖地 |
+| 1 | 2 | 阿明 做饭 -> 小红 擦窗 -> 大刘 刷厕所 |
+
+## Round-by-round check for week 1 (everyone against everyone, using their own ranking)
+
+| Who | Against | Order | Round by round | Result |
+| --- | --- | --- | --- | --- |
+| 阿明 | 小红 | picks before them | round 1 倒垃圾(1) <= their same round 洗碗(5); round 2 做饭(2) <= their same round 擦窗(4) | no envy |
+| 阿明 | 大刘 | picks before them | round 1 倒垃圾(1) <= their same round 拖地(3); round 2 做饭(2) <= their same round 刷厕所(6) | no envy |
+| 小红 | 阿明 | picks after them | round 1 洗碗(2) <= their round 2 做饭(6) | no envy once the last pick "擦窗" is set aside |
+| 小红 | 大刘 | picks before them | round 1 洗碗(2) <= their same round 拖地(4); round 2 擦窗(3) <= their same round 刷厕所(5) | no envy |
+| 大刘 | 阿明 | picks after them | round 1 拖地(1) <= their round 2 做饭(3) | no envy once the last pick "刷厕所" is set aside |
+| 大刘 | 小红 | picks after them | round 1 拖地(1) <= their round 2 擦窗(6) | comparing the whole bundles: no envy |
+
+## Random source and how to recompute
+
+| Item | Value |
+| --- | --- |
+| Where the source comes from | 虚构示例：2026 年 11 月 8 日某公开开奖，按官网显示的格式原样抄写 |
+| Source text (verbatim) | （虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07 |
+| Rule name | chore_pick_order_v1 |
+| Chore units per week (part of the seed, the n_slots of the seed) | 6 |
+| Names (sorted by code point, part of the seed) | 大刘, 小红, 阿明 |
+| Seed preimage (take the SHA-256 of this text) | {"n_slots":6,"participants":["大刘","小红","阿明"],"rule":"chore_pick_order_v1","source":"（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07"} |
+| Seed (SHA-256, hex) | 6944c304e73fa353e0d827408cc1f48fd3a8684494793fc65a25fa07a39f46a1 |
+| Pick order of week 1 | 阿明, 小红, 大刘 |
+
+The number in brackets is the place of the chore in that person's own ranking (1 is the least disliked). <= means no worse than the other person's pick. A person who picks before the other is compared with the same round, a person who picks after the other with the next round, because the other has already taken a chore in the current one.
+
+EF1 status (nobody envies anybody once one chore is set aside): holds. The script checked every pair of people in all 1 week. All 9 round-by-round comparisons hold.
+
+Rotation: the pick order of week 1 comes from the source, then the start moves one place each week. After 3 weeks everybody has started once.
+
+How to recompute the pick order of week 1: (1) seed = SHA-256 of the seed preimage (UTF-8). (2) Draw number c (counting from 0) = the first 8 bytes, big-endian, of SHA-256(seed + c as 8 big-endian bytes), read as an integer x. For an integer in 0..n-1, take x mod n if x < 2^64 - (2^64 mod n), otherwise add 1 to c and draw again. (3) Sort the names by code point, go i from n-1 down to 1, draw an integer j in 0..i and swap positions i and j. The result is the pick order of week 1. The random module is never used.
+
+One line per person (send it to that person only, not to the group):
+- 阿明: In every round, the chore you picked (round 1 倒垃圾, round 2 做饭) is no worse in your ranking than the one each other person picked right after you: the same round if they pick after you, their next round if they pick before you. At most one chore is an exception: set it aside and you envy nobody.
+- 小红: In every round, the chore you picked (round 1 洗碗, round 2 擦窗) is no worse in your ranking than the one each other person picked right after you: the same round if they pick after you, their next round if they pick before you. At most one chore is an exception: set it aside and you envy nobody.
+- 大刘: In every round, the chore you picked (round 1 拖地, round 2 刷厕所) is no worse in your ranking than the one each other person picked right after you: the same round if they pick after you, their next round if they pick before you. At most one chore is an exception: set it aside and you envy nobody.
+
+## Not modeled
+
+- Whether the source was really fixed in advance, cannot be changed afterwards and could not be predicted: the script cannot check this. It only decides who picks first in week 1.
+- Whether the rankings were entered faithfully: each person checks theirs in their own message. How much a chore is disliked beyond the order, for example if somebody finds dishes ten times worse than mopping, is not seen by the script.
+- Strategy-proofness: round-robin picking is not strategy-proof. A person who knows the other rankings can sometimes get a lighter set by ranking untruthfully.
+- Across weeks: every week is guaranteed to be EF1 on its own. Nothing is promised about the weeks added together.
+- Tasks that somebody likes: not supported. A liked task declared in likes is refused.
+- Paying somebody to take a chore: this plan moves no money. To compensate housemates with money, set rules.plan to bundle_pay. What an outside cleaner costs is not calculated. Use bill-split to share that.
+
+## Reproduce
+
+```
+python3 scripts/chore_split.py --demo --format md --lang en
+```

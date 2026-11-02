@@ -1,0 +1,66 @@
+# 团建去哪儿: Condorcet (Schulze completion)
+
+## Result
+
+| Item | Value |
+| --- | --- |
+| Counting rule (fixed before the vote) | Condorcet (Schulze completion) |
+| Winner | 爬山 |
+| Ballots | 27, in 5 different rankings |
+| Partial rankings | not allowed, every ballot ranks all options |
+| Ties | broken by a random order fixed in advance, the earlier option wins |
+| Tie-break order | 爬山 > KTV > 密室逃脱 > 火锅 > 剧本杀 |
+| Random source | （虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07 |
+| Seed (SHA-256), first 16 hex digits | c96cf8ec928f61d0 |
+
+## Ballots (equal ones merged)
+
+| Ballots | Ranking |
+| --- | --- |
+| 8 | 密室逃脱 > 爬山 > KTV > 火锅 > 剧本杀 |
+| 7 | 剧本杀 > 爬山 > KTV > 火锅 > 密室逃脱 |
+| 6 | 火锅 > KTV > 剧本杀 > 爬山 > 密室逃脱 |
+| 4 | KTV > 火锅 > 密室逃脱 > 爬山 > 剧本杀 |
+| 2 | 爬山 > 剧本杀 > 火锅 > 密室逃脱 > KTV |
+
+## Pairwise matrix (each cell: ballots ranking the row option above the column option)
+
+|  | 密室逃脱 | 爬山 | 剧本杀 | 火锅 | KTV |
+| --- | --- | --- | --- | --- | --- |
+| 密室逃脱 | - | 12 | 12 | 8 | 10 |
+| 爬山 | 15 | - | 14 | 17 | 17 |
+| 剧本杀 | 15 | 13 | - | 9 | 9 |
+| 火锅 | 19 | 10 | 18 | - | 8 |
+| KTV | 17 | 10 | 18 | 19 | - |
+
+## Winner under each rule
+
+| Rule | Winner | Key numbers |
+| --- | --- | --- |
+| Plurality | 密室逃脱 | 密室逃脱 has 8 first choices (of 27) |
+| Runoff | 剧本杀 | final 剧本杀 15 : 密室逃脱 12 |
+| IRV | 火锅 | 火锅 elected after 4 rounds, 18 votes in the last (of 27 ballots still counting) |
+| Borda | KTV | KTV 64 points, second place 爬山 63 points |
+| Condorcet (the agreed rule) | 爬山 | 爬山 beats every other option in pairwise comparisons |
+| Schulze | 爬山 | 爬山 beats every other option in pairwise comparisons |
+| Kemeny | 爬山 | 爬山 is first, ranking score 169 |
+
+Condorcet winner: 爬山 beats every other option in pairwise comparisons.
+
+The tie-break order was fixed by the random source before the vote. This time it was not needed. The algorithm is in how_to_verify under certificate in the --json output.
+
+This table is for explaining a result after the fact: with the same ballots, another rule can pick another winner. The rule has to be fixed before the vote and must not be chosen after seeing results. The agreed rule is Condorcet (Schulze completion) and its winner is 爬山.
+
+Among these 7 rules, 5 different winners appear.
+
+## Not modeled
+
+- No protection against strategic voting: with three or more options, every ranking rule that can elect each option and is not a dictatorship can be manipulated by some voter in some situation (the Gibbard-Satterthwaite theorem).
+- A ballot cannot rank two options equally.
+- The script does not check who may vote, whether someone voted twice or whether a ballot is genuine. The organizer does.
+
+## Reproduce
+
+```
+python3 scripts/group_vote.py --demo --format md --lang en
+```

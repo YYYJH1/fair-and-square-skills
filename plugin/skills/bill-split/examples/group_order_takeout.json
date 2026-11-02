@@ -1,0 +1,16 @@
+{
+  "mode": "group_order",
+  "id": "waimai-1",
+  "items": [
+    {"who": "阿明", "name": "黄焖鸡", "amount": 28, "packaging": 1},
+    {"who": "小红", "name": "麻辣烫", "amount": 28, "packaging": 1},
+    {"who": "Coco", "name": "柠檬水", "amount": 6, "packaging": 1}
+  ],
+  "fees": [{"name": "配送费", "amount": 5, "split": "proportional"}],
+  "coupons": [
+    {"name": "满减", "tiers": [[40, 10], [60, 18]], "split": "shapley"},
+    {"name": "平台红包", "amount": 3, "split": "proportional"}
+  ],
+  "paid_by": "阿明",
+  "audit": {"current": "proportional"}
+}

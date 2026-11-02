@@ -1,0 +1,40 @@
+(For the organizer: send each block below privately to the person named. Do not post it in the group.)
+
+--- To 大刘 ---
+大刘, this is your own chore result. Nobody else sees your costs.
+Your cap is 2 units.
+Your chores each week: 做饭, 刷厕所 (2 units in all). By your own costs they come to 70.00.
+Compensation: you receive 25.00 a week.
+After the compensation your week comes to -45.00.
+By your own costs, your share comes to -45.00 a week, and no other share (with the payment that goes with it) is a better deal for you. The share of 阿明 would be exactly as good a deal for you (also -45.00), and a tie is not a loss.
+Your check table (your weekly net if you took that share = minus your cost, plus the payment that goes with it; * marks your own share, higher is better):
+  大刘's share (做饭, 刷厕所): -70.00 + 25.00 = -45.00*
+  小红's share (擦窗, 洗碗): -80.00 - 5.00 = -85.00
+  阿明's share (倒垃圾, 拖地): -25.00 - 20.00 = -45.00
+Everybody's payments add up to 0.00, so nobody outside has to pay.
+
+--- To 小红 ---
+小红, this is your own chore result. Nobody else sees your costs.
+Your cap is 2 units.
+Your chores each week: 擦窗, 洗碗 (2 units in all). By your own costs they come to 40.00.
+Compensation: you pay 5.00 a week.
+After the compensation your week comes to -45.00.
+By your own costs, your share comes to -45.00 a week, and no other share (with the payment that goes with it) is a better deal for you.
+Your check table (your weekly net if you took that share = minus your cost, plus the payment that goes with it; * marks your own share, higher is better):
+  大刘's share (做饭, 刷厕所): -120.00 + 25.00 = -95.00
+  小红's share (擦窗, 洗碗): -40.00 - 5.00 = -45.00*
+  阿明's share (倒垃圾, 拖地): -35.00 - 20.00 = -55.00
+Everybody's payments add up to 0.00, so nobody outside has to pay.
+
+--- To 阿明 ---
+阿明, this is your own chore result. Nobody else sees your costs.
+Your cap is 2 units.
+Your chores each week: 倒垃圾, 拖地 (2 units in all). By your own costs they come to 25.00.
+Compensation: you pay 20.00 a week.
+After the compensation your week comes to -45.00.
+By your own costs, your share comes to -45.00 a week, and no other share (with the payment that goes with it) is a better deal for you.
+Your check table (your weekly net if you took that share = minus your cost, plus the payment that goes with it; * marks your own share, higher is better):
+  大刘's share (做饭, 刷厕所): -100.00 + 25.00 = -75.00
+  小红's share (擦窗, 洗碗): -55.00 - 5.00 = -60.00
+  阿明's share (倒垃圾, 拖地): -25.00 - 20.00 = -45.00*
+Everybody's payments add up to 0.00, so nobody outside has to pay.

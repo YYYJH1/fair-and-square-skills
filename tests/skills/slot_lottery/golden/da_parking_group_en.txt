@@ -1,0 +1,19 @@
+Assignment result: 6 people, 3 slots (deferred acceptance, applicants propose)
+Where the source comes from: 虚构示例：2026 年 11 月 8 日某公开开奖，按官网显示的格式原样抄写
+Deadline: 2026-11-07 20:00 前私聊交志愿，之后名单锁定
+Source text: （虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07
+Seed preimage (its SHA-256 is the seed): {"n_slots":5,"participants":["Coco","Yuki","大刘","小红","老王","阿明"],"rule":"da_tiebreak_v1","source":"（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07"}
+Seed (SHA-256): cd3a03662b9a3505d2604d3ed7545b521c5143936d99a14b62b8ea0968091f72
+Method: deferred acceptance (DA), applicants propose. Ties inside a tier follow the lottery order below.
+Lottery order (earlier wins a tie inside a tier): 1 Yuki, 2 老王, 3 阿明, 4 Coco, 5 小红, 6 大刘
+"充电车位" (seats: 1), priority: tier 1: Coco, 阿明; not accepted: Yuki, 大刘, 小红, 老王
+"地面车位" (seats: 2), priority: tier 1: 老王; tier 2: Coco, Yuki, 大刘, 小红, 阿明
+"地下车位" (seats: 2), priority: everybody in one tier, ordered by the lottery
+Result:
+Coco got "地下车位"
+Yuki got "地面车位"
+小红 got "地下车位"
+老王 got "地面车位"
+阿明 got "充电车位"
+No slot: 大刘
+Recompute: the source text, the names, the slot count and the rule name are all above. Take the SHA-256 of the seed preimage for the seed, then shuffle with the counter to get the lottery order. Run deferred acceptance on everybody's ranking and the priorities above to check the result. Rankings were handed in privately, so they can be put together only if everybody agrees, and python3 scripts/slot_lottery.py --verify checks the same.

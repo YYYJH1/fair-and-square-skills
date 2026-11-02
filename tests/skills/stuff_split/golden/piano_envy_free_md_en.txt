@@ -1,0 +1,53 @@
+# Stuff split result (envy-free with cash): 3 people share 1 item
+
+## Who gets what
+
+| Person | Items | Value to the person | Cash (received is positive) | Final worth (value + cash) |
+| --- | --- | --- | --- | --- |
+| 甲 | (no items) | 0.00 | +300.00 | 300.00 |
+| 乙 | 钢琴 | 900.00 | -600.00 | 300.00 |
+| 丙 | (no items) | 0.00 | +300.00 | 300.00 |
+| Total |  | 900.00 | 0.00 | 900.00 |
+
+## Envy table (by the row person's values: the value of the listed person's items plus that person's cash. The package marked * is the row person's own, a larger number is a better deal)
+
+| Person | 甲 | 乙 | 丙 |
+| --- | --- | --- | --- |
+| 甲 | 300.00* | -600.00 | 300.00 |
+| 乙 | 300.00 | 300.00* | 300.00 |
+| 丙 | 300.00 | 290.00 | 300.00* |
+| Cash | +300.00 | -600.00 | +300.00 |
+
+## The highest value of each item
+
+| Item | Highest value | People with it | Gets it |
+| --- | --- | --- | --- |
+| 钢琴 | 900.00 | 乙 | 乙 |
+| Total | 900.00 |  |  |
+
+Note: 虚构示例：甲、乙、丙三位继承人分一架钢琴
+
+Rule (fixed in advance, not changed after the result): every item goes to a person who values it most, and cash then makes everybody's final worth (the value of their items plus their cash) the same, so nobody envies anybody's package (envy_free).
+
+Result: every item went to a person who values it most. The highest values add up to 900.00. Divided among the 3 people, that is 300.00, which is what each person ends with (items plus cash).
+
+After rounding to the cent, nobody envies anybody (largest envy 0.00). Each cash amount is rounded only down or up to the cent, and the total is exactly 0.
+
+One line per person (send it to that person only, not to the group):
+
+- 甲: By your values, your final worth is 300.00 (you hold no items; cash: receives 300.00). If you swapped for any other person's package (that package as you value it, plus that person's cash), you would get no more than 300.00, so you envy nobody.
+- 乙: By your values, your final worth is 300.00 (you hold 钢琴, worth 900.00 to you; cash: pays 600.00). If you swapped for any other person's package (that package as you value it, plus that person's cash), you would get no more than 300.00, so you envy nobody.
+- 丙: By your values, your final worth is 300.00 (you hold no items; cash: receives 300.00). If you swapped for any other person's package (that package as you value it, plus that person's cash), you would get no more than 300.00, so you envy nobody.
+
+## Not modeled
+
+- Values that add up: when two items are worth more together than apart (a TV and its stand), please enter them as one item.
+- People who cannot come up with the cash for now: the script does not look at budgets and does not handle instalments.
+- Items are treated as whole and as shared by everybody: no splitting, selling or throwing away.
+- Strategy-proofness: none of the three rules stops somebody from misreporting their values.
+
+## Reproduce
+
+```
+python3 scripts/stuff_split.py --input - --format md --lang en
+```

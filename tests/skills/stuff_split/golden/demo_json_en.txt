@@ -1,0 +1,154 @@
+{
+  "certificate": {
+    "envy_table": {
+      "大刘": {
+        "大刘": "40.00",
+        "小红": "15.00",
+        "阿明": "45.00"
+      },
+      "小红": {
+        "大刘": "15.00",
+        "小红": "40.00",
+        "阿明": "45.00"
+      },
+      "阿明": {
+        "大刘": "25.00",
+        "小红": "30.00",
+        "阿明": "45.00"
+      }
+    },
+    "one_liner": {
+      "大刘": "By your values, the package of 阿明 is worth 45.00, which is 5.00 more than your 40.00. Without 冰箱, the item in it you value most (worth 35.00), it is worth 10.00 and no more than yours, so you do not envy 阿明 once one item is set aside. Every other package is worth no more than yours.",
+      "小红": "By your values, the package of 阿明 is worth 45.00, which is 5.00 more than your 40.00. Without 冰箱, the item in it you value most (worth 25.00), it is worth 20.00 and no more than yours, so you do not envy 阿明 once one item is set aside. Every other package is worth no more than yours.",
+      "阿明": "By your values, nobody's package is worth more than your 45.00, so you envy nobody."
+    },
+    "recompute": {
+      "allocations": "729",
+      "ef1": {
+        "大刘": {
+          "阿明": {
+            "holds": true,
+            "own_cents": "40.00",
+            "rest_cents": "10.00",
+            "set_aside_item": "冰箱",
+            "set_aside_value_cents": "35.00",
+            "theirs_cents": "45.00"
+          }
+        },
+        "小红": {
+          "阿明": {
+            "holds": true,
+            "own_cents": "40.00",
+            "rest_cents": "20.00",
+            "set_aside_item": "冰箱",
+            "set_aside_value_cents": "25.00",
+            "theirs_cents": "45.00"
+          }
+        }
+      },
+      "evenness": 12,
+      "limit": "2000000",
+      "optimal_allocations": 2,
+      "people_with_positive_value": 3,
+      "product": "72000",
+      "product_cents": "72000000000"
+    }
+  },
+  "inputs_echo": {
+    "items": [
+      "冰箱",
+      "洗衣机",
+      "沙发",
+      "电视",
+      "微波炉",
+      "书架"
+    ],
+    "note": "虚构示例：三个室友毕业搬家，分合租期间一起买的六件东西",
+    "people": [
+      "阿明",
+      "小红",
+      "大刘"
+    ],
+    "rules": {
+      "method": "max_nash"
+    },
+    "values": {
+      "大刘": {
+        "书架": "5.00",
+        "冰箱": "35.00",
+        "微波炉": "15.00",
+        "沙发": "25.00",
+        "洗衣机": "10.00",
+        "电视": "10.00"
+      },
+      "小红": {
+        "书架": "10.00",
+        "冰箱": "25.00",
+        "微波炉": "5.00",
+        "沙发": "10.00",
+        "洗衣机": "30.00",
+        "电视": "20.00"
+      },
+      "阿明": {
+        "书架": "5.00",
+        "冰箱": "30.00",
+        "微波炉": "10.00",
+        "沙发": "15.00",
+        "洗衣机": "25.00",
+        "电视": "15.00"
+      }
+    }
+  },
+  "not_modeled": [
+    "Values that add up: when two items are worth more together than apart (a TV and its stand), please enter them as one item.",
+    "Items are treated as whole and as shared by everybody: no splitting, selling or throwing away.",
+    "Strategy-proofness: none of the three rules stops somebody from misreporting their values."
+  ],
+  "reproduce": "python3 scripts/stuff_split.py --demo --json --lang en",
+  "result": {
+    "allocation": {
+      "大刘": [
+        "沙发",
+        "微波炉"
+      ],
+      "小红": [
+        "洗衣机",
+        "书架"
+      ],
+      "阿明": [
+        "冰箱",
+        "电视"
+      ]
+    },
+    "envious_people": 2,
+    "fell_back": false,
+    "max_envy_cents": "5.00",
+    "method": "max_nash",
+    "method_used": "max_nash",
+    "money_moves": false,
+    "own_value_cents": {
+      "大刘": "40.00",
+      "小红": "40.00",
+      "阿明": "45.00"
+    },
+    "owner": {
+      "书架": "小红",
+      "冰箱": "阿明",
+      "微波炉": "大刘",
+      "沙发": "大刘",
+      "洗衣机": "小红",
+      "电视": "阿明"
+    },
+    "tie_break": {
+      "method": "sorted_names",
+      "order": [
+        "大刘",
+        "小红",
+        "阿明"
+      ],
+      "preimage": null,
+      "seed_hex": null,
+      "was_tie": false
+    }
+  }
+}

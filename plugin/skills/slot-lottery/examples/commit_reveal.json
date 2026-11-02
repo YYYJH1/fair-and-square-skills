@@ -1,0 +1,27 @@
+{
+  "mode": "lottery",
+  "people": ["阿明", "小红", "大刘", "Coco", "老王", "Yuki"],
+  "n_slots": 2,
+  "commit_reveal": {
+    "commitments": [
+      {"name": "阿明", "commitment": "cac18104316e6362575d36d021f871ffe84cbc49ad7650618c58d102452a3928"},
+      {"name": "小红", "commitment": "fb82e7e824dbb790394c2a8324275c0df7b0e0d0083e747940bb55053325c7e6"},
+      {"name": "大刘", "commitment": "a5c691314fb5a4c2bf25085f7fc24ad345aa81a2717b2e2e8c8a50058bab9cd6"},
+      {"name": "Coco", "commitment": "809352a03bfaf5dae8f58cb04de4e068d6c3d922fe5eb752907b439339ffbc80"},
+      {"name": "老王", "commitment": "b8f3b05d94ed676492c0a4e5d6cdd1a8db9d6ebc843f42b618b1d40d4af5a368"},
+      {"name": "Yuki", "commitment": "8a7cabec43771af1eb8b0689625967c8171db32af32659a40820ea141e7265e5"}
+    ],
+    "reveals": [
+      {"name": "阿明", "reveal": "4732c1f8f018e7e8a4e5e04da1042a8f"},
+      {"name": "小红", "reveal": "dea49aeb187111fcfa1e2f21cddd64d3"},
+      {"name": "大刘", "reveal": "8579d215fd808903417bbdccbf896823"},
+      {"name": "Coco", "reveal": "29187e2513274c53f7c2ae77f0bf8ba2"},
+      {"name": "老王", "reveal": "9a9204f0a637fc7698c7677e484b2a7f"},
+      {"name": "Yuki", "reveal": "d61449d5eb68db73448843f78251d7cc"}
+    ]
+  },
+  "rules": {
+    "deadline": "虚构示例：2026-11-07 20:00 前在群里发承诺码，2026-11-08 20:00 前发揭示码",
+    "non_reveal": "forfeit"
+  }
+}

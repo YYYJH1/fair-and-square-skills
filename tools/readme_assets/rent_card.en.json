@@ -1,0 +1,10 @@
+{
+  "total_rent": 3600,
+  "rooms": ["Master room", "Garden room", "Box room"],
+  "bids": {
+    "Ana": [2000, 800, 800],
+    "Ben": [1400, 1500, 700],
+    "Cleo": [1200, 1400, 1000]
+  },
+  "rules": {"negative_rent": "spliddit"}
+}

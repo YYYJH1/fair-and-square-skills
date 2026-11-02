@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Plain text everywhere. Python 3.14 colors the --help text of argparse when a variable such as
+  # FORCE_COLOR is set, and these two switches turn that off.
+  NO_COLOR: "1"
+  PYTHON_COLORS: "0"
+
+jobs:
+  test:
+    name: test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install uv and Python ${{ matrix.python-version }}
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install the dev dependencies from uv.lock
+        run: uv sync --locked
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Check formatting
+        run: uv run ruff format --check .
+
+      - name: Test
+        timeout-minutes: 20
+        run: uv run pytest -q
+
+      - name: Validate the plugin layout
+        run: uv run python tools/validate_plugin.py
+
+  stdlib-only:
+    name: stdlib-only (Python 3.9, no packages installed)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.9"
+
+      - name: Run every skill script with --help, --demo and --selftest
+        timeout-minutes: 5
+        shell: bash
+        run: |
+          set -euo pipefail
+          python --version
+          for script in plugin/skills/*/scripts/*.py; do
+            case "${script}" in */fsq_core.py) continue ;; esac
+            echo "::group::${script}"
+            for flag in --help --demo --selftest; do
+              echo "running ${flag}"
+              timeout 120 python -B "${script}" "${flag}" > /dev/null
+            done
+            echo "::endgroup::"
+          done
+
+      - name: Run every skill script in isolated mode
+        timeout-minutes: 5
+        shell: bash
+        run: |
+          set -euo pipefail
+          for script in plugin/skills/*/scripts/*.py; do
+            case "${script}" in */fsq_core.py) continue ;; esac
+            timeout 120 python -I -B "${script}" --demo > /dev/null
+          done

@@ -1,0 +1,18 @@
+{
+  "mode": "expenses",
+  "people": ["阿明", "小红", "大刘", "Coco"],
+  "expenses": [
+    {
+      "id": "dinner-1",
+      "what": "聚餐",
+      "paid_by": {"阿明": 680},
+      "items": [
+        {"name": "菜", "amount": 480, "everyone": true},
+        {"name": "酒", "amount": 160, "among": ["大刘", "Coco"]}
+      ],
+      "fees": [{"name": "服务费", "amount": 40, "split": "by_consumption"}],
+      "discounts": []
+    }
+  ],
+  "rules": {"settle": "min_transfers"}
+}

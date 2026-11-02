@@ -1,0 +1,87 @@
+{
+  "certificate": {
+    "one_liner": {
+      "Coco": "你要送礼物给：Yuki。",
+      "Yuki": "你要送礼物给：小红。",
+      "大刘": "你要送礼物给：阿明。",
+      "小红": "你要送礼物给：老王。",
+      "老王": "你要送礼物给：Coco。",
+      "阿明": "你要送礼物给：大刘。"
+    },
+    "recompute": {
+      "algorithm": "seed = SHA-256 of the canonical JSON (sorted keys, no spaces, UTF-8) of {\"n_slots\": N, \"participants\": names sorted by code point, \"rule\": RULE, \"source\": SOURCE TEXT}. Draw number c = first 8 bytes, big-endian, of SHA-256(seed + c as 8 big-endian bytes). A uniform integer in [0, n) takes x mod n if x < 2^64 - (2^64 mod n), otherwise the next draw is used. Number the names 0 to n-1 in that order. A plan gives every giver i one receiver r(i). r is one-to-one, r(i) is not i and (i, r(i)) is not an excluded direction. In the way ring, following the gifts from person 0 also visits everybody before coming back. List all legal plans in increasing order of (r(0), r(1), ...). The first uniform integer k in [0, N) of the stream, N being the number of legal plans, picks plan number k+1.",
+      "attempts": null,
+      "max_attempts": null,
+      "method": "enumeration",
+      "plan_count": 96,
+      "plan_number": 13,
+      "rule": "gift_exchange_any_enum_v1",
+      "seed_hex": "1a00559810149576dff6f98ced86cddfee2b976104656ff33b57b66f87e005d9",
+      "seed_preimage": "{\"n_slots\":6,\"participants\":[\"Coco\",\"Yuki\",\"大刘\",\"小红\",\"老王\",\"阿明\"],\"rule\":\"gift_exchange_any_enum_v1\",\"source\":\"（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07\"}",
+      "source_text": "（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07"
+    }
+  },
+  "inputs_echo": {
+    "deadline": "2026-11-07 20:00 报名截止，名单和不能互送的规则随后锁定",
+    "forbidden": [
+      {
+        "giver": "Coco",
+        "receiver": "大刘"
+      },
+      {
+        "giver": "大刘",
+        "receiver": "Coco"
+      },
+      {
+        "giver": "小红",
+        "receiver": "阿明"
+      },
+      {
+        "giver": "老王",
+        "receiver": "Yuki"
+      },
+      {
+        "giver": "阿明",
+        "receiver": "小红"
+      }
+    ],
+    "mode": "any",
+    "participants": [
+      "Coco",
+      "Yuki",
+      "大刘",
+      "小红",
+      "老王",
+      "阿明"
+    ],
+    "random_source": "（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07",
+    "randomness": "public_source",
+    "source_description": "虚构示例：2026 年 11 月 8 日某公开开奖，按官网显示的格式原样抄写"
+  },
+  "not_modeled": [
+    "随机源是否真的事先约定、事后无法更改、临场无人能预测：脚本核对不了。这三条只要有一条不成立，就有人能影响结果。",
+    "名单、方式和不能互送的规则是否在随机源公布前就已冻结：由群里的记录证明，脚本只按输入计算。",
+    "谁看得到结果：运行脚本的人看到全表，抽法又是公开的，所以有名单、不能互送的规则和随机源原文的人，自己跑一遍也能算出全表。这些材料要等礼物交换完再公布。",
+    "任意错排允许两个人互送（甲送给乙，乙也送给甲）。不想出现这种情况，就选「一圈传下去」，或者把这两个人登记为不能互送。"
+  ],
+  "reproduce": "python3 scripts/gift_exchange.py --demo --json",
+  "result": {
+    "assignments": {
+      "Coco": "Yuki",
+      "Yuki": "小红",
+      "大刘": "阿明",
+      "小红": "老王",
+      "老王": "Coco",
+      "阿明": "大刘"
+    },
+    "attempts": null,
+    "circle": null,
+    "method": "enumeration",
+    "plan_count": 96,
+    "plan_number": 13,
+    "rule": "gift_exchange_any_enum_v1",
+    "seed_hex": "1a00559810149576dff6f98ced86cddfee2b976104656ff33b57b66f87e005d9",
+    "seed_preimage": "{\"n_slots\":6,\"participants\":[\"Coco\",\"Yuki\",\"大刘\",\"小红\",\"老王\",\"阿明\"],\"rule\":\"gift_exchange_any_enum_v1\",\"source\":\"（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07\"}",
+    "source_text": "（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07"
+  }
+}

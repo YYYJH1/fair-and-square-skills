@@ -1,0 +1,197 @@
+{
+  "certificate": {
+    "envy_table": {
+      "Coco": {
+        "主卧带卫": "-750.00",
+        "北次卧": "350.00",
+        "南次卧": "50.00",
+        "小书房": "350.00"
+      },
+      "大刘": {
+        "主卧带卫": "250.00",
+        "北次卧": "-150.00",
+        "南次卧": "-250.00",
+        "小书房": "150.00"
+      },
+      "小红": {
+        "主卧带卫": "-550.00",
+        "北次卧": "50.00",
+        "南次卧": "250.00",
+        "小书房": "250.00"
+      },
+      "阿明": {
+        "主卧带卫": "-150.00",
+        "北次卧": "-50.00",
+        "南次卧": "-50.00",
+        "小书房": "250.00"
+      }
+    },
+    "one_liner": {
+      "Coco": "By your bids, 北次卧 is 350.00 cheaper than the price you had in mind, and no other room is a better deal. 小书房 would be exactly as good a deal for you (also 350.00 cheaper than your price), and a tie is not a loss.",
+      "大刘": "By your bids, 主卧带卫 is 250.00 cheaper than the price you had in mind, and no other room is a better deal.",
+      "小红": "By your bids, 南次卧 is 250.00 cheaper than the price you had in mind, and no other room is a better deal. 小书房 would be exactly as good a deal for you (also 250.00 cheaper than your price), and a tie is not a loss.",
+      "阿明": "By your bids, 小书房 is 250.00 cheaper than the price you had in mind, and no other room is a better deal."
+    },
+    "rent_within_own_bid": {
+      "Coco": true,
+      "大刘": true,
+      "小红": true,
+      "阿明": true
+    },
+    "ties": {
+      "Coco": [
+        "小书房"
+      ],
+      "大刘": [],
+      "小红": [
+        "小书房"
+      ],
+      "阿明": []
+    }
+  },
+  "inputs_echo": {
+    "audit": {
+      "assignment": {
+        "Coco": "北次卧",
+        "大刘": "主卧带卫",
+        "小红": "南次卧",
+        "阿明": "小书房"
+      },
+      "rent": {
+        "Coco": "2000.00",
+        "大刘": "2000.00",
+        "小红": "2000.00",
+        "阿明": "2000.00"
+      }
+    },
+    "bids": {
+      "Coco": {
+        "主卧带卫": "2400.00",
+        "北次卧": "2000.00",
+        "南次卧": "2300.00",
+        "小书房": "1300.00"
+      },
+      "大刘": {
+        "主卧带卫": "3400.00",
+        "北次卧": "1500.00",
+        "南次卧": "2000.00",
+        "小书房": "1100.00"
+      },
+      "小红": {
+        "主卧带卫": "2600.00",
+        "北次卧": "1700.00",
+        "南次卧": "2500.00",
+        "小书房": "1200.00"
+      },
+      "阿明": {
+        "主卧带卫": "3000.00",
+        "北次卧": "1600.00",
+        "南次卧": "2200.00",
+        "小书房": "1200.00"
+      }
+    },
+    "rooms": [
+      "主卧带卫",
+      "南次卧",
+      "北次卧",
+      "小书房"
+    ],
+    "rules": {
+      "negative_rent": "spliddit"
+    },
+    "total_rent": "8000.00"
+  },
+  "not_modeled": [
+    "Strategy-proofness: no envy-free rent division method is strategy-proof.",
+    "Different numbers of rooms and people, and two people who share a room without being a couple (a couple first agrees on one joint set of bids and counts as one person).",
+    "A budget limit on the most a person can pay."
+  ],
+  "reproduce": "python3 rent_split.py --input - --format md --audit --lang en   # same JSON on standard input",
+  "result": {
+    "assignment": {
+      "Coco": "北次卧",
+      "大刘": "主卧带卫",
+      "小红": "南次卧",
+      "阿明": "小书房"
+    },
+    "audit": {
+      "assignment_is_optimal": true,
+      "bids_total_best_cents": "9100.00",
+      "bids_total_now_cents": "9100.00",
+      "per_person": {
+        "Coco": {
+          "delta_cents": "350.00",
+          "envied_rooms": [
+            "主卧带卫"
+          ],
+          "envy_cents": "400.00",
+          "rent_now_cents": "2000.00",
+          "room_now": "北次卧",
+          "rule_rent_cents": "1650.00",
+          "rule_room": "北次卧",
+          "surplus_now_cents": "0.00",
+          "surplus_rule_cents": "350.00"
+        },
+        "大刘": {
+          "delta_cents": "-1150.00",
+          "envied_rooms": [],
+          "envy_cents": "0.00",
+          "rent_now_cents": "2000.00",
+          "room_now": "主卧带卫",
+          "rule_rent_cents": "3150.00",
+          "rule_room": "主卧带卫",
+          "surplus_now_cents": "1400.00",
+          "surplus_rule_cents": "250.00"
+        },
+        "小红": {
+          "delta_cents": "-250.00",
+          "envied_rooms": [
+            "主卧带卫"
+          ],
+          "envy_cents": "100.00",
+          "rent_now_cents": "2000.00",
+          "room_now": "南次卧",
+          "rule_rent_cents": "2250.00",
+          "rule_room": "南次卧",
+          "surplus_now_cents": "500.00",
+          "surplus_rule_cents": "250.00"
+        },
+        "阿明": {
+          "delta_cents": "1050.00",
+          "envied_rooms": [
+            "主卧带卫"
+          ],
+          "envy_cents": "1800.00",
+          "rent_now_cents": "2000.00",
+          "room_now": "小书房",
+          "rule_rent_cents": "950.00",
+          "rule_room": "小书房",
+          "surplus_now_cents": "-800.00",
+          "surplus_rule_cents": "250.00"
+        }
+      }
+    },
+    "has_negative_rent": false,
+    "max_envy_cents": "0.00",
+    "rent_cents": {
+      "主卧带卫": "3150.00",
+      "北次卧": "1650.00",
+      "南次卧": "2250.00",
+      "小书房": "950.00"
+    },
+    "rule": "spliddit",
+    "rule_applied": "non_negative",
+    "shifted": {},
+    "surplus_cents": {
+      "Coco": "350.00",
+      "大刘": "250.00",
+      "小红": "250.00",
+      "阿明": "250.00"
+    },
+    "tie_break": {
+      "method": "not_needed",
+      "seed_hex": null,
+      "was_tie": false
+    }
+  }
+}

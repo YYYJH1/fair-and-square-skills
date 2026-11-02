@@ -1,0 +1,56 @@
+[project]
+name = "fair-and-square-skills"
+version = "0.2.0"
+description = "Agent skills for everyday fair division: rent, bills, rides, votes, chores, lotteries, belongings and gift exchanges, computed by tested scripts."
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Jiahao You" }]
+keywords = [
+  "fair-division",
+  "rent",
+  "bill-splitting",
+  "carpool",
+  "voting",
+  "lottery",
+  "chores",
+  "secret-santa",
+  "gift-exchange",
+  "dividing-belongings",
+  "mechanism-design",
+]
+classifiers = [
+  "Environment :: Console",
+  "Intended Audience :: End Users/Desktop",
+  "Natural Language :: Chinese (Simplified)",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Mathematics",
+]
+requires-python = ">=3.9"
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/YYYJH1/fair-and-square-skills"
+Repository = "https://github.com/YYYJH1/fair-and-square-skills"
+Issues = "https://github.com/YYYJH1/fair-and-square-skills/issues"
+Documentation = "https://github.com/YYYJH1/fair-and-square-skills/blob/main/docs/THEORY.md"
+Changelog = "https://github.com/YYYJH1/fair-and-square-skills/blob/main/CHANGELOG.md"
+
+[dependency-groups]
+dev = ["pytest>=8", "hypothesis>=6.100", "ruff>=0.6", "scipy>=1.11"]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

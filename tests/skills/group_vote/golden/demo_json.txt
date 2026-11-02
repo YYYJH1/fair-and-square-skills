@@ -1,0 +1,275 @@
+{
+  "certificate": {
+    "how_to_verify": "seed = SHA-256 of the canonical JSON (sorted keys, no spaces, UTF-8) of {\"n_slots\": N, \"participants\": names sorted by code point, \"rule\": RULE, \"source\": SOURCE TEXT}. Draw number c = first 8 bytes, big-endian, of SHA-256(seed + c as 8 big-endian bytes). A uniform integer in [0, n) takes x mod n if x < 2^64 - (2^64 mod n), otherwise the next draw is used. The order is Fisher-Yates over the code-point-sorted names, i from n-1 down to 1, swapping position i with a uniform integer in [0, i]. Here the rule is \"group_vote_tie_order_v1\", the participants are the options and n_slots is 1. The first option of the order wins a tie.",
+    "seed_hex": "c96cf8ec928f61d0856038334c01b5d837b49b53f24814bbe0592bc65c3aba97",
+    "tie_break_order": [
+      "爬山",
+      "KTV",
+      "密室逃脱",
+      "火锅",
+      "剧本杀"
+    ]
+  },
+  "inputs_echo": {
+    "all_rules": true,
+    "ballot_lines": [
+      {
+        "count": 8,
+        "ranking": [
+          "密室逃脱",
+          "爬山",
+          "KTV",
+          "火锅",
+          "剧本杀"
+        ]
+      },
+      {
+        "count": 7,
+        "ranking": [
+          "剧本杀",
+          "爬山",
+          "KTV",
+          "火锅",
+          "密室逃脱"
+        ]
+      },
+      {
+        "count": 6,
+        "ranking": [
+          "火锅",
+          "KTV",
+          "剧本杀",
+          "爬山",
+          "密室逃脱"
+        ]
+      },
+      {
+        "count": 4,
+        "ranking": [
+          "KTV",
+          "火锅",
+          "密室逃脱",
+          "爬山",
+          "剧本杀"
+        ]
+      },
+      {
+        "count": 2,
+        "ranking": [
+          "爬山",
+          "剧本杀",
+          "火锅",
+          "密室逃脱",
+          "KTV"
+        ]
+      }
+    ],
+    "ballot_total": 27,
+    "kind": "ranked",
+    "options": [
+      "密室逃脱",
+      "爬山",
+      "剧本杀",
+      "火锅",
+      "KTV"
+    ],
+    "rules": {
+      "method": "condorcet",
+      "partial": "reject",
+      "tie_break": {
+        "random_source": "（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07"
+      }
+    },
+    "topic": "团建去哪儿"
+  },
+  "not_modeled": [
+    "没有防策略保证：选项在三个及以上时，任何能选出每个选项、又不是独裁的排序规则，都可能被某个投票人在某种情形下操纵（Gibbard–Satterthwaite 定理）。",
+    "同一张选票里不能并列同一个名次。",
+    "谁有资格投票、有没有重复投票、选票是否真实，脚本不核对，请组织者核对。"
+  ],
+  "reproduce": "python3 scripts/group_vote.py --demo --json",
+  "result": {
+    "condorcet_winner": "爬山",
+    "cycle": null,
+    "method": "condorcet",
+    "pairwise_matrix": {
+      "KTV": {
+        "剧本杀": 18,
+        "密室逃脱": 17,
+        "火锅": 19,
+        "爬山": 10
+      },
+      "剧本杀": {
+        "KTV": 9,
+        "密室逃脱": 15,
+        "火锅": 9,
+        "爬山": 13
+      },
+      "密室逃脱": {
+        "KTV": 10,
+        "剧本杀": 12,
+        "火锅": 8,
+        "爬山": 12
+      },
+      "火锅": {
+        "KTV": 8,
+        "剧本杀": 18,
+        "密室逃脱": 19,
+        "爬山": 10
+      },
+      "爬山": {
+        "KTV": 17,
+        "剧本杀": 14,
+        "密室逃脱": 15,
+        "火锅": 17
+      }
+    },
+    "per_rule": {
+      "borda": {
+        "scores": {
+          "KTV": "64",
+          "剧本杀": "46",
+          "密室逃脱": "42",
+          "火锅": "55",
+          "爬山": "63"
+        },
+        "winner": "KTV"
+      },
+      "condorcet": {
+        "winner": "爬山"
+      },
+      "irv": {
+        "rounds": [
+          {
+            "continuing": 27,
+            "counts": {
+              "KTV": 4,
+              "剧本杀": 7,
+              "密室逃脱": 8,
+              "火锅": 6,
+              "爬山": 2
+            },
+            "eliminated": [
+              "爬山"
+            ],
+            "exhausted": 0,
+            "round": 1,
+            "winner": null
+          },
+          {
+            "continuing": 27,
+            "counts": {
+              "KTV": 4,
+              "剧本杀": 9,
+              "密室逃脱": 8,
+              "火锅": 6
+            },
+            "eliminated": [
+              "KTV"
+            ],
+            "exhausted": 0,
+            "round": 2,
+            "winner": null
+          },
+          {
+            "continuing": 27,
+            "counts": {
+              "剧本杀": 9,
+              "密室逃脱": 8,
+              "火锅": 10
+            },
+            "eliminated": [
+              "密室逃脱"
+            ],
+            "exhausted": 0,
+            "round": 3,
+            "winner": null
+          },
+          {
+            "continuing": 27,
+            "counts": {
+              "剧本杀": 9,
+              "火锅": 18
+            },
+            "eliminated": [],
+            "exhausted": 0,
+            "round": 4,
+            "winner": "火锅"
+          }
+        ],
+        "winner": "火锅"
+      },
+      "kemeny": {
+        "optimal_rankings": 1,
+        "ranking": [
+          "爬山",
+          "KTV",
+          "火锅",
+          "剧本杀",
+          "密室逃脱"
+        ],
+        "score": 169,
+        "winner": "爬山"
+      },
+      "plurality": {
+        "scores": {
+          "KTV": 4,
+          "剧本杀": 7,
+          "密室逃脱": 8,
+          "火锅": 6,
+          "爬山": 2
+        },
+        "winner": "密室逃脱"
+      },
+      "runoff": {
+        "round_1": {
+          "decided": false,
+          "votes": {
+            "KTV": 4,
+            "剧本杀": 7,
+            "密室逃脱": 8,
+            "火锅": 6,
+            "爬山": 2
+          }
+        },
+        "round_2": {
+          "abstain": 0,
+          "finalists": [
+            "密室逃脱",
+            "剧本杀"
+          ],
+          "votes": {
+            "剧本杀": 15,
+            "密室逃脱": 12
+          }
+        },
+        "winner": "剧本杀"
+      },
+      "schulze": {
+        "winner": "爬山"
+      }
+    },
+    "per_rule_winners": {
+      "borda": "KTV",
+      "condorcet": "爬山",
+      "irv": "火锅",
+      "kemeny": "爬山",
+      "plurality": "密室逃脱",
+      "runoff": "剧本杀",
+      "schulze": "爬山"
+    },
+    "removed_ballots": 0,
+    "schulze_winners": [
+      "爬山"
+    ],
+    "tie_break_order": [
+      "爬山",
+      "KTV",
+      "密室逃脱",
+      "火锅",
+      "剧本杀"
+    ],
+    "tie_events": [],
+    "winner": "爬山"
+  }
+}

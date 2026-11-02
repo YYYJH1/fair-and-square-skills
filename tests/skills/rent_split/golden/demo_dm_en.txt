@@ -1,0 +1,69 @@
+(For the organizer: send each block below privately to the person named. Do not post it in the group.)
+
+--- To 阿明 ---
+阿明, this is your own rent result. Nobody else can see your bids.
+Check of the current split:
+You live in 小书房 now and pay 2,000.00 a month.
+By your bids, under the current split you envy 主卧带卫 by 1,800.00.
+By the rule, 小书房 costs 950.00 a month, and you now pay 1,050.00 more than that.
+The split by the rule:
+You live in 小书房 and pay 950.00 a month.
+Your bid for this room is 1,200.00, so you gain 250.00.
+By your bids, 小书房 is 250.00 cheaper than the price you had in mind, and no other room is a better deal.
+You pay no more than your own bid for this room.
+Your check table (your bid - rent, the room marked * is the one you live in, a larger number is a better deal):
+  主卧带卫: 3,000.00 - 3,150.00 = -150.00
+  南次卧: 2,200.00 - 2,250.00 = -50.00
+  北次卧: 1,600.00 - 1,650.00 = -50.00
+  小书房: 1,200.00 - 950.00 = 250.00 *
+
+--- To 小红 ---
+小红, this is your own rent result. Nobody else can see your bids.
+Check of the current split:
+You live in 南次卧 now and pay 2,000.00 a month.
+By your bids, under the current split you envy 主卧带卫 by 100.00.
+By the rule, 南次卧 costs 2,250.00 a month, and you now pay 250.00 less than that.
+The split by the rule:
+You live in 南次卧 and pay 2,250.00 a month.
+Your bid for this room is 2,500.00, so you gain 250.00.
+By your bids, 南次卧 is 250.00 cheaper than the price you had in mind, and no other room is a better deal. 小书房 would be exactly as good a deal for you (also 250.00 cheaper than your price), and a tie is not a loss.
+You pay no more than your own bid for this room.
+Your check table (your bid - rent, the room marked * is the one you live in, a larger number is a better deal):
+  主卧带卫: 2,600.00 - 3,150.00 = -550.00
+  南次卧: 2,500.00 - 2,250.00 = 250.00 *
+  北次卧: 1,700.00 - 1,650.00 = 50.00
+  小书房: 1,200.00 - 950.00 = 250.00
+
+--- To 大刘 ---
+大刘, this is your own rent result. Nobody else can see your bids.
+Check of the current split:
+You live in 主卧带卫 now and pay 2,000.00 a month.
+By your bids, under the current split you envy nobody.
+By the rule, 主卧带卫 costs 3,150.00 a month, and you now pay 1,150.00 less than that.
+The split by the rule:
+You live in 主卧带卫 and pay 3,150.00 a month.
+Your bid for this room is 3,400.00, so you gain 250.00.
+By your bids, 主卧带卫 is 250.00 cheaper than the price you had in mind, and no other room is a better deal.
+You pay no more than your own bid for this room.
+Your check table (your bid - rent, the room marked * is the one you live in, a larger number is a better deal):
+  主卧带卫: 3,400.00 - 3,150.00 = 250.00 *
+  南次卧: 2,000.00 - 2,250.00 = -250.00
+  北次卧: 1,500.00 - 1,650.00 = -150.00
+  小书房: 1,100.00 - 950.00 = 150.00
+
+--- To Coco ---
+Coco, this is your own rent result. Nobody else can see your bids.
+Check of the current split:
+You live in 北次卧 now and pay 2,000.00 a month.
+By your bids, under the current split you envy 主卧带卫 by 400.00.
+By the rule, 北次卧 costs 1,650.00 a month, and you now pay 350.00 more than that.
+The split by the rule:
+You live in 北次卧 and pay 1,650.00 a month.
+Your bid for this room is 2,000.00, so you gain 350.00.
+By your bids, 北次卧 is 350.00 cheaper than the price you had in mind, and no other room is a better deal. 小书房 would be exactly as good a deal for you (also 350.00 cheaper than your price), and a tie is not a loss.
+You pay no more than your own bid for this room.
+Your check table (your bid - rent, the room marked * is the one you live in, a larger number is a better deal):
+  主卧带卫: 2,400.00 - 3,150.00 = -750.00
+  南次卧: 2,300.00 - 2,250.00 = 50.00
+  北次卧: 2,000.00 - 1,650.00 = 350.00 *
+  小书房: 1,300.00 - 950.00 = 350.00

@@ -1,0 +1,47 @@
+{
+  "certificate": {},
+  "inputs_echo": {
+    "deadline": "2026-11-07 20:00 报名截止，名单和不能互送的规则随后锁定",
+    "forbidden": [
+      {
+        "giver": "Coco",
+        "receiver": "大刘"
+      },
+      {
+        "giver": "大刘",
+        "receiver": "Coco"
+      },
+      {
+        "giver": "小红",
+        "receiver": "阿明"
+      },
+      {
+        "giver": "老王",
+        "receiver": "Yuki"
+      },
+      {
+        "giver": "阿明",
+        "receiver": "小红"
+      }
+    ],
+    "mode": "any",
+    "participants": [
+      "Coco",
+      "Yuki",
+      "大刘",
+      "小红",
+      "老王",
+      "阿明"
+    ],
+    "random_source": "（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07",
+    "randomness": "public_source",
+    "source_description": "虚构示例：2026 年 11 月 8 日某公开开奖，按官网显示的格式原样抄写"
+  },
+  "not_modeled": [],
+  "reproduce": "python3 scripts/gift_exchange.py --demo --check --json",
+  "result": {
+    "legal_plan_exists": true,
+    "method": "enumeration",
+    "plan_count": 96
+  }
+}

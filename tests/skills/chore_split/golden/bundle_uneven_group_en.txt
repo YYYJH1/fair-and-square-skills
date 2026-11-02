@@ -1,0 +1,22 @@
+Chore split (bundles with compensation): 4 people, 10 chores, smallest weekly total cost
+Rules (fixed in advance, not changed after the result): everybody has a cap on the number of chores, and nobody is given a chore they cannot do. Within those limits the split with the smallest weekly total cost is taken. Then payments that add up to zero make sure that nobody, by their own costs, would rather have another person's share.
+Tie rule: when more than one split has the smallest total cost, the chores are given out one unit at a time in the order of their names. Each goes to the person who comes first in the tie order below and for whom a split with the smallest total cost is still possible.
+Where the source comes from: 虚构示例：2026 年 11 月 29 日某公开开奖，按官网显示的格式原样抄写
+Source text: （虚构示例）2026-11-29 某公开开奖号码 02 09 16 23 30 + 05 11
+Seed preimage (the SHA-256 of this text is the seed): {"n_slots":10,"participants":["Coco","大刘","小红","阿明"],"rule":"chore_bundle_tiebreak_v1","source":"（虚构示例）2026-11-29 某公开开奖号码 02 09 16 23 30 + 05 11"}
+Seed (SHA-256): a255593c1fd876e4de71504dc61e588c135750d505523830544434e72d0b948d
+Tie order: 阿明, Coco, 小红, 大刘.
+The weekly split:
+Coco: 刷厕所, 擦窗 (2 units, cap 3)
+大刘: 做饭 x2, 洗碗 x2 (4 units, cap 4)
+小红: 洗碗 (1 unit, cap 1)
+阿明: 倒垃圾 x2, 拖地 (3 units, cap 3)
+Compensation (adds up to zero):
+Coco pays 5.00
+大刘 receives 20.00
+小红 pays 10.00
+阿明 pays 5.00
+20.00 is paid in and 20.00 is taken out. The people who pay put the money into a common pot and the people who receive take theirs from it, so nobody outside has to pay.
+Guarantee: by the costs each person gave in private, nobody would rather have another person's share (with the payment that goes with it). After rounding to the cent, the most anybody would gain by swapping is 0.00. Everybody gets a private message with only their own numbers so they can check.
+Not guaranteed: the method is not strategy-proof. The worst-off person is only as well off as possible within the one split of smallest total cost. A person's cost is the sum over their chores, and money and cost trade one for one.
+Recompute: the source text, the names, the chore units per week and the rule name are above. Take the SHA-256 of the seed preimage and shuffle with the counter to get the tie order. The shuffle is specified under Public randomness in docs/THEORY.md of github.com/YYYJH1/fair-and-square-skills.

@@ -1,0 +1,36 @@
+{
+  "name": "fair-and-square",
+  "description": "Fair division for everyday life as agent skills: rent, bills, rides, votes, chores, lotteries, belongings and gift exchanges.",
+  "owner": {
+    "name": "Jiahao You",
+    "url": "https://github.com/YYYJH1"
+  },
+  "plugins": [
+    {
+      "name": "fair-and-square",
+      "source": "./plugin",
+      "description": "Agent skills for everyday fair division: rent, bills, rides, votes, chores, lotteries, belongings and gift exchanges. Every number comes from a tested script.",
+      "author": {
+        "name": "Jiahao You",
+        "url": "https://github.com/YYYJH1"
+      },
+      "homepage": "https://github.com/YYYJH1/fair-and-square-skills",
+      "repository": "https://github.com/YYYJH1/fair-and-square-skills",
+      "license": "MIT",
+      "category": "productivity",
+      "keywords": [
+        "fair-division",
+        "rent",
+        "bill-splitting",
+        "carpool",
+        "voting",
+        "lottery",
+        "chores",
+        "secret-santa",
+        "gift-exchange",
+        "dividing-belongings",
+        "mechanism-design"
+      ]
+    }
+  ]
+}

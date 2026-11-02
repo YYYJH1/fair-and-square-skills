@@ -1,0 +1,71 @@
+# Chore split (bundles with compensation): 4 people, 10 chores, smallest weekly total cost
+
+## The weekly split and the compensation (the compensation adds up to zero)
+
+| Person | Chores | Count / cap | Own cost | Compensation | Weekly net |
+| --- | --- | --- | --- | --- | --- |
+| Coco | 刷厕所, 擦窗 | 2 / 3 | 35.00 | pays 5.00 | -40.00 |
+| 大刘 | 做饭 x2, 洗碗 x2 | 4 / 4 | 50.00 | receives 20.00 | -30.00 |
+| 小红 | 洗碗 | 1 / 1 | 30.00 | pays 10.00 | -40.00 |
+| 阿明 | 倒垃圾 x2, 拖地 | 3 / 3 | 30.00 | pays 5.00 | -35.00 |
+| Total |  | 10 | 145.00 | 0.00 | -145.00 |
+
+## Check table (the weekly net if the person took another share, by their own costs; * marks their own share, higher is better)
+
+| Person | Coco's share | 大刘's share | 小红's share | 阿明's share |
+| --- | --- | --- | --- | --- |
+| Coco | -40.00* | cannot take | -55.00 | -85.00 |
+| 大刘 | -75.00 | -30.00* | -30.00 | -135.00 |
+| 小红 | cannot take | cannot take | -40.00* | cannot take |
+| 阿明 | -95.00 | cannot take | -35.00 | -35.00* |
+
+## Random source for ties and how to recompute
+
+| Item | Value |
+| --- | --- |
+| Where the source comes from | 虚构示例：2026 年 11 月 29 日某公开开奖，按官网显示的格式原样抄写 |
+| Source text (verbatim) | （虚构示例）2026-11-29 某公开开奖号码 02 09 16 23 30 + 05 11 |
+| Rule name | chore_bundle_tiebreak_v1 |
+| Chore units per week (part of the seed, the n_slots of the seed) | 10 |
+| Names (sorted by code point, part of the seed) | Coco, 大刘, 小红, 阿明 |
+| Seed preimage (take the SHA-256 of this text) | {"n_slots":10,"participants":["Coco","大刘","小红","阿明"],"rule":"chore_bundle_tiebreak_v1","source":"（虚构示例）2026-11-29 某公开开奖号码 02 09 16 23 30 + 05 11"} |
+| Seed (SHA-256, hex) | a255593c1fd876e4de71504dc61e588c135750d505523830544434e72d0b948d |
+| Tie order (earlier comes first) | 阿明, Coco, 小红, 大刘 |
+
+Rules (fixed in advance, not changed after the result): everybody has a cap on the number of chores, and nobody is given a chore they cannot do. Within those limits the script takes the split with the smallest weekly total cost. Then payments that add up to zero make sure that nobody, by their own costs, would rather have another person's share (with the payment that goes with it), and among such payments the worst-off person is as well off as possible.
+
+Total weekly cost (each person's own costs): 145.00. The worst off after the compensation is Coco, 小红, with -40.00 a week.
+
+The people who pay put the money into a common pot and the people who receive take theirs from it: 20.00 is paid in and 20.00 is taken out, which is exactly equal, so nobody outside has to pay.
+
+After rounding to the cent nobody envies another share (largest envy 0.00). The payments are rounded down or up to a cent and add up to exactly 0.00.
+
+Tie rule: more than one split can have the smallest total cost. The chores are put in the order of their names (code point order) and given out one unit at a time. Each goes to the person who comes first in the tie order and for whom a split with the smallest total cost is still possible.
+
+The rules name a public random source, but only one split has the smallest total cost this time, so it is not used.
+
+How to recompute the tie order: (1) seed = SHA-256 of the seed preimage (UTF-8). (2) Draw number c (counting from 0) = the first 8 bytes, big-endian, of SHA-256(seed + c as 8 big-endian bytes), read as an integer x. For an integer in 0..n-1, take x mod n if x < 2^64 - (2^64 mod n), otherwise add 1 to c and draw again. (3) Sort the names by code point, go i from n-1 down to 1, draw an integer j in 0..i and swap positions i and j. The result is the tie order. The random module is never used.
+
+One line per person (send it to that person only, not to the group):
+- Coco: By your own costs, your share comes to -40.00 a week, and no other share (with the payment that goes with it) is a better deal for you. You cannot take the share of 大刘, so it is not compared.
+- 大刘: By your own costs, your share comes to -30.00 a week, and no other share (with the payment that goes with it) is a better deal for you. The share of 小红 would be exactly as good a deal for you (also -30.00), and a tie is not a loss.
+- 小红: By your own costs, your share comes to -40.00 a week, and no other share (with the payment that goes with it) is a better deal for you. You cannot take the share of Coco or 大刘 or 阿明, so it is not compared.
+- 阿明: By your own costs, your share comes to -35.00 a week, and no other share (with the payment that goes with it) is a better deal for you. The share of 小红 would be exactly as good a deal for you (also -35.00), and a tie is not a loss. You cannot take the share of 大刘, so it is not compared.
+
+## Not modeled
+
+- Whether the costs are honest: the script only does arithmetic on the numbers the people gave, and nobody sees another person's numbers, so it cannot check them.
+- Strategy-proofness: this method is not strategy-proof. A person who knows what the others entered can sometimes end up better off by misreporting their costs.
+- How chores relate: a person's cost is the sum over their chores. Chores that are easier or harder together, or that depend on the order, are not modeled.
+- Money and cost trade one for one, there is no budget limit, and how much money a person already has does not matter.
+- Tied splits: when several splits have the same total cost, the order fixed in advance picks one of them. That one is not guaranteed to be the best for the worst-off person.
+- The worst-off person is as well off as possible within the one split of smallest total cost, not among all splits. A split with a higher total cost sometimes leaves the worst-off person better off.
+- Across weeks: this plan settles one typical week and repeats it. It does not rotate anything between weeks.
+- What an outside cleaner costs: not calculated. Use bill-split to share that.
+- Tasks that somebody likes: costs cannot be negative, so enter 0 for a task that somebody likes.
+
+## Reproduce
+
+```
+python3 scripts/chore_split.py --input - --format md --lang en
+```

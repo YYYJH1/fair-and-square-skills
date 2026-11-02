@@ -1,0 +1,50 @@
+# Chore split (bundles with compensation): 2 people, 2 chores, smallest weekly total cost
+
+## The weekly split and the compensation (the compensation adds up to zero)
+
+| Person | Chores | Count / cap | Own cost | Compensation | Weekly net |
+| --- | --- | --- | --- | --- | --- |
+| 小红 | 倒垃圾 | 1 / 1 | 12.34 | 0.00 | -12.34 |
+| 阿明 | 洗碗 | 1 / 1 | 12.35 | 0.00 | -12.35 |
+| Total |  | 2 | 24.69 | 0.00 | -24.69 |
+
+## Check table (the weekly net if the person took another share, by their own costs; * marks their own share, higher is better)
+
+| Person | 小红's share | 阿明's share |
+| --- | --- | --- |
+| 小红 | -12.34* | -12.35 |
+| 阿明 | -12.34 | -12.35* |
+
+Rules (fixed in advance, not changed after the result): everybody has a cap on the number of chores, and nobody is given a chore they cannot do. Within those limits the script takes the split with the smallest weekly total cost. Then payments that add up to zero make sure that nobody, by their own costs, would rather have another person's share (with the payment that goes with it), and among such payments the worst-off person is as well off as possible.
+
+Total weekly cost (each person's own costs): 24.69. The worst off after the compensation is 阿明, with -12.35 a week.
+
+The people who pay put the money into a common pot and the people who receive take theirs from it: 0.00 is paid in and 0.00 is taken out, which is exactly equal, so nobody outside has to pay.
+
+After rounding to the cent the largest envy is 0.01. At the exact values there is no envy, so this comes from rounding and is at most 0.01. The payments are rounded down or up to a cent and add up to exactly 0.00.
+
+Tie rule: more than one split can have the smallest total cost. The chores are put in the order of their names (code point order) and given out one unit at a time. Each goes to the person who comes first in the tie order and for whom a split with the smallest total cost is still possible.
+
+Several splits have the same smallest total cost this time and no public random source was given, so the tie was settled by the order of the names. To avoid favouring early names, put a public random source in the rules message next time.
+
+One line per person (send it to that person only, not to the group):
+- 小红: By your own costs, your share comes to -12.34 a week, and no other share (with the payment that goes with it) is a better deal for you.
+- 阿明: By your own costs, your share comes to -12.35 a week. After rounding to the cent, the share of 小红 would be 0.01 better for you than yours. That is a rounding error (at the exact values no other share is a better deal).
+
+## Not modeled
+
+- Whether the costs are honest: the script only does arithmetic on the numbers the people gave, and nobody sees another person's numbers, so it cannot check them.
+- Strategy-proofness: this method is not strategy-proof. A person who knows what the others entered can sometimes end up better off by misreporting their costs.
+- How chores relate: a person's cost is the sum over their chores. Chores that are easier or harder together, or that depend on the order, are not modeled.
+- Money and cost trade one for one, there is no budget limit, and how much money a person already has does not matter.
+- Tied splits: when several splits have the same total cost, the order fixed in advance picks one of them. That one is not guaranteed to be the best for the worst-off person.
+- The worst-off person is as well off as possible within the one split of smallest total cost, not among all splits. A split with a higher total cost sometimes leaves the worst-off person better off.
+- Across weeks: this plan settles one typical week and repeats it. It does not rotate anything between weeks.
+- What an outside cleaner costs: not calculated. Use bill-split to share that.
+- Tasks that somebody likes: costs cannot be negative, so enter 0 for a task that somebody likes.
+
+## Reproduce
+
+```
+python3 scripts/chore_split.py --input - --format md --lang en
+```

@@ -1,0 +1,21 @@
+# Gift exchange rules check: 12 people (any derangement)
+
+## Result of the check
+
+| Item | Value |
+| --- | --- |
+| Way of giving | any derangement |
+| Number of people | 12 |
+| Names (sorted by code point, part of the seed) | Coco, Leo, Mia, Nina, Yuki, 大刘, 小周, 小红, 小雨, 老王, 阿明, 阿杰 |
+| Directions that are not allowed (who may not give to whom) | Coco→大刘, 大刘→Coco, 小周→Mia, 小红→阿明, 老王→Yuki, 阿明→小红 |
+| Conclusion | a legal plan exists |
+
+This step only asks whether the rules have a solution. It draws nothing and needs no random source, so it can be done before the source is published. The answer depends only on the names, the way of giving and the exclusions.
+
+With more than 9 people the plans are not listed. A legal plan is known to exist. The draw proposes random plans, at most 20000 of them. If legal plans are very rare it may find none, and then the script reports an error instead of giving an uneven result.
+
+## Reproduce
+
+```
+python3 scripts/gift_exchange.py --input - --check --format md --lang en
+```

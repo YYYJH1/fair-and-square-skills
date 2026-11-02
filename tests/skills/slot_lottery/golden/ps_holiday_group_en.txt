@@ -1,0 +1,16 @@
+Assignment result: 6 people, 4 slots (probabilistic serial, decomposed and drawn from the public source)
+Where the source comes from: 虚构示例：2026 年 11 月 8 日某公开开奖，按官网显示的格式原样抄写
+Deadline: 2026-11-07 20:00 前私聊交志愿，之后名单锁定
+Source text: （虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07
+Seed preimage (its SHA-256 is the seed): {"n_slots":5,"participants":["Coco","Yuki","大刘","小红","老王","阿明"],"rule":"ps_bvn_v1","source":"（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07"}
+Seed (SHA-256): 9e2a519c3d90baa1980cfe2dab5da503d47e53bc5e266afe1c78a76d0fd02ac2
+Method: probabilistic serial (PS). The table of chances is decomposed into fixed assignments and the public source picks one of them.
+The draw: a random number from 0 to 35, drawn 26.
+Result:
+Coco got "国庆后一周"
+Yuki got "春节前一周"
+大刘 got "端午"
+小红 got "春节前一周"
+老王 got "五一"
+No slot: 阿明
+Recompute: the source text, the names, the slot count and the rule name are all above. Take the SHA-256 of the seed preimage for the seed, then draw the random number. The table of chances and the decomposition carry ranking information, so they are not posted in the group. The organizer holds the full --json certificate, and once everybody agrees to reveal their rankings, python3 scripts/slot_lottery.py --verify recomputes the whole result from the same input.

@@ -1,0 +1,12 @@
+{
+  "mode": "group_order",
+  "id": "coupon-1",
+  "items": [
+    {"who": "甲", "name": "烤鱼套餐", "amount": 150},
+    {"who": "乙", "name": "火锅双人餐", "amount": 140},
+    {"who": "丙", "name": "奶茶", "amount": 20}
+  ],
+  "coupons": [{"name": "满300减60", "tiers": [[300, 60]], "split": "shapley"}],
+  "paid_by": "甲",
+  "audit": {"current": "proportional"}
+}

@@ -1,0 +1,3 @@
+# Files that tools/sync_core.py copies into every plugin/skills/*/scripts/ directory.
+# One file name per line; blank lines and lines starting with # are ignored.
+fsq_core.py

@@ -1,0 +1,21 @@
+{
+  "mode": "rsd",
+  "people": ["Ana", "Ben", "Cleo", "Coco", "Dev", "Yuki"],
+  "slot_names": ["Week after National Day", "Week before Spring Festival", "May Day", "Dragon Boat"],
+  "capacities": {"Week before Spring Festival": 2},
+  "prefs": {
+    "Ana": ["Week before Spring Festival", "Week after National Day", "May Day", "Dragon Boat"],
+    "Ben": ["Week before Spring Festival", "May Day", "Week after National Day", "Dragon Boat"],
+    "Cleo": ["Week after National Day", "Week before Spring Festival", "Dragon Boat", "May Day"],
+    "Coco": ["Week before Spring Festival", "Week after National Day", "Dragon Boat", "May Day"],
+    "Dev": ["May Day", "Week before Spring Festival", "Week after National Day", "Dragon Boat"],
+    "Yuki": ["Week before Spring Festival", "Dragon Boat", "May Day", "Week after National Day"]
+  },
+  "random_source": "(fictional example) 2026-11-08 public draw numbers 03 11 19 24 33 + 02 07",
+  "rules": {
+    "source_description": "Fictional example: a public draw on 8 November 2026, copied exactly as its official site shows it",
+    "deadline": "Rankings go in privately by 2026-11-07 20:00, then the list is locked",
+    "no_ranking": "forfeit",
+    "method": "ps"
+  }
+}

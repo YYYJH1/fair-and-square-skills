@@ -1,0 +1,112 @@
+{
+  "certificate": {
+    "one_liner": {
+      "Coco": "你没有抽中：顺序第 4 位，候补第 1 位（3 个名额，共 8 人）。有人放弃时按候补顺序递补，不重抽。",
+      "Mia": "你没有抽中：顺序第 7 位，候补第 4 位（3 个名额，共 8 人）。有人放弃时按候补顺序递补，不重抽。",
+      "Yuki": "你抽中了：顺序第 1 位，在 3 个名额之内（共 8 人）。",
+      "大刘": "你抽中了：顺序第 3 位，在 3 个名额之内（共 8 人）。",
+      "小周": "你抽中了：顺序第 2 位，在 3 个名额之内（共 8 人）。",
+      "小红": "你没有抽中：顺序第 5 位，候补第 2 位（3 个名额，共 8 人）。有人放弃时按候补顺序递补，不重抽。",
+      "老王": "你没有抽中：顺序第 8 位，候补第 5 位（3 个名额，共 8 人）。有人放弃时按候补顺序递补，不重抽。",
+      "阿明": "你没有抽中：顺序第 6 位，候补第 3 位（3 个名额，共 8 人）。有人放弃时按候补顺序递补，不重抽。"
+    },
+    "recompute": {
+      "algorithm": "seed = SHA-256 of the canonical JSON (sorted keys, no spaces, UTF-8) of {\"n_slots\": N, \"participants\": names sorted by code point, \"rule\": RULE, \"source\": SOURCE TEXT}. Draw number c = first 8 bytes, big-endian, of SHA-256(seed + c as 8 big-endian bytes). A uniform integer in [0, n) takes x mod n if x < 2^64 - (2^64 mod n), otherwise the next draw is used. The order is Fisher-Yates over the code-point-sorted names, i from n-1 down to 1, swapping position i with a uniform integer in [0, i].",
+      "seeds": {
+        "main": "15b9c53a44270857eb44286382b897216eaecc0dcf18eb49260f7442cdf87710"
+      },
+      "source_text": "（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07"
+    }
+  },
+  "inputs_echo": {
+    "deadline": "2026-11-07 20:00 报名截止，名单和名额数随后锁定",
+    "mode": "lottery",
+    "n_slots": 3,
+    "participants": [
+      "Coco",
+      "Mia",
+      "Yuki",
+      "大刘",
+      "小周",
+      "小红",
+      "老王",
+      "阿明"
+    ],
+    "random_source": "（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07",
+    "randomness": "public_source",
+    "source_description": "虚构示例：2026 年 11 月 8 日某公开开奖，按官网显示的格式原样抄写"
+  },
+  "not_modeled": [
+    "随机源是否真的事先约定、事后无法更改、临场无人能预测：脚本核对不了。这三条只要有一条不成立，就有人能影响结果。",
+    "名单、名额数和规则是否在随机源公布前就已冻结：由群里的记录证明，脚本只按输入计算。",
+    "有人放弃后按候补顺序递补是群里的约定，不在脚本的保证里。"
+  ],
+  "reproduce": "python3 scripts/slot_lottery.py --demo --json",
+  "result": {
+    "draws": [
+      {
+        "group": "main",
+        "order": [
+          "Yuki",
+          "小周",
+          "大刘",
+          "Coco",
+          "小红",
+          "阿明",
+          "Mia",
+          "老王"
+        ],
+        "participants": [
+          "Coco",
+          "Mia",
+          "Yuki",
+          "大刘",
+          "小周",
+          "小红",
+          "老王",
+          "阿明"
+        ],
+        "seed_hex": "15b9c53a44270857eb44286382b897216eaecc0dcf18eb49260f7442cdf87710",
+        "seed_preimage": "{\"n_slots\":3,\"participants\":[\"Coco\",\"Mia\",\"Yuki\",\"大刘\",\"小周\",\"小红\",\"老王\",\"阿明\"],\"rule\":\"uniform_lottery_v1\",\"source\":\"（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07\"}"
+      }
+    ],
+    "lapses": {},
+    "order": [
+      "Yuki",
+      "小周",
+      "大刘",
+      "Coco",
+      "小红",
+      "阿明",
+      "Mia",
+      "老王"
+    ],
+    "placed_by_rule": [],
+    "positions": {
+      "Coco": 4,
+      "Mia": 7,
+      "Yuki": 1,
+      "大刘": 3,
+      "小周": 2,
+      "小红": 5,
+      "老王": 8,
+      "阿明": 6
+    },
+    "removed": [],
+    "rule": "uniform_lottery_v1",
+    "seed_hex": "15b9c53a44270857eb44286382b897216eaecc0dcf18eb49260f7442cdf87710",
+    "source_text": "（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07",
+    "waiting": [
+      "Coco",
+      "小红",
+      "阿明",
+      "Mia",
+      "老王"
+    ],
+    "winners": [
+      "Yuki",
+      "小周",
+      "大刘"
+    ]
+  }
+}

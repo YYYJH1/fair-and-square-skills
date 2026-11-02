@@ -1,0 +1,13 @@
+{
+  "topic": "周五聚餐吃什么",
+  "options": ["火锅", "烧烤", "日料"],
+  "ballots": [
+    {"count": 4, "ranking": ["火锅", "烧烤", "日料"]},
+    {"count": 4, "ranking": ["烧烤", "日料", "火锅"]},
+    {"count": 4, "ranking": ["日料", "火锅", "烧烤"]}
+  ],
+  "rules": {
+    "method": "schulze",
+    "tie_break": {"random_source": "（虚构示例）2026-11-15 某公开开奖号码 05 09 14 22 31 + 03 11"}
+  }
+}

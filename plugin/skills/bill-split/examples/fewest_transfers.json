@@ -1,0 +1,15 @@
+{
+  "mode": "expenses",
+  "people": ["甲", "乙", "丙", "丁", "戊"],
+  "expenses": [
+    {
+      "id": "tickets-1",
+      "what": "演出门票",
+      "paid_by": {"甲": 120, "乙": 50},
+      "items": [
+        {"name": "门票", "amount": 170, "exact": {"甲": 50, "丙": 50, "丁": 40, "戊": 30}}
+      ]
+    }
+  ],
+  "rules": {"settle": "min_transfers"}
+}

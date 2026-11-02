@@ -1,0 +1,9 @@
+Stuff split result (Knaster's sealed bids): 3 people share 5 items
+Note: 虚构示例：三兄妹分老房子里的五样东西，大姐照顾父母出力最多，约定份额是 2 比 1 比 1
+Rule (fixed in advance, not changed after the result): every item goes to a person who values it most, everybody is first owed the share given by the agreed weights (大姐 1/2, 二哥 1/4, 小妹 1/4) of their own total value, and the surplus is shared in proportion to the shares (knaster).
+大姐 gets 老座钟, 缝纫机, cash: receives 5.00
+二哥 gets 书桌, cash: pays 7.50
+小妹 gets 相册, 旧收音机, cash: receives 2.50
+The cash adds up to 0.00.
+Guarantee: everybody ends with at least their own fair share (rounded down to the cent). Nobody is promised freedom from envy, and this time 2 people envy another person's package by their own values. Everybody gets a private message with only their own numbers, so each person can check it.
+Several items have a highest value that more than one person shares. Such an item goes to the sharer who holds the fewest items so far, and then to the one who comes first in the priority order, which comes from the public random source in the rules. Seed (SHA-256): 597a31fd1301cb32eb086291da548587d26fb5a6724f6080c26d80230d6f94ef. The algorithm is SEED_SPEC in fsq_core. This only decides who holds the item and who pays or receives cash, and every person's final worth stays the same.

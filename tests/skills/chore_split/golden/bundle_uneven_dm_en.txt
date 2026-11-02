@@ -1,0 +1,58 @@
+(For the organizer: send each block below privately to the person named. Do not post it in the group.)
+
+--- To Coco ---
+Coco, this is your own chore result. Nobody else sees your costs.
+Your cap is 3 units.
+Your chores each week: 刷厕所, 擦窗 (2 units in all). By your own costs they come to 35.00.
+Compensation: you pay 5.00 a week.
+After the compensation your week comes to -40.00.
+By your own costs, your share comes to -40.00 a week, and no other share (with the payment that goes with it) is a better deal for you. You cannot take the share of 大刘, so it is not compared.
+Your check table (your weekly net if you took that share = minus your cost, plus the payment that goes with it; * marks your own share, higher is better):
+  Coco's share (刷厕所, 擦窗): -35.00 - 5.00 = -40.00*
+  大刘's share (做饭 x2, 洗碗 x2): you cannot take it (it has 4 units, over your cap of 3 units)
+  小红's share (洗碗): -45.00 - 10.00 = -55.00
+  阿明's share (倒垃圾 x2, 拖地): -80.00 - 5.00 = -85.00
+Everybody's payments add up to 0.00, so nobody outside has to pay.
+
+--- To 大刘 ---
+大刘, this is your own chore result. Nobody else sees your costs.
+Your cap is 4 units.
+Your chores each week: 做饭 x2, 洗碗 x2 (4 units in all). By your own costs they come to 50.00.
+Compensation: you receive 20.00 a week.
+After the compensation your week comes to -30.00.
+By your own costs, your share comes to -30.00 a week, and no other share (with the payment that goes with it) is a better deal for you. The share of 小红 would be exactly as good a deal for you (also -30.00), and a tie is not a loss.
+Your check table (your weekly net if you took that share = minus your cost, plus the payment that goes with it; * marks your own share, higher is better):
+  Coco's share (刷厕所, 擦窗): -70.00 - 5.00 = -75.00
+  大刘's share (做饭 x2, 洗碗 x2): -50.00 + 20.00 = -30.00*
+  小红's share (洗碗): -20.00 - 10.00 = -30.00
+  阿明's share (倒垃圾 x2, 拖地): -130.00 - 5.00 = -135.00
+Everybody's payments add up to 0.00, so nobody outside has to pay.
+
+--- To 小红 ---
+小红, this is your own chore result. Nobody else sees your costs.
+Your cap is 1 unit.
+Your chores each week: 洗碗 (1 unit in all). By your own costs they come to 30.00.
+Compensation: you pay 10.00 a week.
+After the compensation your week comes to -40.00.
+By your own costs, your share comes to -40.00 a week, and no other share (with the payment that goes with it) is a better deal for you. You cannot take the share of Coco or 大刘 or 阿明, so it is not compared.
+Your check table (your weekly net if you took that share = minus your cost, plus the payment that goes with it; * marks your own share, higher is better):
+  Coco's share (刷厕所, 擦窗): you cannot take it (it has 2 units, over your cap of 1 unit)
+  大刘's share (做饭 x2, 洗碗 x2): you cannot take it (it holds "做饭", which you cannot do, and it has 4 units, over your cap of 1 unit)
+  小红's share (洗碗): -30.00 - 10.00 = -40.00*
+  阿明's share (倒垃圾 x2, 拖地): you cannot take it (it has 3 units, over your cap of 1 unit)
+You said you cannot do: "做饭". They are not in your costs and will not be given to you.
+Everybody's payments add up to 0.00, so nobody outside has to pay.
+
+--- To 阿明 ---
+阿明, this is your own chore result. Nobody else sees your costs.
+Your cap is 3 units.
+Your chores each week: 倒垃圾 x2, 拖地 (3 units in all). By your own costs they come to 30.00.
+Compensation: you pay 5.00 a week.
+After the compensation your week comes to -35.00.
+By your own costs, your share comes to -35.00 a week, and no other share (with the payment that goes with it) is a better deal for you. The share of 小红 would be exactly as good a deal for you (also -35.00), and a tie is not a loss. You cannot take the share of 大刘, so it is not compared.
+Your check table (your weekly net if you took that share = minus your cost, plus the payment that goes with it; * marks your own share, higher is better):
+  Coco's share (刷厕所, 擦窗): -90.00 - 5.00 = -95.00
+  大刘's share (做饭 x2, 洗碗 x2): you cannot take it (it has 4 units, over your cap of 3 units)
+  小红's share (洗碗): -25.00 - 10.00 = -35.00
+  阿明's share (倒垃圾 x2, 拖地): -30.00 - 5.00 = -35.00*
+Everybody's payments add up to 0.00, so nobody outside has to pay.

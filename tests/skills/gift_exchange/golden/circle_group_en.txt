@@ -1,0 +1,9 @@
+Gift exchange draw: 6 people (one circle)
+Names: Coco, Yuki, 大刘, 小红, 老王, 阿明
+Everybody has received a private message saying who they give to. This card does not say who gives to whom.
+Way of giving: one circle
+Exclusions: 5 in all (each is one direction, who may not give to whom).
+There are 40 legal plans. If the random source could not be predicted in advance, each of them is equally likely to be drawn.
+Where the source comes from: 虚构示例：2026 年 11 月 8 日某公开开奖，按官网显示的格式原样抄写
+Deadline: 2026-11-07 20:00 报名截止，名单和不能互送的规则随后锁定
+The way of drawing is public and can be recomputed: the random source is a public text agreed in advance, and from that text to the result the script uses only SHA-256 and integer arithmetic, never the random module. The source text, the seed preimage, the exclusions and the number of the plan drawn will be published after the exchange, and anybody can recompute the draw from them. They are not published now because with them anybody who runs the script can work out who gives to whom.

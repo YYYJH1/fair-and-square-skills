@@ -1,0 +1,31 @@
+(For the organizer: send each block below privately to the person named. Do not post it in the group.)
+
+--- To 阿明 ---
+阿明, this is your own result. Nobody else can see your values.
+Rule (fixed in advance, not changed after the result): no money moves, and the allocation taken is the one that gives something to the most people and then has the largest product of the values people receive. It leaves nobody envious once one item is set aside, and no other allocation is at least as good for everybody and better for somebody (max_nash).
+You get: 冰箱, 电视, worth 45.00 by your values.
+By your values, nobody's package is worth more than your 45.00, so you envy nobody.
+Your check table (one row per person: what their items are worth by your values, and the row marked * is your own):
+  阿明: 冰箱, 电视, value 45.00 *
+  小红: 洗衣机, 书架, value 30.00
+  大刘: 沙发, 微波炉, value 25.00
+
+--- To 小红 ---
+小红, this is your own result. Nobody else can see your values.
+Rule (fixed in advance, not changed after the result): no money moves, and the allocation taken is the one that gives something to the most people and then has the largest product of the values people receive. It leaves nobody envious once one item is set aside, and no other allocation is at least as good for everybody and better for somebody (max_nash).
+You get: 洗衣机, 书架, worth 40.00 by your values.
+By your values, the package of 阿明 is worth 45.00, which is 5.00 more than your 40.00. Without 冰箱, the item in it you value most (worth 25.00), it is worth 20.00 and no more than yours, so you do not envy 阿明 once one item is set aside. Every other package is worth no more than yours.
+Your check table (one row per person: what their items are worth by your values, and the row marked * is your own):
+  阿明: 冰箱, 电视, value 45.00
+  小红: 洗衣机, 书架, value 40.00 *
+  大刘: 沙发, 微波炉, value 15.00
+
+--- To 大刘 ---
+大刘, this is your own result. Nobody else can see your values.
+Rule (fixed in advance, not changed after the result): no money moves, and the allocation taken is the one that gives something to the most people and then has the largest product of the values people receive. It leaves nobody envious once one item is set aside, and no other allocation is at least as good for everybody and better for somebody (max_nash).
+You get: 沙发, 微波炉, worth 40.00 by your values.
+By your values, the package of 阿明 is worth 45.00, which is 5.00 more than your 40.00. Without 冰箱, the item in it you value most (worth 35.00), it is worth 10.00 and no more than yours, so you do not envy 阿明 once one item is set aside. Every other package is worth no more than yours.
+Your check table (one row per person: what their items are worth by your values, and the row marked * is your own):
+  阿明: 冰箱, 电视, value 45.00
+  小红: 洗衣机, 书架, value 15.00
+  大刘: 沙发, 微波炉, value 40.00 *

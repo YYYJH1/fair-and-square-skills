@@ -1,0 +1,8 @@
+Stuff split result (no cash, maximum Nash welfare): 3 people share 6 items
+Note: 虚构示例：三个室友毕业搬家，分合租期间一起买的六件东西
+Rule (fixed in advance, not changed after the result): no money moves, and the allocation taken is the one that gives something to the most people and then has the largest product of the values people receive. It leaves nobody envious once one item is set aside, and no other allocation is at least as good for everybody and better for somebody (max_nash).
+阿明 gets 冰箱, 电视
+小红 gets 洗衣机, 书架
+大刘 gets 沙发, 微波炉
+Guarantee: once one item is set aside, nobody envies another person's package (EF1), and no other allocation is at least as good for everybody and better for somebody (Pareto efficient). Freedom from all envy is not promised, and this time 2 people envy another person's package by their own values, which goes away once one item is set aside. Everybody gets a private message with only their own numbers, so each person can check it.
+2 allocations tie for the largest Nash welfare. Exactly one of them gives people the most even numbers of items, and it was taken, so no priority order was needed.

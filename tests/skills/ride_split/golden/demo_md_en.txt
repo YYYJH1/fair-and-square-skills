@@ -1,0 +1,62 @@
+# Ride split: meter readings
+
+## Who pays for each stretch
+
+| Stretch | Until this rider gets off | Cost | Still in the car | People |
+| --- | --- | --- | --- | --- |
+| 1 | 小周 | 14.00 | 小周, 阿杰, Mia, 老陈 | 4 |
+| 2 | 阿杰 | 12.00 | 阿杰, Mia, 老陈 | 3 |
+| 3 | Mia | 15.00 | Mia, 老陈 | 2 |
+| 4 | 老陈 | 22.00 | 老陈 | 1 |
+
+## What each rider pays
+
+| Rider | Riding alone | Pays | Saves | Saves % |
+| --- | --- | --- | --- | --- |
+| 小周 | 14.00 | 3.50 | 10.50 | 75% |
+| 阿杰 | 26.00 | 7.50 | 18.50 | 71% |
+| Mia | 41.00 | 15.00 | 26.00 | 63% |
+| 老陈 | 63.00 | 37.00 | 26.00 | 41% |
+| Total |  | 63.00 |  |  |
+
+## Compared with other splits
+
+| Rider | Stretch by stretch (Shapley) | Equal split | Proportional to solo fare |
+| --- | --- | --- | --- |
+| 小周 | 3.50 | 15.75 | 6.13 |
+| 阿杰 | 7.50 | 15.75 | 11.37 |
+| Mia | 15.00 | 15.75 | 17.94 |
+| 老陈 | 37.00 | 15.75 | 27.56 |
+| Total | 63.00 | 63.00 | 63.00 |
+| Core check | in the core | 3 groups pay more than alone | in the core |
+
+## Groups that pay more than riding alone
+
+| Split | Group | Pay together | Alone | Extra |
+| --- | --- | --- | --- | --- |
+| Equal split | 小周 | 15.75 | 14.00 | 1.75 |
+| Equal split | 小周, 阿杰 | 31.50 | 26.00 | 5.50 |
+| Equal split | 小周, 阿杰, Mia | 47.25 | 41.00 | 6.25 |
+
+Meter readings: each stretch of road is paid for by the riders still in the car. This is the Shapley value (the airport game of Littlechild and Owen, 1973). The first reading includes the starting fare.
+
+老陈 pays the most: nobody else is in the car for the last stretch of 22.00.
+
+Core check: no rider, and no group of riders, should pay more than the same people would pay for a ride of their own. Where that happens, those riders would be better off leaving the shared ride.
+
+Stretch by stretch (Shapley): all 15 groups checked, none pays more than riding alone.
+
+The proportional split is in the core here too. How it differs from the Stretch by stretch (Shapley) split is a choice of rule and must be agreed in advance.
+
+Rounding: leftover cents go to the largest remainders; exact ties are decided by the ride_id "ride-1".
+
+## Not modeled
+
+- Tolls, tips, surcharges and waiting time: add them to the total first, the script does not split them separately.
+- Not strategy-proof: readings and estimates are reported by the riders themselves.
+
+## Reproduce
+
+```
+python3 scripts/ride_split.py --demo --format md --lang en
+```

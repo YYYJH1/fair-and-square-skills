@@ -1,0 +1,47 @@
+# Draw result: 8 people, 3 slots (uniform lottery)
+
+## Full order (the first 3 are drawn, the rest wait in order)
+
+| Position | Name | Result |
+| --- | --- | --- |
+| 1 | Yuki | drawn |
+| 2 | 小周 | drawn |
+| 3 | 大刘 | drawn |
+| 4 | Coco | waiting 1 |
+| 5 | 小红 | waiting 2 |
+| 6 | 阿明 | waiting 3 |
+| 7 | Mia | waiting 4 |
+| 8 | 老王 | waiting 5 |
+
+## Random source and how to recompute
+
+| Item | Value |
+| --- | --- |
+| Where the source comes from | 虚构示例：2026 年 11 月 8 日某公开开奖，按官网显示的格式原样抄写 |
+| Deadline | 2026-11-07 20:00 报名截止，名单和名额数随后锁定 |
+| Source text (verbatim) | （虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07 |
+| Rule name | uniform_lottery_v1 |
+| Slot count (part of the seed) | 3 |
+| Names (sorted by code point, part of the seed) | Coco, Mia, Yuki, 大刘, 小周, 小红, 老王, 阿明 |
+| Seed preimage (take the SHA-256 of this text) | {"n_slots":3,"participants":["Coco","Mia","Yuki","大刘","小周","小红","老王","阿明"],"rule":"uniform_lottery_v1","source":"（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07"} |
+| Seed (SHA-256, hex) | 15b9c53a44270857eb44286382b897216eaecc0dcf18eb49260f7442cdf87710 |
+
+Drawn: Yuki, 小周, 大刘.
+
+Waiting list (if someone gives up, the next name moves up; no new draw): Coco, 小红, 阿明, Mia, 老王.
+
+Recompute: seed = SHA-256 of the canonical JSON (sorted keys, no spaces, UTF-8) of {"n_slots": N, "participants": names sorted by code point, "rule": RULE, "source": SOURCE TEXT}. Draw number c = first 8 bytes, big-endian, of SHA-256(seed + c as 8 big-endian bytes). A uniform integer in [0, n) takes x mod n if x < 2^64 - (2^64 mod n), otherwise the next draw is used. The order is Fisher-Yates over the code-point-sorted names, i from n-1 down to 1, swapping position i with a uniform integer in [0, i].
+
+Check it: give this input together with the claimed result (claimed) to python3 scripts/slot_lottery.py --verify. It exits 0 on a match and 1 otherwise. Copy the source text again from where it was published and pass it with --source.
+
+## Not modeled
+
+- Whether the random source was really fixed in advance, cannot be changed afterwards and could not be predicted: the script cannot check this. If any of the three fails, the result can be steered.
+- Whether the names, the slot count and the rules were frozen before the source was published: the group's records show it, the script only computes from the input.
+- Moving up the waiting list when someone gives up is the group's convention, not a guarantee of the script.
+
+## Reproduce
+
+```
+python3 scripts/slot_lottery.py --demo --format md --lang en
+```

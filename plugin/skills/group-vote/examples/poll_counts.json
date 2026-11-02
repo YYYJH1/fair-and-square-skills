@@ -1,0 +1,10 @@
+{
+  "topic": "部门聚餐选哪家",
+  "options": ["海底捞", "烤肉店", "日料店", "川菜馆"],
+  "approval_counts": {"海底捞": 12, "烤肉店": 12, "日料店": 9, "川菜馆": 7},
+  "participants": 20,
+  "rules": {
+    "method": "approval",
+    "tie_break": {"random_source": "（虚构示例）2026-11-15 某公开开奖号码 05 09 14 22 31 + 03 11"}
+  }
+}

@@ -1,0 +1,376 @@
+{
+  "certificate": {
+    "one_liner": {
+      "大刘": "你每一轮挑的那件（第 1 轮 拖地，第 2 轮 刷厕所），在你的排序里都不比别人紧接着挑的那件更讨厌：对方挑得比你晚，就和对方同一轮比，对方挑得比你早，就和对方下一轮比。最多只有一件家务例外，去掉它，你就不羡慕任何人。",
+      "小红": "你每一轮挑的那件（第 1 轮 洗碗，第 2 轮 擦窗），在你的排序里都不比别人紧接着挑的那件更讨厌：对方挑得比你晚，就和对方同一轮比，对方挑得比你早，就和对方下一轮比。最多只有一件家务例外，去掉它，你就不羡慕任何人。",
+      "阿明": "你每一轮挑的那件（第 1 轮 倒垃圾，第 2 轮 做饭），在你的排序里都不比别人紧接着挑的那件更讨厌：对方挑得比你晚，就和对方同一轮比，对方挑得比你早，就和对方下一轮比。最多只有一件家务例外，去掉它，你就不羡慕任何人。"
+    },
+    "pairs": [
+      {
+        "comparisons": [
+          {
+            "holds": true,
+            "other_chore": "洗碗",
+            "other_place": 5,
+            "other_round": 1,
+            "own_chore": "倒垃圾",
+            "own_place": 1,
+            "own_round": 1,
+            "same_round": true
+          },
+          {
+            "holds": true,
+            "other_chore": "擦窗",
+            "other_place": 4,
+            "other_round": 2,
+            "own_chore": "做饭",
+            "own_place": 2,
+            "own_round": 2,
+            "same_round": true
+          }
+        ],
+        "exempt_chores": [],
+        "other": "小红",
+        "other_ran_out_in_round": null,
+        "person": "阿明",
+        "person_picks_first": true,
+        "status": "envy_free",
+        "unmatched_picks": [],
+        "via": "rounds",
+        "week": 1,
+        "witness": null
+      },
+      {
+        "comparisons": [
+          {
+            "holds": true,
+            "other_chore": "拖地",
+            "other_place": 3,
+            "other_round": 1,
+            "own_chore": "倒垃圾",
+            "own_place": 1,
+            "own_round": 1,
+            "same_round": true
+          },
+          {
+            "holds": true,
+            "other_chore": "刷厕所",
+            "other_place": 6,
+            "other_round": 2,
+            "own_chore": "做饭",
+            "own_place": 2,
+            "own_round": 2,
+            "same_round": true
+          }
+        ],
+        "exempt_chores": [],
+        "other": "大刘",
+        "other_ran_out_in_round": null,
+        "person": "阿明",
+        "person_picks_first": true,
+        "status": "envy_free",
+        "unmatched_picks": [],
+        "via": "rounds",
+        "week": 1,
+        "witness": null
+      },
+      {
+        "comparisons": [
+          {
+            "holds": true,
+            "other_chore": "做饭",
+            "other_place": 6,
+            "other_round": 2,
+            "own_chore": "洗碗",
+            "own_place": 2,
+            "own_round": 1,
+            "same_round": false
+          }
+        ],
+        "exempt_chores": [],
+        "other": "阿明",
+        "other_ran_out_in_round": null,
+        "person": "小红",
+        "person_picks_first": false,
+        "status": "ef1",
+        "unmatched_picks": [
+          {
+            "chore": "擦窗",
+            "round": 2
+          }
+        ],
+        "via": "rounds",
+        "week": 1,
+        "witness": null
+      },
+      {
+        "comparisons": [
+          {
+            "holds": true,
+            "other_chore": "拖地",
+            "other_place": 4,
+            "other_round": 1,
+            "own_chore": "洗碗",
+            "own_place": 2,
+            "own_round": 1,
+            "same_round": true
+          },
+          {
+            "holds": true,
+            "other_chore": "刷厕所",
+            "other_place": 5,
+            "other_round": 2,
+            "own_chore": "擦窗",
+            "own_place": 3,
+            "own_round": 2,
+            "same_round": true
+          }
+        ],
+        "exempt_chores": [],
+        "other": "大刘",
+        "other_ran_out_in_round": null,
+        "person": "小红",
+        "person_picks_first": true,
+        "status": "envy_free",
+        "unmatched_picks": [],
+        "via": "rounds",
+        "week": 1,
+        "witness": null
+      },
+      {
+        "comparisons": [
+          {
+            "holds": true,
+            "other_chore": "做饭",
+            "other_place": 3,
+            "other_round": 2,
+            "own_chore": "拖地",
+            "own_place": 1,
+            "own_round": 1,
+            "same_round": false
+          }
+        ],
+        "exempt_chores": [],
+        "other": "阿明",
+        "other_ran_out_in_round": null,
+        "person": "大刘",
+        "person_picks_first": false,
+        "status": "ef1",
+        "unmatched_picks": [
+          {
+            "chore": "刷厕所",
+            "round": 2
+          }
+        ],
+        "via": "rounds",
+        "week": 1,
+        "witness": null
+      },
+      {
+        "comparisons": [
+          {
+            "holds": true,
+            "other_chore": "擦窗",
+            "other_place": 6,
+            "other_round": 2,
+            "own_chore": "拖地",
+            "own_place": 1,
+            "own_round": 1,
+            "same_round": false
+          }
+        ],
+        "exempt_chores": [],
+        "other": "小红",
+        "other_ran_out_in_round": null,
+        "person": "大刘",
+        "person_picks_first": false,
+        "status": "envy_free",
+        "unmatched_picks": [
+          {
+            "chore": "刷厕所",
+            "round": 2
+          }
+        ],
+        "via": "dominance",
+        "week": 1,
+        "witness": null
+      }
+    ],
+    "recompute": {
+      "algorithm": "seed = SHA-256 of the canonical JSON (sorted keys, no spaces, UTF-8) of {\"n_slots\": N, \"participants\": names sorted by code point, \"rule\": RULE, \"source\": SOURCE TEXT}. Draw number c = first 8 bytes, big-endian, of SHA-256(seed + c as 8 big-endian bytes). A uniform integer in [0, n) takes x mod n if x < 2^64 - (2^64 mod n), otherwise the next draw is used. The order is Fisher-Yates over the code-point-sorted names, i from n-1 down to 1, swapping position i with a uniform integer in [0, i].",
+      "seed_hex": "6944c304e73fa353e0d827408cc1f48fd3a8684494793fc65a25fa07a39f46a1",
+      "source_text": "（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07"
+    }
+  },
+  "inputs_echo": {
+    "chores": [
+      {
+        "name": "洗碗",
+        "units": 1
+      },
+      {
+        "name": "倒垃圾",
+        "units": 1
+      },
+      {
+        "name": "拖地",
+        "units": 1
+      },
+      {
+        "name": "刷厕所",
+        "units": 1
+      },
+      {
+        "name": "做饭",
+        "units": 1
+      },
+      {
+        "name": "擦窗",
+        "units": 1
+      }
+    ],
+    "participants": [
+      "大刘",
+      "小红",
+      "阿明"
+    ],
+    "random_source": "（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07",
+    "rankings": {
+      "大刘": [
+        "拖地",
+        "倒垃圾",
+        "做饭",
+        "刷厕所",
+        "洗碗",
+        "擦窗"
+      ],
+      "小红": [
+        "倒垃圾",
+        "洗碗",
+        "擦窗",
+        "拖地",
+        "刷厕所",
+        "做饭"
+      ],
+      "阿明": [
+        "倒垃圾",
+        "做饭",
+        "拖地",
+        "擦窗",
+        "洗碗",
+        "刷厕所"
+      ]
+    },
+    "rotate": "shift",
+    "source_description": "虚构示例：2026 年 11 月 8 日某公开开奖，按官网显示的格式原样抄写",
+    "total_units": 6,
+    "weeks": 1
+  },
+  "not_modeled": [
+    "随机源是否真的事先约定、事后无法更改、临场无人能预测：脚本核对不了。它只决定第 1 周谁先挑。",
+    "排序是否被如实录入：每个人在自己的私信里核对。排序之外的程度，比如谁觉得洗碗比拖地难受十倍，脚本看不到。",
+    "防策略：轮流挑不防策略。知道别人排序的人，有时能靠谎报排序让自己分到更轻的家务。",
+    "几周之间：每周各自保证 EF1，不保证几周加起来也一样。",
+    "有人喜欢做的任务：不支持。有人喜欢的任务用 likes 声明，会被拒绝。",
+    "花钱请人做家务：这个方案不涉及钱。要在室友之间用钱补偿，请把 rules.plan 设为 bundle_pay。请外人做家务（比如保洁）的费用不计算，分摊用 bill-split。"
+  ],
+  "reproduce": "python3 scripts/chore_split.py --demo --json",
+  "result": {
+    "comparisons_checked": 9,
+    "comparisons_failed": 0,
+    "ef1_failures": [],
+    "ef1_holds": true,
+    "rule": "chore_pick_order_v1",
+    "schedule": {
+      "大刘": [
+        [
+          "拖地",
+          "刷厕所"
+        ]
+      ],
+      "小红": [
+        [
+          "洗碗",
+          "擦窗"
+        ]
+      ],
+      "阿明": [
+        [
+          "倒垃圾",
+          "做饭"
+        ]
+      ]
+    },
+    "seed_hex": "6944c304e73fa353e0d827408cc1f48fd3a8684494793fc65a25fa07a39f46a1",
+    "seed_preimage": "{\"n_slots\":6,\"participants\":[\"大刘\",\"小红\",\"阿明\"],\"rule\":\"chore_pick_order_v1\",\"source\":\"（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07\"}",
+    "start_order": [
+      "阿明",
+      "小红",
+      "大刘"
+    ],
+    "weeks": [
+      {
+        "bundles": {
+          "大刘": [
+            "拖地",
+            "刷厕所"
+          ],
+          "小红": [
+            "洗碗",
+            "擦窗"
+          ],
+          "阿明": [
+            "倒垃圾",
+            "做饭"
+          ]
+        },
+        "order": [
+          "阿明",
+          "小红",
+          "大刘"
+        ],
+        "picks": [
+          {
+            "chore": "倒垃圾",
+            "person": "阿明",
+            "round": 1,
+            "seq": 1
+          },
+          {
+            "chore": "洗碗",
+            "person": "小红",
+            "round": 1,
+            "seq": 2
+          },
+          {
+            "chore": "拖地",
+            "person": "大刘",
+            "round": 1,
+            "seq": 3
+          },
+          {
+            "chore": "做饭",
+            "person": "阿明",
+            "round": 2,
+            "seq": 4
+          },
+          {
+            "chore": "擦窗",
+            "person": "小红",
+            "round": 2,
+            "seq": 5
+          },
+          {
+            "chore": "刷厕所",
+            "person": "大刘",
+            "round": 2,
+            "seq": 6
+          }
+        ],
+        "ran_out_in_round": {},
+        "rounds": 2,
+        "week": 1
+      }
+    ]
+  }
+}

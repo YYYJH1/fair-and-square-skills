@@ -1,0 +1,72 @@
+# Rent split result (total rent 8,000.00)
+
+## Check of the current split
+
+| Person | Lives in now | Rent now | Envies, by own bids | Rent by the rule | Now, compared with the rule |
+| --- | --- | --- | --- | --- | --- |
+| 阿明 | 小书房 | 2,000.00 | 主卧带卫 by 1,800.00 | 950.00 | 1,050.00 more |
+| 小红 | 南次卧 | 2,000.00 | 主卧带卫 by 100.00 | 2,250.00 | 250.00 less |
+| 大刘 | 主卧带卫 | 2,000.00 | nobody | 3,150.00 | 1,150.00 less |
+| Coco | 北次卧 | 2,000.00 | 主卧带卫 by 400.00 | 1,650.00 | 350.00 more |
+
+## Who lives where and pays what
+
+| Person | Room | Rent per month | Bid for this room | Gain (bid - rent) |
+| --- | --- | --- | --- | --- |
+| 阿明 | 小书房 | 950.00 | 1,200.00 | 250.00 |
+| 小红 | 南次卧 | 2,250.00 | 2,500.00 | 250.00 |
+| 大刘 | 主卧带卫 | 3,150.00 | 3,400.00 | 250.00 |
+| Coco | 北次卧 | 1,650.00 | 2,000.00 | 350.00 |
+| Total |  | 8,000.00 |  |  |
+
+## Envy table (bid - rent, the room marked * is the person's own, a larger number is a better deal)
+
+| Person | 主卧带卫 | 南次卧 | 北次卧 | 小书房 |
+| --- | --- | --- | --- | --- |
+| 阿明 | -150.00 | -50.00 | -50.00 | 250.00* |
+| 小红 | -550.00 | 250.00* | 50.00 | 250.00 |
+| 大刘 | 250.00* | -250.00 | -150.00 | 150.00 |
+| Coco | -750.00 | 50.00 | 350.00* | 350.00 |
+| Rent | 3,150.00 | 2,250.00 | 1,650.00 | 950.00 |
+
+The current rooms are the ones with the highest total of bids (9,100.00), so the only question is how the rents are set. The audit only compares. The group decides whether to change anything.
+
+- 阿明 lives in 小书房: by their own bids they envy 主卧带卫 by 1,800.00; the rent by the rule is 950.00, and they now pay 1,050.00 more than that
+- 小红 lives in 南次卧: by their own bids they envy 主卧带卫 by 100.00; the rent by the rule is 2,250.00, and they now pay 250.00 less than that
+- 大刘 lives in 主卧带卫: by their own bids they envy nobody; the rent by the rule is 3,150.00, and they now pay 1,150.00 less than that
+- Coco lives in 北次卧: by their own bids they envy 主卧带卫 by 400.00; the rent by the rule is 1,650.00, and they now pay 350.00 more than that
+
+Rule (fixed in advance, not changed after the result): first look for an envy-free split in which nobody is paid to live in a room, and allow that only if none exists (spliddit).
+
+This result: nobody is paid to live in a room.
+
+After rounding to the cent, nobody envies anybody (largest envy 0.00). Each rent is rounded only down or up to the cent, and the total is exactly the total rent.
+
+One line per person (send it to that person only, not to the group):
+
+- 阿明: By your bids, 小书房 is 250.00 cheaper than the price you had in mind, and no other room is a better deal.
+- 小红: By your bids, 南次卧 is 250.00 cheaper than the price you had in mind, and no other room is a better deal. 小书房 would be exactly as good a deal for you (also 250.00 cheaper than your price), and a tie is not a loss.
+- 大刘: By your bids, 主卧带卫 is 250.00 cheaper than the price you had in mind, and no other room is a better deal.
+- Coco: By your bids, 北次卧 is 350.00 cheaper than the price you had in mind, and no other room is a better deal. 小书房 would be exactly as good a deal for you (also 350.00 cheaper than your price), and a tie is not a loss.
+
+## Not modeled
+
+- Strategy-proofness: no envy-free rent division method is strategy-proof.
+- Different numbers of rooms and people, and two people who share a room without being a couple (a couple first agrees on one joint set of bids and counts as one person).
+- A budget limit on the most a person can pay.
+
+## Reproduce
+
+```
+python3 rent_split.py --input - --format md --audit --lang en   # same JSON on standard input
+```
+
+# The storage room example: the same bids under two negative-rent rules
+
+| Person | allow (paying someone is allowed) | spliddit and forbid (nobody is paid) |
+| --- | --- | --- |
+| 甲 | 大主卧, pays 3,533.33, gains 1,266.67 | 大主卧, pays 3,000.00, gains 1,800.00 |
+| 乙 | 朝南卧, pays 3,533.33, gains 1,266.67 | 朝南卧, pays 3,000.00, gains 1,800.00 |
+| 丙 | 储物间改的小间, pays -1,066.66, gains 1,266.66 | 储物间改的小间, pays 0.00, gains 200.00 |
+
+With the same bids, both rules give a split without envy (after rounding to the cent the largest envy is 0.00 in both). If the group voted after seeing the results, 甲 and 乙 would choose the second column, so the rule must be fixed before the bids are collected.

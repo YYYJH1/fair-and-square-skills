@@ -1,0 +1,34 @@
+(For the organizer: send each block below privately to the person named. Do not post it in the group.)
+
+--- To 小周 ---
+小周, this is your own result. Nobody else can see your values.
+Rule (fixed in advance, not changed after the result): no money moves, and the allocation taken is the one that gives something to the most people and then has the largest product of the values people receive. It leaves nobody envious once one item is set aside, and no other allocation is at least as good for everybody and better for somebody (max_nash).
+Important: there were too many items to check every allocation, so this time the script took turns and did not use maximum Nash welfare. Taking turns only promises that nobody envies anybody once one item is set aside (EF1), and does not promise Pareto efficiency.
+You get: 书桌, 风扇, 显示器, 洗衣篮, 电水壶, worth 122.00 by your values.
+By your values, nobody's package is worth more than your 122.00, so you envy nobody.
+Your check table (one row per person: what their items are worth by your values, and the row marked * is your own):
+  小周: 书桌, 风扇, 显示器, 洗衣篮, 电水壶, value 122.00 *
+  阿杰: 电饭煲, 键盘, 吹风机, 小冰箱, value 57.00
+  Mia: 台灯, 书架, 椅子, 落地灯, 收纳柜, value 74.00
+
+--- To 阿杰 ---
+阿杰, this is your own result. Nobody else can see your values.
+Rule (fixed in advance, not changed after the result): no money moves, and the allocation taken is the one that gives something to the most people and then has the largest product of the values people receive. It leaves nobody envious once one item is set aside, and no other allocation is at least as good for everybody and better for somebody (max_nash).
+Important: there were too many items to check every allocation, so this time the script took turns and did not use maximum Nash welfare. Taking turns only promises that nobody envies anybody once one item is set aside (EF1), and does not promise Pareto efficiency.
+You get: 电饭煲, 键盘, 吹风机, 小冰箱, worth 100.00 by your values.
+By your values, the package of 小周 is worth 110.00, which is 10.00 more than your 100.00. Without 显示器, the item in it you value most (worth 45.00), it is worth 65.00 and no more than yours, so you do not envy 小周 once one item is set aside. Every other package is worth no more than yours.
+Your check table (one row per person: what their items are worth by your values, and the row marked * is your own):
+  小周: 书桌, 风扇, 显示器, 洗衣篮, 电水壶, value 110.00
+  阿杰: 电饭煲, 键盘, 吹风机, 小冰箱, value 100.00 *
+  Mia: 台灯, 书架, 椅子, 落地灯, 收纳柜, value 68.00
+
+--- To Mia ---
+Mia, this is your own result. Nobody else can see your values.
+Rule (fixed in advance, not changed after the result): no money moves, and the allocation taken is the one that gives something to the most people and then has the largest product of the values people receive. It leaves nobody envious once one item is set aside, and no other allocation is at least as good for everybody and better for somebody (max_nash).
+Important: there were too many items to check every allocation, so this time the script took turns and did not use maximum Nash welfare. Taking turns only promises that nobody envies anybody once one item is set aside (EF1), and does not promise Pareto efficiency.
+You get: 台灯, 书架, 椅子, 落地灯, 收纳柜, worth 148.00 by your values.
+By your values, nobody's package is worth more than your 148.00, so you envy nobody.
+Your check table (one row per person: what their items are worth by your values, and the row marked * is your own):
+  小周: 书桌, 风扇, 显示器, 洗衣篮, 电水壶, value 67.00
+  阿杰: 电饭煲, 键盘, 吹风机, 小冰箱, value 60.00
+  Mia: 台灯, 书架, 椅子, 落地灯, 收纳柜, value 148.00 *

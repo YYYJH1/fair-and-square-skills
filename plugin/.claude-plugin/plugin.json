@@ -1,0 +1,25 @@
+{
+  "name": "fair-and-square",
+  "version": "0.2.0",
+  "description": "Agent skills for everyday fair division: rent, bills, rides, votes, chores, lotteries, belongings and gift exchanges. Every number comes from a tested script.",
+  "author": {
+    "name": "Jiahao You",
+    "url": "https://github.com/YYYJH1"
+  },
+  "homepage": "https://github.com/YYYJH1/fair-and-square-skills",
+  "repository": "https://github.com/YYYJH1/fair-and-square-skills",
+  "license": "MIT",
+  "keywords": [
+    "fair-division",
+    "rent",
+    "bill-splitting",
+    "carpool",
+    "voting",
+    "lottery",
+    "chores",
+    "secret-santa",
+    "gift-exchange",
+    "dividing-belongings",
+    "mechanism-design"
+  ]
+}

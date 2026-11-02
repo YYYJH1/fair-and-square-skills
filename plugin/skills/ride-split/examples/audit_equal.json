@@ -1,0 +1,7 @@
+{
+  "mode": "meter",
+  "ride_id": "ride-1",
+  "riders": ["小周", "阿杰", "Mia", "老陈"],
+  "meter_at_dropoff": [14, 26, 41, 63],
+  "audit": {"current": {"小周": 15.75, "阿杰": 15.75, "Mia": 15.75, "老陈": 15.75}}
+}

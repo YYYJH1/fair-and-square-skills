@@ -1,0 +1,49 @@
+# Gift exchange draw: 6 people (any derangement)
+
+## Who gives to whom (the full table, for the organizer only)
+
+| Giver | Receiver |
+| --- | --- |
+| Coco | Yuki |
+| Yuki | 小红 |
+| 大刘 | 阿明 |
+| 小红 | 老王 |
+| 老王 | Coco |
+| 阿明 | 大刘 |
+
+## How it was drawn and what is needed to recompute (publish after the exchange)
+
+| Item | Value |
+| --- | --- |
+| Where the source comes from | 虚构示例：2026 年 11 月 8 日某公开开奖，按官网显示的格式原样抄写 |
+| Deadline | 2026-11-07 20:00 报名截止，名单和不能互送的规则随后锁定 |
+| Source text (verbatim) | （虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07 |
+| Way of giving | any derangement |
+| How the plan is chosen | list every legal plan and draw one by its number |
+| Rule name | gift_exchange_any_enum_v1 |
+| Number of people (the n_slots of the seed) | 6 |
+| Names (sorted by code point, part of the seed) | Coco, Yuki, 大刘, 小红, 老王, 阿明 |
+| Directions that are not allowed (who may not give to whom) | Coco→大刘, 大刘→Coco, 小红→阿明, 老王→Yuki, 阿明→小红 |
+| Number of legal plans | 96 |
+| Number of the plan drawn | number 13 of 96 |
+| Seed preimage (take the SHA-256 of this text) | {"n_slots":6,"participants":["Coco","Yuki","大刘","小红","老王","阿明"],"rule":"gift_exchange_any_enum_v1","source":"（虚构示例）2026-11-08 某公开开奖号码 03 11 19 24 33 + 02 07"} |
+| Seed (SHA-256, hex) | 1a00559810149576dff6f98ced86cddfee2b976104656ff33b57b66f87e005d9 |
+
+For the organizer: the table above says who gives to whom. Send each person only their own private message, and do not post the table or a screenshot of it in the group. Whoever runs this script (this session included) sees the whole table.
+
+Recompute: (1) The seed is the SHA-256 of the seed preimage (UTF-8). (2) Draw number c (c counts from 0) is the first 8 bytes, read big-endian, of SHA-256 of the seed followed by c as 8 big-endian bytes. A uniform integer in [0, n) takes x mod n if x < 2^64 - (2^64 mod n), otherwise the next draw is used. (3) Sort the names by code point and number them 0 to 5. A plan gives every giver i one receiver r(i). r is one-to-one, r(i) is not i, and (i, r(i)) is not a direction that is not allowed. (4) Sort all legal plans by r(0), r(1), r(2), ... in increasing order. Take a uniform integer k in [0, N) with step (2), where N is the number of legal plans. Plan number k+1 is the result. The random module is not used.
+
+Check it: run this script again on the same input and the output is identical byte for byte. After the exchange, publish the material above and anybody can recompute it.
+
+## Not modeled
+
+- Whether the random source was really fixed in advance, cannot be changed afterwards and could not be predicted: the script cannot check this. If any of the three fails, the result can be steered.
+- Whether the names, the way of giving and the exclusions were frozen before the source was published: the group's records show it, the script only computes from the input.
+- Who can see the result: whoever runs the script sees the whole table, and because the draw is public, anybody who has the names, the exclusions and the source text can run it and get the whole table too. Publish this material only after the exchange.
+- Any derangement allows two people to give to each other (A to B and B to A). To avoid that, choose one circle, or list the two as a pair that may not be matched.
+
+## Reproduce
+
+```
+python3 scripts/gift_exchange.py --demo --format md --lang en
+```

@@ -1,0 +1,18 @@
+{
+  "mode": "expenses",
+  "people": ["阿明", "小红", "大刘", "Coco", "老王", "Yuki"],
+  "expenses": [
+    {"id": "trip-1", "what": "民宿", "paid_by": {"阿明": 1200},
+     "items": [{"name": "两晚住宿", "amount": 1200, "everyone": true}]},
+    {"id": "trip-2", "what": "包车", "paid_by": {"小红": 600},
+     "items": [{"name": "一日包车", "amount": 600,
+                "among": ["阿明", "小红", "大刘", "Coco"]}]},
+    {"id": "trip-3", "what": "晚饭", "paid_by": {"大刘": 360},
+     "items": [{"name": "烧烤", "amount": 360, "among": ["大刘", "Coco", "老王"]}]},
+    {"id": "trip-4", "what": "门票", "paid_by": {"Coco": 300},
+     "items": [{"name": "景区门票", "amount": 300, "everyone": true}]},
+    {"id": "trip-5", "what": "咖啡", "paid_by": {"老王": 180},
+     "items": [{"name": "咖啡", "amount": 180, "among": ["阿明", "老王"]}]}
+  ],
+  "rules": {"settle": "min_transfers"}
+}

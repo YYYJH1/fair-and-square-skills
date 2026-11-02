@@ -1,0 +1,11 @@
+Draw result: 6 people, 2 slots (uniform lottery)
+Deadline: 虚构示例：2026-11-07 20:00 前在群里发承诺码，2026-11-08 20:00 前发揭示码
+Source: the verified reveal codes as canonical JSON sorted by name: {"Coco":"29187e2513274c53f7c2ae77f0bf8ba2","Yuki":"d61449d5eb68db73448843f78251d7cc","大刘":"8579d215fd808903417bbdccbf896823","小红":"dea49aeb187111fcfa1e2f21cddd64d3","老王":"9a9204f0a637fc7698c7677e484b2a7f","阿明":"4732c1f8f018e7e8a4e5e04da1042a8f"}
+Seed preimage (its SHA-256 is the seed): {"n_slots":2,"participants":["Coco","Yuki","大刘","小红","老王","阿明"],"rule":"uniform_lottery_v1","source":"{\"Coco\":\"29187e2513274c53f7c2ae77f0bf8ba2\",\"Yuki\":\"d61449d5eb68db73448843f78251d7cc\",\"大刘\":\"8579d215fd808903417bbdccbf896823\",\"小红\":\"dea49aeb187111fcfa1e2f21cddd64d3\",\"老王\":\"9a9204f0a637fc7698c7677e484b2a7f\",\"阿明\":\"4732c1f8f018e7e8a4e5e04da1042a8f\"}"}
+Seed (SHA-256): b4c61cf2fed2dd5d25ac0c7520024a9cb6093e70bea6f8f99f5ff640d9c782a1
+Full order: 1 阿明, 2 Yuki, 3 Coco, 4 大刘, 5 小红, 6 老王
+Drawn (first 2): 阿明, Yuki
+Waiting list (moves up in order, no new draw): Coco, 大刘, 小红, 老王
+Commit-reveal: 6 reveals match their commitments.
+Warning: commit-reveal does not stop every kind of manipulation. The last person to reveal can see everyone else's reveals before deciding whether to reveal, and that changes the result for the others. For example, in a draw of 3 tickets among 8 people where not revealing means dropping out, that person can raise a friend's chance of winning from 0.375 to 0.643. The agreed handling only makes not revealing costly for the person who does it. It cannot make it harmless for everyone else.
+Recompute: the source text, the names (sorted by code point), the slot count and the rule name are all above. Take the SHA-256 of the seed preimage, then shuffle with the counter. The shuffle is specified under Public randomness in docs/THEORY.md of github.com/YYYJH1/fair-and-square-skills, and slot_lottery.py --verify from the same repository checks a result.

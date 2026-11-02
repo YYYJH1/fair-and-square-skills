@@ -1,0 +1,54 @@
+(For the organizer: send each block below privately to the person named. Do not post it in the group.)
+
+--- To 大刘 ---
+大刘, this is your own chore result. Nobody else sees your ranking.
+Week 1 (pick order: 大刘, Coco, 阿明, 小红; you pick number 1): round 1 拖地, round 2 洗碗, round 3 做饭.
+Week 2 (pick order: Coco, 阿明, 小红, 大刘; you pick number 4): round 1 拖地, round 2 做饭, round 3 做饭.
+Your picks: week 1: round 1 拖地, round 2 洗碗, round 3 做饭; week 2: round 1 拖地, round 2 做饭, round 3 做饭. EF1 fails against 小红, the reason is below. Against everybody else, the chore you picked in every round is no worse in your ranking than the one they picked right after you, with at most one chore as an exception: set it aside and you do not envy them.
+Week 1, against Coco (you pick before Coco each round): in round 1 your pick "拖地" (your no. 1) is no worse than Coco's pick in the same round, "擦窗" (no. 4); in round 2 your pick "洗碗" (your no. 3) is no worse than Coco's pick in the same round, "做饭" (no. 5); in round 3 your pick "做饭" (your no. 5) is no worse than Coco's pick in the same round, "做饭" (no. 5); so you do not envy Coco.
+Week 1, against 阿明 (you pick before 阿明 each round): in round 1 your pick "拖地" (your no. 1) is no worse than 阿明's pick in the same round, "倒垃圾" (no. 2); in round 2 your pick "洗碗" (your no. 3) is no worse than 阿明's pick in the same round, "做饭" (no. 5); in round 3 your pick "做饭" (your no. 5) is no worse than 阿明's pick in the same round, "做饭" (no. 5); so you do not envy 阿明.
+Week 1, against 小红 (you pick before 小红 each round): in round 1 your pick "拖地" (your no. 1) is no worse than 小红's pick in the same round, "洗碗" (no. 3); EF1 fails: counting every chore the same, after your heaviest chore is set aside, your bundle still has 2 chores and 小红's has 1 chore (小红 had no chore left that they can do from round 2 on).
+Week 2, against Coco (Coco picks before you each round): in round 1 your pick "拖地" (your no. 1) is no worse than Coco's pick in the next round (round 2), "洗碗" (no. 3); in round 2 your pick "做饭" (your no. 5) is no worse than Coco's pick in the next round (round 3), "做饭" (no. 5); set aside your last pick "做饭" and you do not envy Coco.
+Week 2, against 阿明 (阿明 picks before you each round): in round 1 your pick "拖地" (your no. 1) is no worse than 阿明's pick in the next round (round 2), "做饭" (no. 5); in round 2 your pick "做饭" (your no. 5) is no worse than 阿明's pick in the next round (round 3), "做饭" (no. 5); line up your chores and 阿明's from heaviest to lightest in your ranking: each of yours is no worse than the one in the same place of 阿明's, so you do not envy 阿明.
+Week 2, against 小红 (小红 picks before you each round): EF1 fails: counting every chore the same, after your heaviest chore is set aside, your bundle still has 2 chores and 小红's has 1 chore (小红 had no chore left that they can do from round 2 on).
+The ranking you gave (least disliked first): 拖地 > 倒垃圾 > 洗碗 > 擦窗 > 做饭. If it differs from what you sent the organizer, tell everybody now.
+
+--- To Coco ---
+Coco, this is your own chore result. Nobody else sees your ranking.
+Week 1 (pick order: 大刘, Coco, 阿明, 小红; you pick number 2): round 1 擦窗, round 2 做饭, round 3 做饭.
+Week 2 (pick order: Coco, 阿明, 小红, 大刘; you pick number 1): round 1 擦窗, round 2 洗碗, round 3 做饭.
+Your picks: week 1: round 1 擦窗, round 2 做饭, round 3 做饭; week 2: round 1 擦窗, round 2 洗碗, round 3 做饭. EF1 fails against 小红, the reason is below. Against everybody else, the chore you picked in every round is no worse in your ranking than the one they picked right after you, with at most one chore as an exception: set it aside and you do not envy them.
+Week 1, against 大刘 (大刘 picks before you each round): in round 1 your pick "擦窗" (your no. 1) is no worse than 大刘's pick in the next round (round 2), "洗碗" (no. 2); in round 2 your pick "做饭" (your no. 5) is no worse than 大刘's pick in the next round (round 3), "做饭" (no. 5); set aside your last pick "做饭" and you do not envy 大刘.
+Week 1, against 阿明 (you pick before 阿明 each round): in round 1 your pick "擦窗" (your no. 1) is no worse than 阿明's pick in the same round, "倒垃圾" (no. 3); in round 2 your pick "做饭" (your no. 5) is no worse than 阿明's pick in the same round, "做饭" (no. 5); in round 3 your pick "做饭" (your no. 5) is no worse than 阿明's pick in the same round, "做饭" (no. 5); so you do not envy 阿明.
+Week 1, against 小红 (you pick before 小红 each round): in round 1 your pick "擦窗" (your no. 1) is no worse than 小红's pick in the same round, "洗碗" (no. 2); EF1 fails: counting every chore the same, after your heaviest chore is set aside, your bundle still has 2 chores and 小红's has 1 chore (小红 had no chore left that they can do from round 2 on).
+Week 2, against 阿明 (you pick before 阿明 each round): in round 1 your pick "擦窗" (your no. 1) is no worse than 阿明's pick in the same round, "倒垃圾" (no. 3); in round 2 your pick "洗碗" (your no. 2) is no worse than 阿明's pick in the same round, "做饭" (no. 5); in round 3 your pick "做饭" (your no. 5) is no worse than 阿明's pick in the same round, "做饭" (no. 5); so you do not envy 阿明.
+Week 2, against 小红 (you pick before 小红 each round): in round 1 your pick "擦窗" (your no. 1) is no worse than 小红's pick in the same round, "洗碗" (no. 2); EF1 fails: counting every chore the same, after your heaviest chore is set aside, your bundle still has 2 chores and 小红's has 1 chore (小红 had no chore left that they can do from round 2 on).
+Week 2, against 大刘 (you pick before 大刘 each round): in round 1 your pick "擦窗" (your no. 1) is no worse than 大刘's pick in the same round, "拖地" (no. 4); in round 2 your pick "洗碗" (your no. 2) is no worse than 大刘's pick in the same round, "做饭" (no. 5); in round 3 your pick "做饭" (your no. 5) is no worse than 大刘's pick in the same round, "做饭" (no. 5); so you do not envy 大刘.
+The ranking you gave (least disliked first): 擦窗 > 洗碗 > 倒垃圾 > 拖地 > 做饭. If it differs from what you sent the organizer, tell everybody now.
+
+--- To 阿明 ---
+阿明, this is your own chore result. Nobody else sees your ranking.
+Week 1 (pick order: 大刘, Coco, 阿明, 小红; you pick number 3): round 1 倒垃圾, round 2 做饭, round 3 做饭.
+Week 2 (pick order: Coco, 阿明, 小红, 大刘; you pick number 2): round 1 倒垃圾, round 2 做饭, round 3 做饭.
+Your picks: week 1: round 1 倒垃圾, round 2 做饭, round 3 做饭; week 2: round 1 倒垃圾, round 2 做饭, round 3 做饭. EF1 fails against 小红, the reason is below. Against everybody else, the chore you picked in every round is no worse in your ranking than the one they picked right after you, with at most one chore as an exception: set it aside and you do not envy them.
+Week 1, against 大刘 (大刘 picks before you each round): in round 1 your pick "倒垃圾" (your no. 1) is no worse than 大刘's pick in the next round (round 2), "洗碗" (no. 2); in round 2 your pick "做饭" (your no. 5) is no worse than 大刘's pick in the next round (round 3), "做饭" (no. 5); set aside your last pick "做饭" and you do not envy 大刘.
+Week 1, against Coco (Coco picks before you each round): in round 1 your pick "倒垃圾" (your no. 1) is no worse than Coco's pick in the next round (round 2), "做饭" (no. 5); in round 2 your pick "做饭" (your no. 5) is no worse than Coco's pick in the next round (round 3), "做饭" (no. 5); line up your chores and Coco's from heaviest to lightest in your ranking: each of yours is no worse than the one in the same place of Coco's, so you do not envy Coco.
+Week 1, against 小红 (you pick before 小红 each round): in round 1 your pick "倒垃圾" (your no. 1) is no worse than 小红's pick in the same round, "洗碗" (no. 2); EF1 fails: counting every chore the same, after your heaviest chore is set aside, your bundle still has 2 chores and 小红's has 1 chore (小红 had no chore left that they can do from round 2 on).
+Week 2, against Coco (Coco picks before you each round): in round 1 your pick "倒垃圾" (your no. 1) is no worse than Coco's pick in the next round (round 2), "洗碗" (no. 2); in round 2 your pick "做饭" (your no. 5) is no worse than Coco's pick in the next round (round 3), "做饭" (no. 5); set aside your last pick "做饭" and you do not envy Coco.
+Week 2, against 小红 (you pick before 小红 each round): in round 1 your pick "倒垃圾" (your no. 1) is no worse than 小红's pick in the same round, "洗碗" (no. 2); EF1 fails: counting every chore the same, after your heaviest chore is set aside, your bundle still has 2 chores and 小红's has 1 chore (小红 had no chore left that they can do from round 2 on).
+Week 2, against 大刘 (you pick before 大刘 each round): in round 1 your pick "倒垃圾" (your no. 1) is no worse than 大刘's pick in the same round, "拖地" (no. 4); in round 2 your pick "做饭" (your no. 5) is no worse than 大刘's pick in the same round, "做饭" (no. 5); in round 3 your pick "做饭" (your no. 5) is no worse than 大刘's pick in the same round, "做饭" (no. 5); so you do not envy 大刘.
+The ranking you gave (least disliked first): 倒垃圾 > 洗碗 > 擦窗 > 拖地 > 做饭. If it differs from what you sent the organizer, tell everybody now.
+
+--- To 小红 ---
+小红, this is your own chore result. Nobody else sees your ranking.
+Week 1 (pick order: 大刘, Coco, 阿明, 小红; you pick number 4): round 1 洗碗.
+Week 2 (pick order: Coco, 阿明, 小红, 大刘; you pick number 3): round 1 洗碗.
+In every round, the chore you picked (week 1: round 1 洗碗; week 2: round 1 洗碗) is no worse in your ranking than the one each other person picked right after you: the same round if they pick after you, their next round if they pick before you. At most one chore is an exception: set it aside and you envy nobody.
+Week 1, against 大刘 (大刘 picks before you each round): 大刘 holds "做饭", which you cannot do, so you cannot envy 大刘.
+Week 1, against Coco (Coco picks before you each round): Coco holds "做饭", which you cannot do, so you cannot envy Coco.
+Week 1, against 阿明 (阿明 picks before you each round): 阿明 holds "做饭", which you cannot do, so you cannot envy 阿明.
+Week 2, against Coco (Coco picks before you each round): Coco holds "做饭", which you cannot do, so you cannot envy Coco.
+Week 2, against 阿明 (阿明 picks before you each round): 阿明 holds "做饭", which you cannot do, so you cannot envy 阿明.
+Week 2, against 大刘 (you pick before 大刘 each round): 大刘 holds "做饭", which you cannot do, so you cannot envy 大刘.
+The ranking you gave (least disliked first): 洗碗 > 倒垃圾 > 擦窗 > 拖地. If it differs from what you sent the organizer, tell everybody now.
+You said you cannot do: 做饭. They are not in your ranking and will not be given to you.

@@ -1,0 +1,8 @@
+{
+  "mode": "estimates",
+  "ride_id": "ride-1",
+  "riders": ["小周", "阿杰", "Mia", "老陈"],
+  "solo_estimate": [15, 27, 40, 66],
+  "actual_total": 63,
+  "paid_by": "老陈"
+}

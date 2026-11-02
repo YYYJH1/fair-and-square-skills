@@ -1,0 +1,14 @@
+{
+  "mode": "ring",
+  "people": ["Ana", "Ben", "Cleo", "Coco", "Dev", "Yuki"],
+  "forbidden": [
+    {"pair": ["Ana", "Ben"]},
+    {"pair": ["Cleo", "Coco"]},
+    {"giver": "Dev", "receiver": "Yuki"}
+  ],
+  "random_source": "(fictional example) 2026-11-08 public draw numbers 03 11 19 24 33 + 02 07",
+  "rules": {
+    "source_description": "Fictional example: a public draw on 8 November 2026, copied exactly as its official site shows it",
+    "deadline": "Sign-up closes 2026-11-07 20:00, then the list and the exclusions are locked"
+  }
+}

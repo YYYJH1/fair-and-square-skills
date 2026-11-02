@@ -1,0 +1,63 @@
+# Stuff split result (no cash, maximum Nash welfare): 3 people share 6 items
+
+## Who gets what
+
+| Person | Items | Value to the person | All items, by the person's values |
+| --- | --- | --- | --- |
+| 阿明 | 冰箱, 电视 | 45.00 | 100.00 |
+| 小红 | 洗衣机, 书架 | 40.00 | 100.00 |
+| 大刘 | 沙发, 微波炉 | 40.00 | 100.00 |
+| Total |  | 125.00 |  |
+
+## Envy table (by the row person's values: the value of the listed person's items. The package marked * is the row person's own, a larger number is a better deal)
+
+| Person | 阿明 | 小红 | 大刘 |
+| --- | --- | --- | --- |
+| 阿明 | 45.00* | 30.00 | 25.00 |
+| 小红 | 45.00 | 40.00* | 15.00 |
+| 大刘 | 45.00 | 15.00 | 40.00* |
+
+## Check with one item set aside (only the people who envy somebody)
+
+| Person | Envies | Own package | Their package | Item valued most in it | Their package without it | Result |
+| --- | --- | --- | --- | --- | --- | --- |
+| 小红 | 阿明 | 40.00 | 45.00 | 冰箱 (25.00) | 20.00 | no envy once it is set aside |
+| 大刘 | 阿明 | 40.00 | 45.00 | 冰箱 (35.00) | 10.00 | no envy once it is set aside |
+
+Note: 虚构示例：三个室友毕业搬家，分合租期间一起买的六件东西
+
+Rule (fixed in advance, not changed after the result): no money moves, and the allocation taken is the one that gives something to the most people and then has the largest product of the values people receive. It leaves nobody envious once one item is set aside, and no other allocation is at least as good for everybody and better for somebody (max_nash).
+
+Result: all 729 allocations were checked one by one, and the one was taken that gives something to most people and then has the largest product of the values people receive (3 people receive more than nothing, product 72000).
+
+2 people envy another person's package by their own values (see the envy table). Every such envy disappears once one item is set aside from the package (see the table below). This is envy-free up to one item (EF1), not freedom from all envy.
+
+2 allocations tie for the largest Nash welfare. Exactly one of them gives people the most even numbers of items, and it was taken, so no priority order was needed.
+
+One line per person (send it to that person only, not to the group):
+
+- 阿明: By your values, nobody's package is worth more than your 45.00, so you envy nobody.
+- 小红: By your values, the package of 阿明 is worth 45.00, which is 5.00 more than your 40.00. Without 冰箱, the item in it you value most (worth 25.00), it is worth 20.00 and no more than yours, so you do not envy 阿明 once one item is set aside. Every other package is worth no more than yours.
+- 大刘: By your values, the package of 阿明 is worth 45.00, which is 5.00 more than your 40.00. Without 冰箱, the item in it you value most (worth 35.00), it is worth 10.00 and no more than yours, so you do not envy 阿明 once one item is set aside. Every other package is worth no more than yours.
+
+## Not modeled
+
+- Values that add up: when two items are worth more together than apart (a TV and its stand), please enter them as one item.
+- Items are treated as whole and as shared by everybody: no splitting, selling or throwing away.
+- Strategy-proofness: none of the three rules stops somebody from misreporting their values.
+
+## Reproduce
+
+```
+python3 scripts/stuff_split.py --demo --format md --lang en
+```
+
+# The piano example: the same values under two rules with cash
+
+| Person | Piano | Knaster: cash | Knaster: final worth | Envy-free: cash | Envy-free: final worth |
+| --- | --- | --- | --- | --- | --- |
+| 甲 | does not | +101.11 | 101.11 | +300.00 | 300.00 |
+| 乙 | gets it | -498.89 | 401.11 | -600.00 | 300.00 |
+| 丙 | does not | +397.78 | 397.78 | +300.00 | 300.00 |
+
+The same values under two rules with cash. Under Knaster, 甲 values the package of 丙 (items plus cash) at 397.78, which is 296.67 more than their own 101.11, so 甲 envies 丙. Under envy-free with cash, everybody's final worth is 300.00 and nobody envies anybody. The two rules are a trade-off. Knaster gives everybody their fair share first and then shares the surplus in proportion to the shares, but somebody may envy somebody. Envy-free with cash promises that nobody envies anybody, but the surplus is not necessarily shared equally, and somebody gets less than under Knaster (乙 has 401.11 under Knaster and 300.00 here. 丙 has 397.78 under Knaster and 300.00 here). If the group voted after seeing the results, 乙, 丙 would choose Knaster and 甲 would choose envy-free with cash, so the rule has to be fixed before the values are collected.

@@ -1,0 +1,6 @@
+{
+  "mode": "meter",
+  "ride_id": "ride-1",
+  "riders": ["小周", "阿杰", "Mia", "老陈"],
+  "meter_at_dropoff": [14, 26, 41, 63]
+}

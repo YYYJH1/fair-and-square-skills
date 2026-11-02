@@ -1,0 +1,12 @@
+{
+  "mode": "general",
+  "ride_id": "ride-1",
+  "riders": ["小周", "阿杰", "Mia"],
+  "distance_matrix": [
+    [0, 2, 12, 11],
+    [2, 0, 10, 9],
+    [12, 10, 0, 5],
+    [11, 9, 5, 0]
+  ],
+  "tariff": {"base": 10, "per_unit": 2.5}
+}
